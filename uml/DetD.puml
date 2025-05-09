@@ -1,0 +1,53 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+
+class Arme{
+    -m_poids : Integer
+}
+
+note left of Arme
+m_poids : 0 = légère
+                 1 = lourde
+end note
+
+class Armure{
+    -m_poids : Integer
+}
+
+note left of Armure
+m_poids : 0 = légère
+                 1 = lourde
+end note
+
+class Personnage{
+    -m_nom : String
+}
+
+class Joueur{
+
+}
+
+class Monstre {
+    -m_espece : String
+    -m_numero : Integer
+
+}
+
+class Classe <<static>>{
+    -m_nom : String <<static>>
+    -m_pv :  <<static>>
+    -m_equipements : Equipement[*] <<static>>
+}
+
+class Race{
+    -m_nom
+}
+
+Armure <|-- Legere2
+Armure <|-- Lourde2
+Personnage <|-- Joueur
+Personnage <|-- Monstre
+Joueur "*" <--* "1\n-m_classe" Classe :  est de la classe >
+
+@enduml

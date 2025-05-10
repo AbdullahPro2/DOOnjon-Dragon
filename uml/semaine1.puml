@@ -1,0 +1,98 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+
+class Arme{
+    +Arme()
+    -m_poids : Integer
+    -m_porte : Integer
+    -m_degats : Integer
+}
+
+note left of Arme
+m_poids : 0 = légère
+                 1 = lourde
+end note
+
+class Armure{
+    +Armure()
+    -m_poids : Integer
+    -m_defense : Integer
+}
+
+note left of Armure
+m_poids : 0 = légère
+                 1 = lourde
+end note
+
+class Personnage{
+    -m_nom : String
+    -m_pv : Integer
+    -m_force : Integer
+    -m_dexterité : Integer
+    -m_vitesse : Integer
+    -m_initiative : Interger
+    +Attaque():void
+    +SeDeplacer():void
+    +Ramasser():void
+}
+
+class Joueur{
+    +Joueur()
+    +Joueur(nom : String, classe : Classe, race : Race)
+    -m_arme
+    -m_armure
+    +setArme() : void
+    +setArmure() : void
+    +Equiper():void
+    +Commenter():void
+    +MjCommenter():void
+}
+
+class Monstre {
+    +Monstre()
+    -m_espece : String
+    -m_numero : Integer
+    -m_classeArmure : Integer
+}
+
+note left of Monstre
+m_classeArmure : 0 = légère
+                 1 = lourde
+end note
+
+class Classe {
+    +Classe()
+    -m_nom : String
+    +getArmes() : Arme[*]
+    +getArmures() : Armure[*]
+    +setArmes() : void
+    +setArmures() : void
+}
+
+class Race{
+    +Race()
+    -m_nom
+}
+
+class Utils <<static>>{
+    -m_donjon : String
+    +lanceDe(n:Integer,f:Integer) : Integer <<static>>
+    +startGame() : void <<static>>
+    +creerDonjon() : void <<static>>
+    +ordreJeu() : void <<static>>
+    +equipeArmure() : Void <<static>>
+    +FinPerdante(): void <<static>>
+    +FinGagnante(): void <<static>>
+}
+
+Personnage <|-- Joueur
+Personnage <|-- Monstre
+Joueur "*" <--* "1\n-m_classe" Classe :  est de la classe >
+Classe "1" <--o "*\n-m_tabArmes" Arme :  est dans les armes de base de >
+Classe "1" <--o "*\n-m_tabArmures" Armure :  est dans les armures de base de >
+Personnage .> Utils : "«call»"
+Joueur "*" <--* "1\n-m_race" Race :  est de la race >
+
+
+@enduml

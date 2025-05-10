@@ -4,6 +4,8 @@ skinparam style strictuml
 
 class Arme{
     -m_poids : Integer
+    -m_porte : Integer
+    -m_degats : Integer
 }
 
 note left of Arme
@@ -13,6 +15,7 @@ end note
 
 class Armure{
     -m_poids : Integer
+    -m_defense : Integer
 }
 
 note left of Armure
@@ -34,20 +37,23 @@ class Monstre {
 
 }
 
-class Classe <<static>>{
-    -m_nom : String <<static>>
-    -m_pv :  <<static>>
-    -m_equipements : Equipement[*] <<static>>
+class Classe {
+    -m_nom : String
+    -m_pv :  Integer
+    +getArmes() : Arme[*]
+    +getArmures() : Armure[*]
+    +setArmes() : void
+    +setArmures() : void
 }
 
 class Race{
     -m_nom
 }
 
-Armure <|-- Legere2
-Armure <|-- Lourde2
 Personnage <|-- Joueur
 Personnage <|-- Monstre
 Joueur "*" <--* "1\n-m_classe" Classe :  est de la classe >
+Classe "1" <--o "*\n-m_arme" Arme :  est dans les armes de base de >
+Classe "1" <--o "*\n-m_armure" Armure :  est dans les armures de base de >
 
 @enduml

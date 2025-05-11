@@ -1,0 +1,68 @@
+import equipement.*;
+import java.util.ArrayList;
+import java.util.List;
+import utils.DeDegats;
+
+public class ClassePersonnage {
+  private String m_nomClass;
+  private int m_pv;
+  private ArrayList<Arme> m_armes;
+  private ArrayList<Armure> m_armures;
+
+  private ClassePersonnage(String nom, int pv, ArrayList<Arme> armes, ArrayList<Armure> armures)
+  {
+    this.m_nomClass = nom;
+    this.m_pv = pv;
+    this.m_armes = armes;
+    this.m_armures = armures;
+  }
+  public static ClassePersonnage Clercs() {
+    return new ClassePersonnage(
+        "Clercs",
+        16,
+        new ArrayList<>(List.of(
+            new Arme(TypeArme.COURANTE, "masse d'armes", new DeDegats(1, 6), 1),
+            new Arme(TypeArme.DISTANCE, "arbalète légère", new DeDegats(1, 8), 16)
+        )),
+        new ArrayList<>(List.of(
+            new Armure(TypeArmure.LEGERE, "armure d'écailles", 9)
+        ))
+    );
+  }
+  public static ClassePersonnage Guerriers() {
+    return new ClassePersonnage(
+        "Guerriers",
+        20,
+        new ArrayList<>(List.of(
+            new Arme(TypeArme.GUERRE, "épée longue", new DeDegats(1, 8), 1),
+            new Arme(TypeArme.DISTANCE, "arbalète légère", new DeDegats(1, 8), 16)
+        )),
+        new ArrayList<>(List.of(
+            new Armure(TypeArmure.LOURDE, "cotte de mailles", 11)
+        ))
+    );
+  }
+  public static ClassePersonnage Magiciens() {
+    return new ClassePersonnage(
+        "Magiciens",
+        12,
+        new ArrayList<>(List.of(
+            new Arme(TypeArme.COURANTE, "bâton", new DeDegats(1, 6), 1),
+            new Arme(TypeArme.DISTANCE, "fronde", new DeDegats(1, 4), 6)
+        )),
+        new ArrayList<>(List.of())
+    );
+  }
+  public static ClassePersonnage Roublards() {
+    return new ClassePersonnage(
+        "Roublards",
+        16,
+        new ArrayList<>(List.of(
+            new Arme(TypeArme.GUERRE, "rapière", new DeDegats(1, 8), 1),
+            new Arme(TypeArme.DISTANCE, "arc court", new DeDegats(1, 6), 16)
+        )),
+        new ArrayList<>(List.of())
+    );
+  }
+
+}

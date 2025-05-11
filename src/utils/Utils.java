@@ -1,3 +1,5 @@
+package utils;
+
 public class Utils {
     public static int lanceDe(int n, int f){
         int somme=0;

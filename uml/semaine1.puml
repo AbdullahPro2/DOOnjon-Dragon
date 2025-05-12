@@ -32,7 +32,7 @@ class Personnage{
     -m_dexterité : Integer
     -m_vitesse : Integer
     -m_initiative : Interger
-    +attaque():void
+    +attaque(j2 : Personnage):void
     +deplacer():void
     +ramasser():void
 }
@@ -45,6 +45,7 @@ class Joueur{
     +equiper():void
     +commenter():void
     +mjCommenter():void
+    +equipeArmure() : Void
 }
 
 class Monstre {
@@ -79,7 +80,6 @@ class Utils <<static>>{
     +startGame() : void <<static>>
     +creerDonjon() : void <<static>>
     +ordreJeu() : void <<static>>
-    +equipeArmure() : Void <<static>>
     +finPerdante(): void <<static>>
     +finGagnante(): void <<static>>
 }

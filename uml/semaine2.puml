@@ -135,7 +135,7 @@ package utils
 
 Personnage <|-- Joueur
 Personnage <|-- Monstre
-Joueur "*" *--> "1\n-m_classe" Classe :  est de la classe >
+Joueur "*" *--> "1\n-m_classe" ClassePersonnage :  est de la classe >
 ' Relation de Classe de Personnage
 ClassePersonnage "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >
 ClassePersonnage "1\nm_armures" *----> "*\n" Armure : est dans les armures de base de >

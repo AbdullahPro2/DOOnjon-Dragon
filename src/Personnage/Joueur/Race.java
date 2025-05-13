@@ -1,3 +1,5 @@
+package Personnage.Joueur;
+
 public class Race {
   private String m_nomRace;
   private int m_bonusForce;

@@ -1,3 +1,5 @@
+package Personnage.Joueur;
+
 import equipement.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,11 @@ public class ClassePersonnage {
   private int m_pv;
   private ArrayList<Arme> m_armes;
   private ArrayList<Armure> m_armures;
+
+  public String getM_nomClass(){ return m_nomClass; }
+  public int getM_pv() { return m_pv; }
+  public ArrayList<Arme> getM_armes() { return m_armes; }
+  public ArrayList<Armure> getM_armures() { return m_armures; }
 
   private ClassePersonnage(String nom, int pv, ArrayList<Arme> armes, ArrayList<Armure> armures)
   {

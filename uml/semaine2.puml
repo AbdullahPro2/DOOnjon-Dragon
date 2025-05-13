@@ -51,6 +51,7 @@ class Personnage{
     -m_vitesse : Integer
     -m_initiative : Interger
     +deplacer():void
+    +attaquer():void
     +ramasser():void
 }
 
@@ -59,10 +60,8 @@ class Joueur{
     +Joueur(nom : String, classe : Classe, race : Race)
     +setArme() : void
     +setArmure() : void
-    +equiper():void
     +commenter():void
     +mjCommenter():void
-    +equipeArmure() : Void
 }
 
 class Monstre {
@@ -72,25 +71,20 @@ class Monstre {
     -m_classeArmure : Integer
 }
 
-note left of Monstre
-m_classeArmure : 0 = légère
-                 1 = lourde
-end note
+class ClassePersonnage {
+   - m_nomClass: String
+   - m_pv: Interger
+   - m_armures: Armure[*]
 
-  class ClassePersonnage {
-    - m_nomClass: String
-    - m_pv: Interger
-    - m_armures: Armure[*]
-
-    + <<create>> ClassePersonnage(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
-    + {static} Clercs() : ClassePersonnage
-    + {static} Guerriers() : ClassePersonnage
-    + {static} Magiciens() : ClassePersonnage
-    + {static} Roublards() : ClassePersonnage
-    + getM_nomClass() : String
-    + getM_pv() : Integer
-    + getM_armes() : Arme[*]
-    + getM_armures() : Armure[*]
+   + <<create>> ClassePersonnage(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
+   + {static} Clercs() : ClassePersonnage
+   + {static} Guerriers() : ClassePersonnage
+   + {static} Magiciens() : ClassePersonnage
+   + {static} Roublards() : ClassePersonnage
+   + getM_nomClass() : String
+   + getM_pv() : Integer
+   + getM_armes() : Arme[*]
+   + getM_armures() : Armure[*]
 }
 
 class Race {

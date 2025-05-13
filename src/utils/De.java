@@ -2,11 +2,11 @@ package utils;
 
 import java.util.Random;
 
-public class DeDegats{
+public class De {
   private int m_nombreDes;
   private int m_facesParDe;
 
-  public DeDegats(int nombreDes, int facesParDe) {
+  public De(int nombreDes, int facesParDe) {
     this.m_nombreDes = nombreDes;
     this.m_facesParDe = facesParDe;
   }

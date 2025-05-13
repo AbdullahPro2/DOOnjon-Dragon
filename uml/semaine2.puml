@@ -1,30 +1,48 @@
- @startuml
-'https://plantuml.com/class-diagram
+@startuml
+'https://plantuml.com/use-case-diagram
+!theme cerulean
 skinparam style strictuml
+skinparam classFontStyle Bold
+skinparam classAttributeIconSize 0
+hide empty members
 
-class Arme{
-    +Arme()
-    -m_poids : Integer
-    -m_porte : Integer
-    -m_degats : Integer
+package equipement
+{
+
+' Class Arme
+  class Arme{
+    - m_nomArme : String
+    - m_portee : Integer
+    + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Interger)
+    + getM_typeArme() : TypeArme
+    + getM_nomArme() : Stirng
+    + getM_degats(): De
+    + getM_portee(): Interger
+    + toString() : String
 }
-
-note left of Arme
-m_poids : 0 = légère
-                 1 = lourde
-end note
-
+  enum TypeArme <<enumerate>>
+  {
+  COURANTE
+  GUERRE
+  DISTANCE
+  }
+' Class Armure
 class Armure{
-    +Armure()
-    -m_poids : Integer
-    -m_defense : Integer
+    - m_nom : String
+    - m_classeArmure : int
+    + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Interger)
+    + getClasseArmure() : Interger
+    + getNom() : String
+    + getTypeArmure() : TypeArmure
+    + toString() : String
 }
 
-note right of Armure
-m_poids : 0 = légère
-                 1 = lourde
-end note
-
+enum TypeArmure <<enumerate>>
+{
+  LEGERE
+  LOURDE
+}
+}
 class Personnage{
     -m_nom : String
     -m_pv : Integer
@@ -32,7 +50,6 @@ class Personnage{
     -m_dexterité : Integer
     -m_vitesse : Integer
     -m_initiative : Interger
-    +attaque(j2 : Personnage):void
     +deplacer():void
     +ramasser():void
 }
@@ -60,38 +77,78 @@ m_classeArmure : 0 = légère
                  1 = lourde
 end note
 
-class Classe {
-    +Classe()
-    -m_nom : String
-    +getArmes() : Arme[*]
-    +getArmures() : Armure[*]
-    +setArmes() : void
-    +setArmures() : void
+  class ClassePersonnage {
+    - m_nomClass: String
+    - m_pv: Interger
+    - m_armures: Armure[*]
+
+    + <<create>> ClassePersonnage(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
+    + {static} Clercs() : ClassePersonnage
+    + {static} Guerriers() : ClassePersonnage
+    + {static} Magiciens() : ClassePersonnage
+    + {static} Roublards() : ClassePersonnage
+    + getM_nomClass() : String
+    + getM_pv() : Integer
+    + getM_armes() : Arme[*]
+    + getM_armures() : Armure[*]
 }
 
-class Race{
-    +Race()
-    -m_nom
+class Race {
+  - m_nomRace: String
+  - m_bonusForce: Integer
+  - m_bonusDexterite: Integer
+  - m_bonusVitesse: Integer
+
+  + <<create>> Race(nom: String, force: Integer, dex: Integer, vitesse: Integer)
+  + getM_nomRace(): String
+  + getM_BonusForce(): Integer
+  + getM_BonusDexterite(): Integer
+  + getM_BonusVitesse(): Integer
+
+  + {static} Elfe(): Race
+  + {static} Halfelin(): Race
+  + {static} Humain(): Race
+  + {static} Nain(): Race
 }
 
-class Utils <<static>>{
+package utils
+{
+  class Utils <<static>>{
     -m_donjon : String[]
     +lanceDe(n:Integer,f:Integer) : Integer <<static>>
     +startGame() : void <<static>>
     +creerDonjon() : void <<static>>
     +ordreJeu() : void <<static>>
+    +equipeArmure() : Void <<static>>
     +finPerdante(): void <<static>>
     +finGagnante(): void <<static>>
+  }
+  class De
+  {
+    - m_nombreDes : Interger
+    - m_facesParDe: Interger
+    + <<create>> De(nombreDes : Interger, facesParDe : Interger)
+    + getDegatsAleatoires(): Integer
+    + toString(): Stirng
+  }
 }
 
 Personnage <|-- Joueur
 Personnage <|-- Monstre
-Joueur "*" *--> "1\n-m_classe" Classe :  est de la classe >
-Classe "1" o--> "*\n-m_tabArmes     " Arme :  est dans les armes de base de >
-Classe "1" o--> "*\n-m_tabArmures" Armure :  est dans les armures de base de >
+Joueur "*" *--> "1\n-m_classe" ClassePersonnage :  est de la classe >
+' Relation de Classe de Personnage
+ClassePersonnage "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >
+ClassePersonnage "1\nm_armures" *----> "*\n" Armure : est dans les armures de base de >
+
+
 Personnage .> Utils : "«call»"
 Joueur "*" *--> "1\n-m_race" Race :  est de la race >
 Joueur "1" .> "1" Arme : "uses"\nm_arme
 Joueur "1" .> "1" Armure : "uses"\nm_armure
 
+' Class Arme Relations
+Arme .> TypeArme : "«uses»\n m_typeArme"
+Arme "1" *--> "1\n -m_degats" De : fait les dégâts
+' Class Armure Relations
+Armure .> TypeArmure : "«uses»\n m_typeArmure""
 @enduml

@@ -72,11 +72,6 @@ class Monstre {
     -m_classeArmure : Integer
 }
 
-note left of Monstre
-m_classeArmure : 0 = légère
-                 1 = lourde
-end note
-
   class ClassePersonnage {
     - m_nomClass: String
     - m_pv: Interger

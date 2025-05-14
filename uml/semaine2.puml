@@ -11,7 +11,7 @@ package equipement
 
 ' Class Arme
   class Arme{
-    - m_nomArme : String
+    -m_nom : String
     - m_portee : Integer
     + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Interger)
     + getM_typeArme() : TypeArme
@@ -28,7 +28,7 @@ package equipement
   }
 ' Class Armure
 class Armure{
-    - m_nom : String
+    -m_nom : String
     - m_classeArmure : int
     + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Interger)
     + getClasseArmure() : Interger
@@ -42,27 +42,32 @@ enum TypeArmure <<enumerate>>
   LEGERE
   LOURDE
 }
+
+class Entite{
+    -m_x:Integer
+    -m_y:Integer
 }
+
 class Personnage{
-    -m_nom : String
     -m_pv : Integer
     -m_force : Integer
     -m_dexterité : Integer
     -m_vitesse : Integer
     -m_initiative : Interger
-    +attaque():void
     +deplacer():void
+    +attaquer():void
     +ramasser():void
 }
 
 class Joueur{
+    -m_nom : String
     +Joueur()
     +Joueur(nom : String, classe : Classe, race : Race)
     +setArme() : void
     +setArmure() : void
-    +equiper():void
     +commenter():void
     +mjCommenter():void
+    +getNom():String
 }
 
 class Monstre {
@@ -72,20 +77,20 @@ class Monstre {
     -m_classeArmure : Integer
 }
 
-  class ClassePersonnage {
-    - m_nomClass: String
-    - m_pv: Interger
-    - m_armures: Armure[*]
+class ClassePersonnage {
+   - m_nomClass: String
+   - m_pv: Interger
+   - m_armures: Armure[*]
 
-    + <<create>> ClassePersonnage(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
-    + {static} Clercs() : ClassePersonnage
-    + {static} Guerriers() : ClassePersonnage
-    + {static} Magiciens() : ClassePersonnage
-    + {static} Roublards() : ClassePersonnage
-    + getM_nomClass() : String
-    + getM_pv() : Integer
-    + getM_armes() : Arme[*]
-    + getM_armures() : Armure[*]
+   + <<create>> ClassePersonnage(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
+   + {static} Clercs() : ClassePersonnage
+   + {static} Guerriers() : ClassePersonnage
+   + {static} Magiciens() : ClassePersonnage
+   + {static} Roublards() : ClassePersonnage
+   + getM_nomClass() : String
+   + getM_pv() : Integer
+   + getM_armes() : Arme[*]
+   + getM_armures() : Armure[*]
 }
 
 class Race {
@@ -130,6 +135,9 @@ package utils
 
 Personnage <|-- Joueur
 Personnage <|-- Monstre
+Entite <|-- Personnage
+Entite <|-- Arme
+Entite <|-- Armure
 Joueur "*" *--> "1\n-m_classe" ClassePersonnage :  est de la classe >
 ' Relation de Classe de Personnage
 ClassePersonnage "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >

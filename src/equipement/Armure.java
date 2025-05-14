@@ -6,6 +6,7 @@ public class Armure {
   private int m_classeArmure;
 
   public Armure(TypeArmure typeArmure, String nom, int classeArmure) {
+
     this.m_typeArmure = typeArmure;
     this.m_nom = nom;
     this.m_classeArmure = classeArmure;

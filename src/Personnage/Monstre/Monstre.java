@@ -9,7 +9,7 @@ public class Monstre extends Personnage {
 
     public Monstre(int force, int dexterite, int vitesse, int initiative, RaceMonstre race, int numero, int classeArmure)
     {
-        super(force, dexterite, vitesse, initiative);
+        super(race.getM_nom()+" "+numero, race.getM_pv(), force, dexterite, vitesse, initiative);
         m_race = race;
         m_numero = numero;
         m_classeArmure = classeArmure;

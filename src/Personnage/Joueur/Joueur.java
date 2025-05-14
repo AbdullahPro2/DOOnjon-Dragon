@@ -8,11 +8,15 @@ public class Joueur extends Personnage {
 
     private Arme m_arme;
     private Armure m_armure;
+    private Race m_race;
+    private ClassePersonnage m_classe;
 
-    public Joueur(int force, int dexterite, int vitesse, int initiative, Arme arme, Armure armure){
-        super(force, dexterite, vitesse, initiative);
+    public Joueur(int force, int dexterite, int vitesse, String nom, int initiative, Arme arme, Armure armure, Race race, ClassePersonnage classe ){
+        super(nom, classe.getM_pv(), force, dexterite, vitesse, initiative);
         m_arme = arme;
         m_armure = armure;
+        m_race=race;
+        m_classe=classe;
     }
 
     public Arme getM_arme() {

@@ -11,7 +11,7 @@ package equipement
 
 ' Class Arme
   class Arme{
-    - m_nomArme : String
+    -m_nom : String
     - m_portee : Integer
     + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Interger)
     + getM_typeArme() : TypeArme
@@ -28,7 +28,7 @@ package equipement
   }
 ' Class Armure
 class Armure{
-    - m_nom : String
+    -m_nom : String
     - m_classeArmure : int
     + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Interger)
     + getClasseArmure() : Interger
@@ -42,9 +42,13 @@ enum TypeArmure <<enumerate>>
   LEGERE
   LOURDE
 }
+
+class Entite{
+    -m_x:Integer
+    -m_y:Integer
 }
+
 class Personnage{
-    -m_nom : String
     -m_pv : Integer
     -m_force : Integer
     -m_dexterité : Integer
@@ -56,12 +60,14 @@ class Personnage{
 }
 
 class Joueur{
+    -m_nom : String
     +Joueur()
     +Joueur(nom : String, classe : Classe, race : Race)
     +setArme() : void
     +setArmure() : void
     +commenter():void
     +mjCommenter():void
+    +getNom():String
 }
 
 class Monstre {
@@ -129,6 +135,9 @@ package utils
 
 Personnage <|-- Joueur
 Personnage <|-- Monstre
+Entite <|-- Personnage
+Entite <|-- Arme
+Entite <|-- Armure
 Joueur "*" *--> "1\n-m_classe" ClassePersonnage :  est de la classe >
 ' Relation de Classe de Personnage
 ClassePersonnage "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >

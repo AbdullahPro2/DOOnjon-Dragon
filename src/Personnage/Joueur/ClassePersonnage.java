@@ -1,3 +1,5 @@
+package Personnage.Joueur;
+
 import equipement.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,22 @@ public class ClassePersonnage {
     this.m_pv = pv;
     this.m_armes = armes;
     this.m_armures = armures;
+  }
+
+  public int getM_pv() {
+    return m_pv;
+  }
+
+  public ArrayList<Arme> getM_armes() {
+    return m_armes;
+  }
+
+  public ArrayList<Armure> getM_armures() {
+    return m_armures;
+  }
+
+  public String getM_nomClass() {
+    return m_nomClass;
   }
 
   public static ClassePersonnage Clercs() {

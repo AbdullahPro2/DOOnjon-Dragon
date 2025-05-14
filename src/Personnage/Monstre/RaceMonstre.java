@@ -9,6 +9,7 @@ public class RaceMonstre {
         m_pv = pv;
     }
     public int getM_pv() { return m_pv; }
+    public String getM_nom() {return m_nom; }
 
     public static RaceMonstre Dragon() {
         return new RaceMonstre(

@@ -23,6 +23,11 @@ public abstract class Personnage extends Entity {
         m_initiative = de.lanceDe()+3;
     }
 
+    @Override
+    public void setPosition(int x, int y) {
+        super.setPosition(x, y);
+    }
+
     public int getM_dexterite() {
         return m_dexterite;
     }

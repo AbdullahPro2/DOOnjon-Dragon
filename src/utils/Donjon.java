@@ -1,19 +1,28 @@
 package utils;
 
+import Personnage.Personnage;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Donjon {
   private int m_longeur;
   private int m_largeur;
+  private ArrayList<Personnage> m_playerssOnGround;
 
+  public void addEntityOnGround(Personnage pers)
+  {
+    m_playerssOnGround.add(pers);
+  }
   public Donjon() {
     Scanner myObj = new Scanner(System.in);
     System.out.print("Entrez longueur : ");
     m_longeur = Integer.parseInt(myObj.nextLine());
     System.out.print("Entrez largeur : ");
     m_largeur = Integer.parseInt(myObj.nextLine());
+    m_playerssOnGround = new ArrayList<>();
+
   }
-  public static void printLine(int lar, int lon){
+  public void printLine(int lar, int lon){
     System.out.print("   *");
     for(int i = 0; i < lar; i++)
     {
@@ -31,6 +40,7 @@ public class Donjon {
     }
     System.out.println();
     printLine(m_largeur, m_longeur); // Top border
+
     // Print grid rows
     for (int i = 0; i < m_longeur; i++) {
       // Print row number with alignment
@@ -40,23 +50,26 @@ public class Donjon {
         System.out.print((i + 1) + "  |");
       }
 
-      // Loop through each column (dot for now, can add characters later)
       for (int j = 0; j < m_largeur; j++) {
-           //You can replace '.' with a character based on grid state
-          if(i == 10 && j == 5)
-            System.out.print("[ ]");
-        else if(i == 5 && j == 6)
-          System.out.print("CAE");
-        else if(i == 16 && j == 7)
-          System.out.print("M^ ");
-          else
-            System.out.print(" . ");
+        boolean entityPrinted = false;
+
+        for (Personnage entity : m_playerssOnGround) {
+          if (entity.getX() == i && entity.getY() == j) {
+            System.out.print(entity.getM_nom().substring(0,3));
+            entityPrinted = true;
+            break;
+          }
+        }
+
+        if (!entityPrinted) {
+          System.out.print(" . ");
+        }
       }
 
       System.out.print("  |");
       System.out.println();
     }
+
     printLine(m_largeur, m_longeur); // Bottom border
   }
-
 }

@@ -27,4 +27,11 @@ public class RaceMonstre {
                 18
         );
     }
+    @Override
+    public String toString() {
+        return "Race du Monstre : " + m_nom + "\n" +
+            "Points de vie : " + m_pv + "\n" +
+            "Classe d'armure : " + m_classeArmure;
+    }
+
 }

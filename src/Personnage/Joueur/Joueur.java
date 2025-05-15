@@ -14,8 +14,8 @@ public class Joueur extends Personnage {
     private Race m_race;
     private ClassePersonnage m_classe;
 
-    public Joueur(String nom, Race race, ClassePersonnage classe ){
-        super(nom, classe.getM_pv());
+    public Joueur(String nom, Race race, ClassePersonnage classe, int x, int y){
+        super(nom, classe.getM_pv(),x,y);
         m_race=race;
         m_classe=classe;
         super.setM_force(super.getM_force()+race.getM_BonusForce());
@@ -43,6 +43,10 @@ public class Joueur extends Personnage {
         this.m_armure = m_armure;
     }
 
+    @Override
+    public void setPosition(int x, int y) {
+        super.setPosition(x, y);
+    }
     public void Equiper()
     {
         Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal

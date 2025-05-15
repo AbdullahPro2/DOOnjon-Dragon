@@ -39,7 +39,7 @@ public class ClassePersonnage {
         "Clercs",
         16,
         new ArrayList<>(List.of(
-            new Arme(TypeArme.COURANTE, "masse d'armes", new De(1, 6), 1),
+            new Arme(TypeArme.COURANTECORPS, "masse d'armes", new De(1, 6), 1),
             new Arme(TypeArme.DISTANCE, "arbalète légère", new De(1, 8), 16)
         )),
         new ArrayList<>(List.of(
@@ -65,7 +65,7 @@ public class ClassePersonnage {
         "Magiciens",
         12,
         new ArrayList<>(List.of(
-            new Arme(TypeArme.COURANTE, "bâton", new De(1, 6), 1),
+            new Arme(TypeArme.COURANTECORPS, "bâton", new De(1, 6), 1),
             new Arme(TypeArme.DISTANCE, "fronde", new De(1, 4), 6)
         )),
         new ArrayList<>(List.of())
@@ -81,6 +81,15 @@ public class ClassePersonnage {
         )),
         new ArrayList<>(List.of())
     );
+  }
+  @Override
+  public String toString() {
+    return "ClassePersonnage{" +
+        "nom='" + m_nomClass + '\'' +
+        ", pv=" + m_pv +
+        ", armes=" + m_armes +
+        ", armures=" + m_armures +
+        '}';
   }
 
 

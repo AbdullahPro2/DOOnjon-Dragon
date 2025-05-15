@@ -1,7 +1,8 @@
 package equipement;
 
 public enum TypeArme {
-  COURANTE,
+  COURANTECORPS,
+  COURANTEGUERRE,
   GUERRE,
   DISTANCE
 }

@@ -3,8 +3,11 @@ package Personnage.Joueur;
 import Personnage.Personnage;
 import equipement.Arme;
 import equipement.Armure;
+import equipement.TypeArme;
+import equipement.TypeArmure;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Joueur extends Personnage {
@@ -21,6 +24,8 @@ public class Joueur extends Personnage {
         super.setM_force(super.getM_force()+race.getM_BonusForce());
         super.setM_dexterite(super.getM_dexterite()+race.getM_BonusDexterite());
         super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
+        m_arme = null;
+        m_armure = null;
     }
 
     public Race getM_race() {return m_race;}
@@ -47,17 +52,18 @@ public class Joueur extends Personnage {
     public void setPosition(int x, int y) {
         super.setPosition(x, y);
     }
+
     public void Equiper()
     {
         Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal
         System.out.print("Veux-tu equiper une arme (1) ou une armue (2) ? ");
         String choix = scanner.nextLine();  // Lit une ligne de texte
-        while (choix != "1" || choix != "2")
+        while (!Objects.equals(choix, "1") && !Objects.equals(choix, "2"))
         {
             System.out.print("Veuillez répondre \"1\" pour une équiper une arme et \"2\" pour une armure");
             choix = scanner.nextLine();  // Lit une ligne de texte
         }
-        if (choix == "1")
+        if (choix.equals("1"))
         {
             ArrayList<Arme> armes = m_classe.getM_armes();
             for (int i=0; i<armes.size();i++)
@@ -77,7 +83,21 @@ public class Joueur extends Personnage {
                     indice = Integer.parseInt(indiceStr)-1;
                 }
             }
+            if (m_arme!=null)
+            {
+                if (m_arme.getM_typeArme() == TypeArme.GUERRE)
+                {
+                    super.setM_force(super.getM_force()-4);
+                    super.setM_vitesse(super.getM_vitesse()+2);
+                }
+
+            }
             m_arme = armes.get(indice);
+            if (m_arme.getM_typeArme() == TypeArme.GUERRE)
+            {
+                super.setM_force(super.getM_force()+4);
+                super.setM_vitesse(super.getM_vitesse()-2);
+            }
         }
         else
         {
@@ -99,7 +119,19 @@ public class Joueur extends Personnage {
                     indice = Integer.parseInt(indiceStr)-1;
                 }
             }
+            if (m_armure!=null)
+            {
+                if (m_armure.getTypeArmure() == TypeArmure.LOURDE)
+                {
+                    super.setM_vitesse(super.getM_vitesse()+4);
+                }
+
+            }
             m_armure = armures.get(indice);
+            if (m_armure.getTypeArmure() == TypeArmure.LOURDE)
+            {
+                super.setM_vitesse(super.getM_vitesse()-4);
+            }
         }
 
     }

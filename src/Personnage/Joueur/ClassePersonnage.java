@@ -39,8 +39,8 @@ public class ClassePersonnage {
         "Clercs",
         16,
         new ArrayList<>(List.of(
-            new Arme(TypeArme.COURANTECORPS, "masse d'armes", new De(1, 6), 1,-1,-1),
-            new Arme(TypeArme.DISTANCE, "arbalète légère", new De(1, 8), 16,-1,-1)
+            new Arme(TypeArme.COURANTE, "masse d'armes", new De(1, 6), 1,-1,-1),
+            new Arme(TypeArme.COURANTE, "arbalète légère", new De(1, 8), 16,-1,-1)
         )),
         new ArrayList<>(List.of(
             new Armure(TypeArmure.LEGERE, "armure d'écailles", 9,-1,-1)
@@ -53,7 +53,7 @@ public class ClassePersonnage {
         20,
         new ArrayList<>(List.of(
             new Arme(TypeArme.GUERRE, "épée longue", new De(1, 8), 1,-1,-1),
-            new Arme(TypeArme.DISTANCE, "arbalète légère", new De(1, 8), 16,-1,-1)
+            new Arme(TypeArme.COURANTE, "arbalète légère", new De(1, 8), 16,-1,-1)
         )),
         new ArrayList<>(List.of(
             new Armure(TypeArmure.LOURDE, "cotte de mailles", 11,-1,-1)
@@ -65,8 +65,8 @@ public class ClassePersonnage {
         "Magiciens",
         12,
         new ArrayList<>(List.of(
-            new Arme(TypeArme.COURANTECORPS, "bâton", new De(1, 6), 1,-1,-1),
-            new Arme(TypeArme.DISTANCE, "fronde", new De(1, 4), 6,-1,-1)
+            new Arme(TypeArme.COURANTE, "bâton", new De(1, 6), 1,-1,-1),
+            new Arme(TypeArme.COURANTE, "fronde", new De(1, 4), 6,-1,-1)
         )),
         new ArrayList<>(List.of())
     );
@@ -77,7 +77,7 @@ public class ClassePersonnage {
         16,
         new ArrayList<>(List.of(
             new Arme(TypeArme.GUERRE, "rapière", new De(1, 8), 1,-1,-1),
-            new Arme(TypeArme.DISTANCE, "arc court", new De(1, 6), 16,-1,-1)
+            new Arme(TypeArme.COURANTE, "arc court", new De(1, 6), 16,-1,-1)
         )),
         new ArrayList<>(List.of())
     );

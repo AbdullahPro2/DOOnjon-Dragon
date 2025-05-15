@@ -33,4 +33,13 @@ public class Race {
     return new Race("Nain", 6, 0, 0);
   }
 
+  @Override
+  public String toString() {
+    return "Race{" +
+        "nom='" + m_nomRace + '\'' +
+        ", bonusForce=" + m_bonusForce +
+        ", bonusDexterite=" + m_bonusDexterite +
+        ", bonusVitesse=" + m_bonusVitesse +
+        '}';
+  }
 }

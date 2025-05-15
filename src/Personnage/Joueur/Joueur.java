@@ -39,15 +39,16 @@ public class Joueur extends Personnage {
     public void setM_armure(Armure m_armure) {
         this.m_armure = m_armure;
     }
-
-
-    public void commenter()
-    {
-
-    }
-
-    public void commenterMj()
-    {
-
+    @Override
+    public String toString() {
+        return "Joueur{" +
+            "nom='" + super.getM_nom() + '\'' +
+            ", race=" + m_race.toString() +
+            ", classe=" + m_classe.toString() +
+            ", force=" + getM_force() +
+            ", dexterite=" + getM_dexterite() +
+            ", vitesse=" + getM_vitesse() +
+            ", pv=" + getM_pv() +
+            '}';
     }
 }

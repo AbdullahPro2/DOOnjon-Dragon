@@ -1,6 +1,8 @@
 import Personnage.Joueur.ClassePersonnage;
 import Personnage.Joueur.Joueur;
 import Personnage.Joueur.Race;
+import Personnage.Monstre.Monstre;
+import Personnage.Monstre.RaceMonstre;
 import equipement.Arme;
 import equipement.Armure;
 import equipement.TypeArme;
@@ -28,13 +30,17 @@ public class Main {
 
         Narrateur narrateur = new Narrateur();
         Donjon Donjon1 = new Donjon();
-        Joueur joueur1 = new Joueur(10, 10,10,"Thomas",10,baton,armureEcailles, Race.Elfe(),
-            ClassePersonnage.Clercs());
-        Joueur joueur2 = new Joueur(20, 20,20,"Abdullah",20,masseArmes,demiPlate, Race.Humain(),
-            ClassePersonnage.Guerriers());
-        Joueur joueur3 = new Joueur(30, 30,30,"Valentin",30,epeeLongue,cotteMailles, Race.Nain(),
-            ClassePersonnage.Magiciens());
-        Joueur joueur4 = new Joueur(40, 40,40,"Wilson",40,rapiere,harnois, Race.Halfelin(),
-            ClassePersonnage.Roublards());
+        Joueur joueur1 = new Joueur("Thomas",Race.Elfe(),ClassePersonnage.Clercs());
+        Joueur joueur2 = new Joueur("Abdullah",Race.Humain(), ClassePersonnage.Guerriers());
+        Joueur joueur3 = new Joueur("Valentin",Race.Nain(), ClassePersonnage.Magiciens());
+        Joueur joueur4 = new Joueur("Wilson",Race.Halfelin(), ClassePersonnage.Roublards());
+
+        // Monstres
+        System.out.println(joueur1.toString());
+        System.out.println(joueur2.toString());
+        System.out.println(joueur3.toString());
+        System.out.println(joueur4.toString());
+
+
     }
 }

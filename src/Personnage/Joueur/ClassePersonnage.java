@@ -82,5 +82,14 @@ public class ClassePersonnage {
         new ArrayList<>(List.of())
     );
   }
+  @Override
+  public String toString() {
+    return "ClassePersonnage{" +
+        "nom='" + m_nomClass + '\'' +
+        ", pv=" + m_pv +
+        ", armes=" + m_armes +
+        ", armures=" + m_armures +
+        '}';
+  }
 
 }

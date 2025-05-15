@@ -43,9 +43,14 @@ enum TypeArmure <<enumerate>>
   LOURDE
 }
 
-class Entite{
-    -m_x:Integer
-    -m_y:Integer
+class Entity{
+   - m_x:Integer
+   - m_y:Integer
+   + <<create>> Entity(x : Integer, y: Integer)
+   + getSymbol(nom: String): String
+   + getX() : Integer
+   + getY() : Integer
+   + setPosition(x : Integer, y : Integer)
 }
 
 class Personnage{
@@ -60,14 +65,17 @@ class Personnage{
 }
 
 class Joueur{
-    -m_nom : String
-    +Joueur()
-    +Joueur(nom : String, classe : Classe, race : Race)
+    -m_arme : Arme
+    -m_armure : Armure
+    -m_race : Race
+    -m_classe : ClassePersonnage
+    +<<create>>Joueur(nom : String, classe : Classe, race : Race)
+    +getArme() : Arme
+    +getArmure() : Armure
     +setArme() : void
     +setArmure() : void
     +commenter():void
     +mjCommenter():void
-    +getNom():String
 }
 
 class Monstre {
@@ -81,6 +89,7 @@ class ClassePersonnage {
    - m_nomClass: String
    - m_pv: Interger
    - m_armures: Armure[*]
+   -m_armes: Arme[*]
 
    + <<create>> ClassePersonnage(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
    + {static} Clercs() : ClassePersonnage
@@ -135,9 +144,9 @@ package utils
 
 Personnage <|-- Joueur
 Personnage <|-- Monstre
-Entite <|-- Personnage
-Entite <|-- Arme
-Entite <|-- Armure
+Entity <|-- Personnage
+Entity <|-- Arme
+Entity <|-- Armure
 Joueur "*" *--> "1\n-m_classe" ClassePersonnage :  est de la classe >
 ' Relation de Classe de Personnage
 ClassePersonnage "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >

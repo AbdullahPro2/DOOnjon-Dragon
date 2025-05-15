@@ -60,14 +60,17 @@ class Personnage{
 }
 
 class Joueur{
-    -m_nom : String
-    +Joueur()
-    +Joueur(nom : String, classe : Classe, race : Race)
+    -m_arme : Arme
+    -m_armure : Armure
+    -m_race : Race
+    -m_classe : ClassePersonnage
+    +<<create>>Joueur(nom : String, classe : Classe, race : Race)
+    +getArme() : Arme
+    +getArmure() : Armure
     +setArme() : void
     +setArmure() : void
     +commenter():void
     +mjCommenter():void
-    +getNom():String
 }
 
 class Monstre {
@@ -81,6 +84,7 @@ class ClassePersonnage {
    - m_nomClass: String
    - m_pv: Interger
    - m_armures: Armure[*]
+   -m_armes: Arme[*]
 
    + <<create>> ClassePersonnage(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
    + {static} Clercs() : ClassePersonnage

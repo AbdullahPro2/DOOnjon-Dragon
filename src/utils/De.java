@@ -10,7 +10,7 @@ public class De {
     this.m_nombreDes = nombreDes;
     this.m_facesParDe = facesParDe;
   }
-  public int getDegatsAleatoires() {
+  public int lanceDe() {
     Random rand = new Random();
     int total = 0;
     for (int i = 0; i < m_nombreDes; i++) {

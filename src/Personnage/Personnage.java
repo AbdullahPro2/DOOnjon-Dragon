@@ -1,8 +1,9 @@
 package Personnage;
 
 import utils.De;
+import utils.Entity;
 
-public abstract class Personnage {
+public abstract class Personnage extends Entity {
     private String m_nom;
     private int m_pv;
     private int m_force;
@@ -10,8 +11,9 @@ public abstract class Personnage {
     private int m_vitesse;
     private int m_initiative;
 
-    public Personnage(String nom, int pv)
+    public Personnage(String nom, int pv, int x, int y)
     {
+        super(x,y);
         De de = new De(4,4);
         m_nom = nom;
         m_pv = pv;

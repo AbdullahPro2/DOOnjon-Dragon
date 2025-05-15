@@ -1,15 +1,17 @@
 package equipement;
 
 import utils.De;
+import utils.Entity;
 
-public class Arme {
+public class Arme extends Entity {
 
   private TypeArme m_typeArme;
   private String m_nomArme;
   private De m_degats;
   private int m_portee;
 
-  public Arme(TypeArme type, String nom, De degats, int portee) {
+  public Arme(TypeArme type, String nom, De degats, int portee, int x, int y) {
+    super(x,y);
     this.m_typeArme = type;
     this.m_nomArme = nom;
     this.m_degats = degats;

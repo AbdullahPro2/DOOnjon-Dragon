@@ -1,12 +1,14 @@
 package equipement;
 
-public class Armure {
+import utils.Entity;
+
+public class Armure extends Entity {
   private TypeArmure m_typeArmure;
   private String m_nom;
   private int m_classeArmure;
 
-  public Armure(TypeArmure typeArmure, String nom, int classeArmure) {
-
+  public Armure(TypeArmure typeArmure, String nom, int classeArmure, int x, int y) {
+    super(x,y);
     this.m_typeArmure = typeArmure;
     this.m_nom = nom;
     this.m_classeArmure = classeArmure;

@@ -11,13 +11,18 @@ public class Joueur extends Personnage {
     private Race m_race;
     private ClassePersonnage m_classe;
 
-    public Joueur(int force, int dexterite, int vitesse, String nom, int initiative, Arme arme, Armure armure, Race race, ClassePersonnage classe ){
-        super(nom, classe.getM_pv(), force, dexterite, vitesse, initiative);
-        m_arme = arme;
-        m_armure = armure;
+    public Joueur(String nom, Race race, ClassePersonnage classe ){
+        super(nom, classe.getM_pv());
         m_race=race;
         m_classe=classe;
+        super.setM_force(super.getM_force()+race.getM_BonusForce());
+        super.setM_dexterite(super.getM_dexterite()+race.getM_BonusDexterite());
+        super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
     }
+
+    public Race getM_race() {return m_race;}
+
+    public ClassePersonnage getM_classe() {return m_classe;}
 
     public Arme getM_arme() {
         return m_arme;
@@ -36,4 +41,13 @@ public class Joueur extends Personnage {
     }
 
 
+    public void commenter()
+    {
+
+    }
+
+    public void commenterMj()
+    {
+
+    }
 }

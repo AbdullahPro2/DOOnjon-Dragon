@@ -1,8 +1,8 @@
 package equipement;
 
-import utils.Entity;
+import utils.Entite;
 
-public class Armure extends Entity {
+public class Armure extends Entite {
   private TypeArmure m_typeArmure;
   private String m_nom;
   private int m_classeArmure;

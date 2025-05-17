@@ -42,86 +42,99 @@ enum TypeArmure <<enumerate>>
   LEGERE
   LOURDE
 }
-
-class Entity{
-   - m_x:Integer
-   - m_y:Integer
-   + <<create>> Entity(x : Integer, y: Integer)
-   + getSymbol(nom: String): String
-   + getX() : Integer
-   + getY() : Integer
-   + setPosition(x : Integer, y : Integer)
 }
+package Personnage {
+    class Personnage{
+        -m_pv : Integer
+        -m_force : Integer
+        -m_dexterité : Integer
+        -m_vitesse : Integer
+        -m_initiative : Interger
+        +deplacer():void
+        +attaquer():void
+        +ramasser():void
+    }
+    package Joueur {
+        class Joueur{
+            -m_arme : Arme
+            -m_armure : Armure
+            -m_race : Race
+            -m_classe : ClasseJoueur
+            +<<create>>Joueur(nom : String, classe : Classe, race : Race)
+            +getArme() : Arme
+            +getArmure() : Armure
+            +setArme() : void
+            +setArmure() : void
+            +commenter():void
+            +mjCommenter():void
+        }
 
-class Personnage{
-    -m_pv : Integer
-    -m_force : Integer
-    -m_dexterité : Integer
-    -m_vitesse : Integer
-    -m_initiative : Interger
-    +deplacer():void
-    +attaquer():void
-    +ramasser():void
-}
+        class ClasseJoueur {
+           - m_nomClass: String
+           - m_pv: Interger
+           - m_armures: Armure[*]
+           - m_armes: Arme[*]
 
-class Joueur{
-    -m_arme : Arme
-    -m_armure : Armure
-    -m_race : Race
-    -m_classe : ClassePersonnage
-    +<<create>>Joueur(nom : String, classe : Classe, race : Race)
-    +getArme() : Arme
-    +getArmure() : Armure
-    +setArme() : void
-    +setArmure() : void
-    +commenter():void
-    +mjCommenter():void
-}
+           - <<create>> ClasseJoueur(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
+           + {static} Clercs() : ClasseJoueur
+           + {static} Guerriers() : ClasseJoueur
+           + {static} Magiciens() : ClasseJoueur
+           + {static} Roublards() : ClasseJoueur
+           + getM_nomClass() : String
+           + getM_pv() : Integer
+           + getM_armes() : Arme[*]
+           + getM_armures() : Armure[*]
+        }
 
-class Monstre {
-    +Monstre()
-    -m_espece : String
-    -m_numero : Integer
-    -m_classeArmure : Integer
-}
+        class Race {
+          - m_nomRace: String
+          - m_bonusForce: Integer
+          - m_bonusDexterite: Integer
+          - m_bonusVitesse: Integer
+          - <<create>> Race(nom: String, force: Integer, dex: Integer, vitesse: Integer)
+          + getM_nomRace(): String
+          + getM_BonusForce(): Integer
+          + getM_BonusDexterite(): Integer
+          + getM_BonusVitesse(): Integer
+          + {static} Elfe(): Race
+          + {static} Halfelin(): Race
+          + {static} Humain(): Race
+          + {static} Nain(): Race
+        }
+    }
+    package Monstre {
+        class Monstre {
+            + <<create>> Monstre(RaceMonstre race, Integer numero, Integer x, Integer y)
+            -m_espece : String
+            -m_numero : Integer
+            -m_classeArmure : Integer
+            + toString() : String
+        }
 
-class ClassePersonnage {
-   - m_nomClass: String
-   - m_pv: Interger
-   - m_armures: Armure[*]
-   -m_armes: Arme[*]
-
-   + <<create>> ClassePersonnage(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
-   + {static} Clercs() : ClassePersonnage
-   + {static} Guerriers() : ClassePersonnage
-   + {static} Magiciens() : ClassePersonnage
-   + {static} Roublards() : ClassePersonnage
-   + getM_nomClass() : String
-   + getM_pv() : Integer
-   + getM_armes() : Arme[*]
-   + getM_armures() : Armure[*]
-}
-
-class Race {
-  - m_nomRace: String
-  - m_bonusForce: Integer
-  - m_bonusDexterite: Integer
-  - m_bonusVitesse: Integer
-
-  + <<create>> Race(nom: String, force: Integer, dex: Integer, vitesse: Integer)
-  + getM_nomRace(): String
-  + getM_BonusForce(): Integer
-  + getM_BonusDexterite(): Integer
-  + getM_BonusVitesse(): Integer
-
-  + {static} Elfe(): Race
-  + {static} Halfelin(): Race
-  + {static} Humain(): Race
-  + {static} Nain(): Race
+        class RaceMonstre {
+            - m_nom : String
+            - m_pv : Integer
+            - m_classeArmure : Integer
+            + getM_pv() : Integer
+            + getM_nom : String
+            + {static} Dragon(): RaceMonstre
+            + {static} Demogorgon(): RaceMonstre
+            + toString() : String
+        }
+    }
 }
 
 package utils
 {
+  class Donjon{
+    - m_longueur : Integer
+    - m_largeur : Integer
+    + addEntityOnGround : void
+    + <<Create>> Donjon()
+    + printLine(lar : Integer)
+    + DonjonGround : void
+  }
+
   class Utils <<static>>{
     -m_donjon : String[]
     +lanceDe(n:Integer,f:Integer) : Integer <<static>>
@@ -140,17 +153,26 @@ package utils
     + getDegatsAleatoires(): Integer
     + toString(): Stirng
   }
+  class Entite{
+     - m_x:Integer
+     - m_y:Integer
+     + <<create>> Entite(x : Integer, y: Integer)
+     + getSymbol(nom: String): String
+     + getX() : Integer
+     + getY() : Integer
+     + setPosition(x : Integer, y : Integer)
+  }
 }
 
 Personnage <|-- Joueur
 Personnage <|-- Monstre
-Entity <|-- Personnage
-Entity <|-- Arme
-Entity <|-- Armure
-Joueur "*" *--> "1\n-m_classe" ClassePersonnage :  est de la classe >
+Entite <|-- Personnage
+Entite <|-- Arme
+Entite <|-- Armure
+Joueur "*" *--> "1\n-m_classe" ClasseJoueur :  est de la classe >
 ' Relation de Classe de Personnage
-ClassePersonnage "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >
-ClassePersonnage "1\nm_armures" *----> "*\n" Armure : est dans les armures de base de >
+ClasseJoueur "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >
+ClasseJoueur "1\nm_armures" *----> "*\n" Armure : est dans les armures de base de >
 
 
 Personnage .> Utils : "«call»"

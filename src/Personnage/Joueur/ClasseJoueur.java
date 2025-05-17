@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import utils.De;
 
-public class ClassePersonnage {
+public class ClasseJoueur {
   private String m_nomClass;
   private int m_pv;
   private ArrayList<Arme> m_armes;
   private ArrayList<Armure> m_armures;
 
-  private ClassePersonnage(String nom, int pv, ArrayList<Arme> armes, ArrayList<Armure> armures) {
+  private ClasseJoueur(String nom, int pv, ArrayList<Arme> armes, ArrayList<Armure> armures) {
     this.m_nomClass = nom;
     this.m_pv = pv;
     this.m_armes = armes;
@@ -34,8 +34,8 @@ public class ClassePersonnage {
     return m_nomClass;
   }
 
-  public static ClassePersonnage Clercs() {
-    return new ClassePersonnage(
+  public static ClasseJoueur Clercs() {
+    return new ClasseJoueur(
         "Clercs",
         16,
         new ArrayList<>(List.of(
@@ -47,8 +47,8 @@ public class ClassePersonnage {
         ))
     );
   }
-  public static ClassePersonnage Guerriers() {
-    return new ClassePersonnage(
+  public static ClasseJoueur Guerriers() {
+    return new ClasseJoueur(
         "Guerriers",
         20,
         new ArrayList<>(List.of(
@@ -60,8 +60,8 @@ public class ClassePersonnage {
         ))
     );
   }
-  public static ClassePersonnage Magiciens() {
-    return new ClassePersonnage(
+  public static ClasseJoueur Magiciens() {
+    return new ClasseJoueur(
         "Magiciens",
         12,
         new ArrayList<>(List.of(
@@ -71,8 +71,8 @@ public class ClassePersonnage {
         new ArrayList<>(List.of())
     );
   }
-  public static ClassePersonnage Roublards() {
-    return new ClassePersonnage(
+  public static ClasseJoueur Roublards() {
+    return new ClasseJoueur(
         "Roublards",
         16,
         new ArrayList<>(List.of(

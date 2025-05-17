@@ -2,6 +2,7 @@ package utils;
 
 import Personnage.Personnage;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Donjon {
@@ -22,7 +23,7 @@ public class Donjon {
     m_playerssOnGround = new ArrayList<>();
 
   }
-  public void printLine(int lar, int lon){
+  public void printLine(int lar){
     System.out.print("   *");
     for(int i = 0; i < lar; i++)
     {
@@ -39,7 +40,7 @@ public class Donjon {
       System.out.print(" " + c + " ");
     }
     System.out.println();
-    printLine(m_largeur, m_longeur); // Top border
+    printLine(m_largeur); // Top border
 
     // Print grid rows
     for (int i = 0; i < m_longeur; i++) {
@@ -70,6 +71,6 @@ public class Donjon {
       System.out.println();
     }
 
-    printLine(m_largeur, m_longeur); // Bottom border
+    printLine(m_largeur); // Bottom border
   }
 }

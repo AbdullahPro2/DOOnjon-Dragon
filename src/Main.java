@@ -1,4 +1,4 @@
-import Personnage.Joueur.ClassePersonnage;
+import Personnage.Joueur.ClasseJoueur;
 import Personnage.Joueur.Joueur;
 import Personnage.Joueur.Race;
 import Personnage.Monstre.Monstre;
@@ -29,10 +29,10 @@ public class Main {
 
         Narrateur narrateur = new Narrateur();
         Donjon Donjon1 = new Donjon();
-        Joueur joueur1 = new Joueur("Thomas",Race.Elfe(),ClassePersonnage.Clercs(),10,10);
-        Joueur joueur2 = new Joueur("Abdullah",Race.Humain(), ClassePersonnage.Guerriers(),12,12);
-        Joueur joueur3 = new Joueur("Valentin",Race.Nain(), ClassePersonnage.Magiciens(),14,14);
-        Joueur joueur4 = new Joueur("Wilson",Race.Halfelin(), ClassePersonnage.Roublards(),16,16);
+        Joueur joueur1 = new Joueur("Thomas",Race.Elfe(), ClasseJoueur.Clercs(),10,10);
+        Joueur joueur2 = new Joueur("Abdullah",Race.Humain(), ClasseJoueur.Guerriers(),12,12);
+        Joueur joueur3 = new Joueur("Valentin",Race.Nain(), ClasseJoueur.Magiciens(),14,14);
+        Joueur joueur4 = new Joueur("Wilson",Race.Halfelin(), ClasseJoueur.Roublards(),16,16);
 
         // Monstres
         Monstre m1 = new Monstre(RaceMonstre.Dragon(), 1, 5,5);

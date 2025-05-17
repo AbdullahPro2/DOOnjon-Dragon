@@ -1,12 +1,13 @@
 package Personnage;
 
 import utils.De;
-import utils.Entity;
+import utils.Donjon;
+import utils.Entite;
 import utils.Utils;
 
 import java.util.Scanner;
 
-public abstract class Personnage extends Entity {
+public abstract class Personnage extends Entite {
     private String m_nom;
     private int m_pv;
     private int m_force;
@@ -33,13 +34,33 @@ public abstract class Personnage extends Entity {
 
     public void SeDeplacer() {
         Scanner scanner = new Scanner(System.in);
+        int[] tabCoord = saisirPositionValide();
+        int x = tabCoord[0];
+        int y = tabCoord[1];
+
+        // Vérification que la case n'est pas occupée, sinon demander une nouvelle position
+        while (super.caseOccupee(x, y)) {
+            System.out.println("La case est déjà occupée. Veuillez choisir une autre position.");
+            tabCoord = saisirPositionValide();  // Demander une nouvelle position
+            x = tabCoord[0];
+            y = tabCoord[1];
+        }
+
+        // Une fois la position valide et libre, on affecte la nouvelle position
+        setPosition(x, y);
+    }
+
+    public int[] saisirPositionValide() {
+        Scanner scanner = new Scanner(System.in);
         int x = -1;
         int y = -1;
 
+        // Boucle jusqu'à ce que l'utilisateur entre une position valide
         while (x == -1 || y == -1) {
             System.out.print("Donner la position à laquelle vous voulez vous déplacer (exemple : A2 ou E6) : ");
             String pos = scanner.nextLine().trim();
 
+            // Vérifie que l'entrée est au moins de la forme "lettre" + "chiffre"
             if (pos.length() < 2) {
                 System.out.println("Entrée invalide. Veuillez utiliser le format \"lettre\"\"chiffre\" (ex : A2).");
                 continue;
@@ -48,24 +69,31 @@ public abstract class Personnage extends Entity {
             char lettre = pos.charAt(0);
             char chiffre = pos.charAt(1);
 
-            // Vérifie la lettre
+            // Vérifie la lettre (doit être une clé valide dans le dictionnaire)
             if (Utils.dico.containsKey(lettre)) {
                 x = Utils.dico.get(lettre);
             } else {
                 System.out.println("Lettre invalide. Elle doit être comprise entre A et Y.");
-                x = -1;  // On s'assure de rester dans la boucle
+                x = -1;  // Réinitialisation pour continuer la boucle
             }
 
-            // Vérifie le chiffre
+            // Vérifie le chiffre (doit être un nombre entre 0 et nombre de lignes-1)
             if (Character.isDigit(chiffre)) {
                 y = chiffre - '0';  // Convertit '2' → 2, etc.
+                if (y < 0 || y > 25) {
+                    System.out.println("Chiffre invalide. Veuillez entrer un nombre entre 0 et 25.");
+                    y = -1;  // Réinitialisation pour continuer la boucle
+                }
             } else {
-                System.out.println("Chiffre invalide. Veuillez entrer un chiffre entre 0 et 9.");
-                y = -1;
+                System.out.println("Chiffre invalide. Veuillez entrer un nombre entre 0 et 25.");
+                y = -1;  // Réinitialisation pour continuer la boucle
             }
         }
-        setPosition(x,y);
+
+        // Retourne les coordonnées valides
+        return new int[] { x, y };
     }
+
 
     public int getM_dexterite() {
         return m_dexterite;

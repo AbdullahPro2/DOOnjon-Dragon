@@ -1,9 +1,9 @@
 package equipement;
 
 import utils.De;
-import utils.Entity;
+import utils.Entite;
 
-public class Arme extends Entity {
+public class Arme extends Entite {
 
   private TypeArme m_typeArme;
   private String m_nomArme;

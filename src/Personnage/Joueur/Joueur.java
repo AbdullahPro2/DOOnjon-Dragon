@@ -5,7 +5,6 @@ import equipement.Arme;
 import equipement.Armure;
 import equipement.TypeArme;
 import equipement.TypeArmure;
-import utils.Utils;
 
 import java.util.*;
 
@@ -14,9 +13,9 @@ public class Joueur extends Personnage {
     private Arme m_arme;
     private Armure m_armure;
     private Race m_race;
-    private ClassePersonnage m_classe;
+    private ClasseJoueur m_classe;
 
-    public Joueur(String nom, Race race, ClassePersonnage classe, int x, int y){
+    public Joueur(String nom, Race race, ClasseJoueur classe, int x, int y){
         super(nom, classe.getM_pv(),x,y);
         m_race=race;
         m_classe=classe;
@@ -29,7 +28,7 @@ public class Joueur extends Personnage {
 
     public Race getM_race() {return m_race;}
 
-    public ClassePersonnage getM_classe() {return m_classe;}
+    public ClasseJoueur getM_classe() {return m_classe;}
 
     public Arme getM_arme() {
         return m_arme;

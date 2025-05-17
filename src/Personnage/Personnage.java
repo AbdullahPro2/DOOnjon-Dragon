@@ -32,16 +32,17 @@ public abstract class Personnage extends Entite {
         super.setPosition(x, y);
     }
 
-    public void SeDeplacer() {
+    public void SeDeplacer(Donjon donjon) {
         Scanner scanner = new Scanner(System.in);
-        int[] tabCoord = saisirPositionValide();
+        int maxX = donjon.getM_largeur();
+        int maxY = donjon.getM_longueur();
+        int[] tabCoord = saisirPositionValide(maxX, maxY);
         int x = tabCoord[0];
         int y = tabCoord[1];
-
         // Vérification que la case n'est pas occupée, sinon demander une nouvelle position
         while (super.caseOccupee(x, y)) {
             System.out.println("La case est déjà occupée. Veuillez choisir une autre position.");
-            tabCoord = saisirPositionValide();  // Demander une nouvelle position
+            tabCoord = saisirPositionValide(maxX, maxY);  // Demander une nouvelle position
             x = tabCoord[0];
             y = tabCoord[1];
         }
@@ -50,7 +51,7 @@ public abstract class Personnage extends Entite {
         setPosition(x, y);
     }
 
-    public int[] saisirPositionValide() {
+    public int[] saisirPositionValide(int maxX, int maxY) {
         Scanner scanner = new Scanner(System.in);
         int x = -1;
         int y = -1;
@@ -72,20 +73,24 @@ public abstract class Personnage extends Entite {
             // Vérifie la lettre (doit être une clé valide dans le dictionnaire)
             if (Utils.dico.containsKey(lettre)) {
                 x = Utils.dico.get(lettre);
+                if (x < 0 || x > maxX) {
+                    System.out.println("Lettre invalide. Veuillez entrer une lettre qui se trouve sur la grille.");
+                    x = -1;  // Réinitialisation pour continuer la boucle
+                }
             } else {
-                System.out.println("Lettre invalide. Elle doit être comprise entre A et Y.");
+                System.out.println("Lettre invalide. Veuillez entrer une lettre qui se trouve sur la grille.");
                 x = -1;  // Réinitialisation pour continuer la boucle
             }
 
             // Vérifie le chiffre (doit être un nombre entre 0 et nombre de lignes-1)
             if (Character.isDigit(chiffre)) {
                 y = chiffre - '0';  // Convertit '2' → 2, etc.
-                if (y < 0 || y > 25) {
-                    System.out.println("Chiffre invalide. Veuillez entrer un nombre entre 0 et 25.");
+                if (y < 0 || y > maxY) {
+                    System.out.println("Chiffre invalide. Veuillez entrer un nombre qui se trouve sur la grille.");
                     y = -1;  // Réinitialisation pour continuer la boucle
                 }
             } else {
-                System.out.println("Chiffre invalide. Veuillez entrer un nombre entre 0 et 25.");
+                System.out.println("Chiffre invalide. Veuillez entrer un nombre qui se trouve sur la grille.");
                 y = -1;  // Réinitialisation pour continuer la boucle
             }
         }

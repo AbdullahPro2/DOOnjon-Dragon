@@ -1,12 +1,13 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Entite {
 
     private int m_x;
     private int m_y;
-    private static List<Entite> m_entites;
+    private static List<Entite> m_entites = new ArrayList<>();
 
     public Entite(int x, int y) {
         this.m_x = x;

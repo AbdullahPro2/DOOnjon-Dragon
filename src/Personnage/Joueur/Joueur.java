@@ -5,10 +5,9 @@ import equipement.Arme;
 import equipement.Armure;
 import equipement.TypeArme;
 import equipement.TypeArmure;
+import utils.Utils;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class Joueur extends Personnage {
 
@@ -52,6 +51,7 @@ public class Joueur extends Personnage {
     public void setPosition(int x, int y) {
         super.setPosition(x, y);
     }
+
 
     public void Equiper()
     {

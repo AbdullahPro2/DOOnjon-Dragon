@@ -2,6 +2,9 @@ package Personnage;
 
 import utils.De;
 import utils.Entity;
+import utils.Utils;
+
+import java.util.Scanner;
 
 public abstract class Personnage extends Entity {
     private String m_nom;
@@ -26,6 +29,42 @@ public abstract class Personnage extends Entity {
     @Override
     public void setPosition(int x, int y) {
         super.setPosition(x, y);
+    }
+
+    public void SeDeplacer() {
+        Scanner scanner = new Scanner(System.in);
+        int x = -1;
+        int y = -1;
+
+        while (x == -1 || y == -1) {
+            System.out.print("Donner la position à laquelle vous voulez vous déplacer (exemple : A2 ou E6) : ");
+            String pos = scanner.nextLine().trim();
+
+            if (pos.length() < 2) {
+                System.out.println("Entrée invalide. Veuillez utiliser le format \"lettre\"\"chiffre\" (ex : A2).");
+                continue;
+            }
+
+            char lettre = pos.charAt(0);
+            char chiffre = pos.charAt(1);
+
+            // Vérifie la lettre
+            if (Utils.dico.containsKey(lettre)) {
+                x = Utils.dico.get(lettre);
+            } else {
+                System.out.println("Lettre invalide. Elle doit être comprise entre A et Y.");
+                x = -1;  // On s'assure de rester dans la boucle
+            }
+
+            // Vérifie le chiffre
+            if (Character.isDigit(chiffre)) {
+                y = chiffre - '0';  // Convertit '2' → 2, etc.
+            } else {
+                System.out.println("Chiffre invalide. Veuillez entrer un chiffre entre 0 et 9.");
+                y = -1;
+            }
+        }
+        setPosition(x,y);
     }
 
     public int getM_dexterite() {

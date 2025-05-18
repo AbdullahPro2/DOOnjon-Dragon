@@ -1,4 +1,4 @@
-package utils;
+package Entites;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,6 @@ public abstract class Entite {
         m_entites.add(this);
     }
 
-    public String getSymbol(String nom){return nom;} // For drawing
 
     public int getX() {
         return m_x;
@@ -38,15 +37,6 @@ public abstract class Entite {
             }
         }
         return false;
-    }
-
-    public List<Entite> getM_entites() {
-        return m_entites;
-    }
-
-    public void addEntite(Entite ent)
-    {
-        m_entites.add(ent);
     }
 
 }

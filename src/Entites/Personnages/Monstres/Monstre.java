@@ -1,6 +1,6 @@
-package Personnage.Monstre;
+package Entites.Personnages.Monstres;
 
-import Personnage.Personnage;
+import Entites.Personnages.Personnage;
 
 public class Monstre extends Personnage {
     private RaceMonstre m_race;

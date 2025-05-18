@@ -1,4 +1,4 @@
-package equipement;
+package Entites.Equipements;
 
 public enum TypeArmure {
   LEGERE,

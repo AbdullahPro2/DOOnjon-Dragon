@@ -1,4 +1,4 @@
-package Personnage.Monstre;
+package Entites.Personnages.Monstres;
 
 public class RaceMonstre {
     private String m_nom;

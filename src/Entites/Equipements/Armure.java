@@ -1,6 +1,6 @@
-package equipement;
+package Entites.Equipements;
 
-import utils.Entite;
+import Entites.Entite;
 
 public class Armure extends Entite {
   private TypeArmure m_typeArmure;

@@ -1,4 +1,4 @@
-package Personnage.Joueur;
+package Entites.Personnages.Joueurs;
 
 public class Race {
   private String m_nomRace;

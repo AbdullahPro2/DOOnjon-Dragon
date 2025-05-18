@@ -1,8 +1,8 @@
-package Personnage;
+package Entites.Personnages;
 
+import Entites.Entite;
 import utils.De;
 import utils.Donjon;
-import utils.Entite;
 import utils.Utils;
 
 import java.util.Scanner;
@@ -118,15 +118,9 @@ public abstract class Personnage extends Entite {
 
     public int getM_initiative() { return m_initiative;}
 
-    public void setM_dexterite(int m_dexterite) {this.m_dexterite = m_dexterite;}
+    public void setM_dexterite(int dexterite) {this.m_dexterite = dexterite;}
 
-    public void setM_force(int m_force) {this.m_force = m_force;}
+    public void setM_force(int force) {this.m_force = force;}
 
-    public void setM_initiative(int m_initiative) {this.m_initiative = m_initiative;}
-
-    public void setM_nom(String m_nom) {this.m_nom = m_nom;}
-
-    public void setM_pv(int m_pv) {this.m_pv = m_pv;}
-
-    public void setM_vitesse(int m_vitesse) {this.m_vitesse = m_vitesse;}
+    public void setM_vitesse(int vitesse) {this.m_vitesse = vitesse;}
 }

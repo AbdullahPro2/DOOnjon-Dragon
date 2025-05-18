@@ -1,8 +1,7 @@
 package utils;
 
-import Personnage.Personnage;
+import Entites.Personnages.Personnage;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Donjon {

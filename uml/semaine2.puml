@@ -6,183 +6,203 @@ skinparam classFontStyle Bold
 skinparam classAttributeIconSize 0
 hide empty members
 
-package equipement
-{
-
-' Class Arme
-  class Arme{
-    -m_nom : String
-    - m_portee : Integer
-    + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Interger)
-    + getM_typeArme() : TypeArme
-    + getM_nomArme() : Stirng
-    + getM_degats(): De
-    + getM_portee(): Interger
-    + toString() : String
-}
-  enum TypeArme <<enumerate>>
-  {
-  COURANTE
-  GUERRE
-  DISTANCE
-  }
-' Class Armure
-class Armure{
-    -m_nom : String
-    - m_classeArmure : int
-    + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Interger)
-    + getClasseArmure() : Interger
-    + getNom() : String
-    + getTypeArmure() : TypeArmure
-    + toString() : String
-}
-
-enum TypeArmure <<enumerate>>
-{
-  LEGERE
-  LOURDE
-}
-}
-package Personnage {
-    class Personnage{
-        -m_pv : Integer
-        -m_force : Integer
-        -m_dexterité : Integer
-        -m_vitesse : Integer
-        -m_initiative : Interger
-        +deplacer():void
-        +attaquer():void
-        +ramasser():void
+package Entites{
+    class Entite{
+        - m_x:Integer
+        - m_y:Integer
+        - {static} m_entites : List<Entite>
+        + <<create>> Entite(x : Integer, y: Integer)
+        + getX() : Integer
+        + getY() : Integer
+        + setPosition(x : Integer, y : Integer)
+        + caseOccupee(x : Integer, y : Integer)
     }
-    package Joueur {
-        class Joueur{
-            -m_arme : Arme
-            -m_armure : Armure
-            -m_race : Race
-            -m_classe : ClasseJoueur
-            +<<create>>Joueur(nom : String, classe : Classe, race : Race)
-            +getArme() : Arme
-            +getArmure() : Armure
-            +setArme() : void
-            +setArmure() : void
-            +commenter():void
-            +mjCommenter():void
-        }
 
-        class ClasseJoueur {
-           - m_nomClass: String
-           - m_pv: Interger
-           - m_armures: Armure[*]
-           - m_armes: Arme[*]
+    package Equipements
+    {
 
-           - <<create>> ClasseJoueur(nom : Stirng, pv : Integer, armes: Armes[*], armures: Armure[*])
-           + {static} Clercs() : ClasseJoueur
-           + {static} Guerriers() : ClasseJoueur
-           + {static} Magiciens() : ClasseJoueur
-           + {static} Roublards() : ClasseJoueur
-           + getM_nomClass() : String
-           + getM_pv() : Integer
-           + getM_armes() : Arme[*]
-           + getM_armures() : Armure[*]
-        }
+        ' Class Arme
+      class Arme{
+        - m_nom : String
+        - m_portee : Integer
+        + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Integer)
+        + getM_typeArme() : TypeArme
+        + getM_nomArme() : String
+        + getM_degats(): De
+        + getM_portee(): Integer
+        + toString() : String
+      }
+      enum TypeArme <<enumerate>>
+      {
+        COURANTE
+        GUERRE
+      }
+      ' Class Armure
+      class Armure{
+        -m_nom : String
+        - m_classeArmure : int
+        + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer)
+        + getClasseArmure() : Integer
+        + getNom() : String
+        + getTypeArmure() : TypeArmure
+        + toString() : String
+      }
 
-        class Race {
-          - m_nomRace: String
-          - m_bonusForce: Integer
-          - m_bonusDexterite: Integer
-          - m_bonusVitesse: Integer
-          - <<create>> Race(nom: String, force: Integer, dex: Integer, vitesse: Integer)
-          + getM_nomRace(): String
-          + getM_BonusForce(): Integer
-          + getM_BonusDexterite(): Integer
-          + getM_BonusVitesse(): Integer
-          + {static} Elfe(): Race
-          + {static} Halfelin(): Race
-          + {static} Humain(): Race
-          + {static} Nain(): Race
-        }
+      enum TypeArmure <<enumerate>>
+      {
+        LEGERE
+        LOURDE
+      }
     }
-    package Monstre {
-        class Monstre {
-            + <<create>> Monstre(RaceMonstre race, Integer numero, Integer x, Integer y)
-            -m_espece : String
-            -m_numero : Integer
-            -m_classeArmure : Integer
-            + toString() : String
-        }
 
-        class RaceMonstre {
-            - m_nom : String
-            - m_pv : Integer
-            - m_classeArmure : Integer
+    package Personnages {
+        class Personnage{
+            -m_nom : String
+            -m_pv : Integer
+            -m_force : Integer
+            -m_dexterité : Integer
+            -m_vitesse : Integer
+            -m_initiative : Integer
+            + <<create>> Personnage(nom : String, pv : Integer, x : Integer, y : Integer)
+            + setPosition(x : Integer, y : Integer)
+            + seDeplacer(donjon : Donjon):void
+            + saisirPositionValide(maxX : Integer, maxY : Integer) : Integer[]
+            + attaquer():void
+            + ramasser():void
+            + getM_nom() : String
             + getM_pv() : Integer
-            + getM_nom : String
-            + {static} Dragon(): RaceMonstre
-            + {static} Demogorgon(): RaceMonstre
-            + toString() : String
+            + getM_force() : Integer
+            + getM_dexterite() : Integer
+            + getM_vitesse() : Integer
+            + getM_initiative : Integer
+            + setM_force(force : Integer) : void
+            + setM_dexterite(dexterite : Integer) : void
+            + setM_vitesse(dexterite : Integer) : void
+
+        }
+        package Joueurs {
+            class Joueur{
+                +<<create>>Joueur(nom : String, classe : Classe, race : Race, x : Integer, y : Integer)
+                +setPosition(x : Integer, y : Integer)
+                +Equiper() : void
+                +commenter():void
+                +mjCommenter():void
+                +toString() : String
+            }
+
+            class ClasseJoueur {
+               - m_nomClass: String
+               - m_pv: Integer
+               - <<create>> ClasseJoueur(nom : String, pv : Integer, armes: Armes[*], armures: Armure[*])
+               + {static} Clercs() : ClasseJoueur
+               + {static} Guerriers() : ClasseJoueur
+               + {static} Magiciens() : ClasseJoueur
+               + {static} Roublards() : ClasseJoueur
+               + getM_nomClass() : String
+               + getM_pv() : Integer
+               + getM_armes() : Arme[*]
+               + getM_armures() : Armure[*]
+               + toString() : String
+            }
+
+            class Race {
+              - m_nomRace: String
+              - m_bonusForce: Integer
+              - m_bonusDexterite: Integer
+              - m_bonusVitesse: Integer
+              - <<create>> Race(nom: String, force: Integer, dex: Integer, vitesse: Integer)
+              + getM_nomRace(): String
+              + getM_BonusForce(): Integer
+              + getM_BonusDexterite(): Integer
+              + getM_BonusVitesse(): Integer
+              + {static} Elfe(): Race
+              + {static} Halfelin(): Race
+              + {static} Humain(): Race
+              + {static} Nain(): Race
+              + toString() : String
+            }
+        }
+        package Monstres {
+            class Monstre {
+                - m_numero : Integer
+                + <<create>> Monstre(race : RaceMonstre, numero : Integer, x : Integer, y : Integer)
+                + toString() : String
+            }
+
+            class RaceMonstre {
+                - m_nom : String
+                - m_pv : Integer
+                - m_classeArmure : Integer
+                + getM_pv() : Integer
+                + getM_nom : String
+                + {static} Dragon(): RaceMonstre
+                + {static} Demogorgon(): RaceMonstre
+                + toString() : String
+            }
         }
     }
 }
-
 package utils
 {
   class Donjon{
     - m_longueur : Integer
     - m_largeur : Integer
-    + addEntityOnGround : void
+    - m_playerssOnGround : ArrayList<Personnage>
     + <<Create>> Donjon()
-    + printLine(lar : Integer)
-    + DonjonGround : void
+    + addEntityOnGround : void
+    + printLine(longueur : Integer)
+    + DonjonGround() : void
+    + getM_longueur() : Integer
+    + getM_largeur() : Integer
   }
 
   class Utils <<static>>{
-    -m_donjon : String[]
-    +lanceDe(n:Integer,f:Integer) : Integer <<static>>
-    +startGame() : void <<static>>
-    +creerDonjon() : void <<static>>
-    +ordreJeu() : void <<static>>
-    +equipeArmure() : Void <<static>>
-    +finPerdante(): void <<static>>
-    +finGagnante(): void <<static>>
+    + {static} dico : Map<Character, Integer>
   }
   class De
   {
-    - m_nombreDes : Interger
-    - m_facesParDe: Interger
-    + <<create>> De(nombreDes : Interger, facesParDe : Interger)
-    + getDegatsAleatoires(): Integer
-    + toString(): Stirng
-  }
-  class Entite{
-     - m_x:Integer
-     - m_y:Integer
-     + <<create>> Entite(x : Integer, y: Integer)
-     + getSymbol(nom: String): String
-     + getX() : Integer
-     + getY() : Integer
-     + setPosition(x : Integer, y : Integer)
+    - m_nombreDes : Integer
+    - m_facesParDe: Integer
+    + <<create>> De(nombreDes : Integer, facesParDe : Integer)
+    + lanceDe(): Integer
+    + toString(): String
   }
 }
 
+' Relations de Personnage
 Personnage <|-- Joueur
 Personnage <|-- Monstre
+Personnage .> Donjon : "uses"
+Personnage .> Utils : "«call»"
+
+' Relations de Entite
 Entite <|-- Personnage
 Entite <|-- Arme
 Entite <|-- Armure
-Joueur "*" *--> "1\n-m_classe" ClasseJoueur :  est de la classe >
-' Relation de Classe de Personnage
+Entite "1" o--> "*" Entite : -m_entites
+
+
+' Relations de ClasseJoueur
 ClasseJoueur "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >
 ClasseJoueur "1\nm_armures" *----> "*\n" Armure : est dans les armures de base de >
 
+' Relations de Joueur
 
-Personnage .> Utils : "«call»"
-Joueur "*" *--> "1\n-m_race" Race :  est de la race >
-Joueur "1" .> "1" Arme : "uses"\nm_arme
-Joueur "1" .> "1" Armure : "uses"\nm_armure
+Joueur "1" o--> "0..1" Arme : -m_arme\nporte une arme
+Joueur "1" o--> "0..1" Armure : -m_armure\nporte une armure
+Joueur "1" o--> "1" Race : -m_race\nest de la race
+Joueur "1" o--> "1" ClasseJoueur : -m_classe\na pour classe
+
+' Relations de Monstre
+Monstre "1" o--> "1" RaceMonstre : -m_race\nest de la race
 
 ' Class Arme Relations
 Arme .> TypeArme : "«uses»\n m_typeArme"
 Arme "1" *--> "1\n -m_degats" De : fait les dégâts
 ' Class Armure Relations
-Armure .> TypeArmure : "«uses»\n m_typeArmure""
+Armure .> TypeArmure : "«uses»\n m_typeArmure"
+
+' Class Donjon Relations
+Donjon "1" o--> "*" Personnage : -m_playerssOnGround\ncontient des personnages
+
 @enduml

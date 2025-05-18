@@ -1,12 +1,12 @@
-import Personnage.Joueur.ClasseJoueur;
-import Personnage.Joueur.Joueur;
-import Personnage.Joueur.Race;
-import Personnage.Monstre.Monstre;
-import Personnage.Monstre.RaceMonstre;
-import equipement.Arme;
-import equipement.Armure;
-import equipement.TypeArme;
-import equipement.TypeArmure;
+import Entites.Personnages.Joueurs.ClasseJoueur;
+import Entites.Personnages.Joueurs.Joueur;
+import Entites.Personnages.Joueurs.Race;
+import Entites.Personnages.Monstres.Monstre;
+import Entites.Personnages.Monstres.RaceMonstre;
+import Entites.Equipements.Arme;
+import Entites.Equipements.Armure;
+import Entites.Equipements.TypeArme;
+import Entites.Equipements.TypeArmure;
 import utils.De;
 import utils.Donjon;
 

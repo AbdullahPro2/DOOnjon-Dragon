@@ -1,10 +1,10 @@
-package Personnage.Joueur;
+package Entites.Personnages.Joueurs;
 
-import Personnage.Personnage;
-import equipement.Arme;
-import equipement.Armure;
-import equipement.TypeArme;
-import equipement.TypeArmure;
+import Entites.Personnages.Personnage;
+import Entites.Equipements.Arme;
+import Entites.Equipements.Armure;
+import Entites.Equipements.TypeArme;
+import Entites.Equipements.TypeArmure;
 
 import java.util.*;
 
@@ -24,26 +24,6 @@ public class Joueur extends Personnage {
         super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
         m_arme = null;
         m_armure = null;
-    }
-
-    public Race getM_race() {return m_race;}
-
-    public ClasseJoueur getM_classe() {return m_classe;}
-
-    public Arme getM_arme() {
-        return m_arme;
-    }
-
-    public Armure getM_armure() {
-        return m_armure;
-    }
-
-    public void setM_arme(Arme m_arme) {
-        this.m_arme = m_arme;
-    }
-
-    public void setM_armure(Armure m_armure) {
-        this.m_armure = m_armure;
     }
 
     @Override
@@ -132,6 +112,14 @@ public class Joueur extends Personnage {
                 super.setM_vitesse(super.getM_vitesse()-4);
             }
         }
+
+    }
+
+    public void attaquer(){
+
+    }
+
+    public void ramasser(){
 
     }
 

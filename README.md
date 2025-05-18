@@ -59,11 +59,11 @@ Chaque personnage est défini par:
   - sa vitesse
   - son initiative
 - son inventaire d'équipements en armes et armures (n'est pas limité en nombre d'équipements)
-- les équipements qu'il porte (limité à une equipement et une armure)
+- les équipements qu'il porte (limité à une Entites.Equipements et une armure)
 
 #### Les caractéristiques
 - la caractéristique de points de vie indique le nombre de dégâts que peut subir un joueur avant de mourir
-- la caractéristique force offre un bonus lors de l'utilisation d'une equipement de corps à corps (voir Déroulement d'un donjon >  Tour d'un personnage ou d'un monstre > Attaquer)
+- la caractéristique force offre un bonus lors de l'utilisation d'une Entites.Equipements de corps à corps (voir Déroulement d'un donjon >  Tour d'un personnage ou d'un monstre > Attaquer)
 - la caractéristique dextérité offre un bonus lors de l'utilisation de armes à distance (voir Déroulement d'un donjon >  Tour d'un personnage ou d'un monstre > Attaquer)
 - la caractéristique vitesse indique la distance que peut parcourir un personnage lors d'une action (voir Déroulement d'un donjon >  Tour d'un personnage ou d'un monstre > Se déplacer)
 - la caractéristique initiative offre un bonus pour déterminer l'ordre dans lequel jouera un personnage lors d'un combat dans un donjon (voir Déroulement d'un donjon >  Mise en Place)
@@ -169,7 +169,7 @@ Afin de faciliter la tâche au maître du jeu, un choix de mise en place du donj
 
 Chaque joueur et chaque monstre lance 1d20 et ajoute leur caractéristique d'initiative. Ils joueront par ordre décroissant du résultat d'initiative.
 
-Avant de débuter le donjon, chaque joueur peut équiper l'armure et l'equipement de son choix.
+Avant de débuter le donjon, chaque joueur peut équiper l'armure et l'Entites.Equipements de son choix.
 
 
 #### Tour d'un personnage ou d'un monstre
@@ -180,22 +180,22 @@ Lors de son tour, le joueur ou le monstre (contrôlé par le maître du jeu) peu
 A la fin de chaque action le joueur ou le maître du jeu peut commenter l'action pour améliorer le *Role Play*.
 
 ##### S'équiper *(uniquement pour les personnages)*
-Un joueur peut équiper une equipement ou une armure de son inventaire.
-(L'equipement ou l'armure précédemment équipée retourne dans l'inventaire)
-Ne pas oublier de prendre alors en compte l'éventuel modificateur de vitesse dû à l'equipement de guerre ou l'armure lourde lors des futurs déplacements du personnage.
+Un joueur peut équiper une Entites.Equipements ou une armure de son inventaire.
+(L'Entites.Equipements ou l'armure précédemment équipée retourne dans l'inventaire)
+Ne pas oublier de prendre alors en compte l'éventuel modificateur de vitesse dû à l'Entites.Equipements de guerre ou l'armure lourde lors des futurs déplacements du personnage.
 
 ##### Se Déplacer
 Un joueur ou un monstre peut de déplacer d'une distance égale à sa caractéristique de vitesse divisée par 3 sur une case sans monstre, joueur ou obstacle.
 L'évitement d'obstacles n'est pas pris en compte pour le calcul de la distance de déplacement.
 
 ##### Attaquer
-L'attaquant attaque avec l'equipement  qu'il porte.
-- L'attaquant choisit la cible de son attaque(monstre dans le cas d'un attaquant personnage et personnage dans le cas d'un attaquant monstre). La cible de l'attaque  doit être à portée du joueur donnée par l'equipement (les armes au corps-à-corps ont une portée d'une seule case). Les obstacles ne bloquent pas les attaques des armes à distance.
-- L'attaquant commence par faire un jet d'attaque (1d20). Il ajoute ensuite au résultat du dé sa caractéristique de Dextérité s'il s'agit d'une attaque avec equipement à distance et sa caractéristique de Force s'il s'agit d'une attaque avec equipement au corps-à-corps.
-- Si la somme est supérieur à la classe d'armure de la cible, l'attaquant lance le dé de dégât de l'equipement et la cible perd en point de vies le résultat du jet de dé. Dans le cas contraire, l'attaquant finit son action sans infliger de dégâts à la cible.
+L'attaquant attaque avec l'Entites.Equipements  qu'il porte.
+- L'attaquant choisit la cible de son attaque(monstre dans le cas d'un attaquant personnage et personnage dans le cas d'un attaquant monstre). La cible de l'attaque  doit être à portée du joueur donnée par l'Entites.Equipements (les armes au corps-à-corps ont une portée d'une seule case). Les obstacles ne bloquent pas les attaques des armes à distance.
+- L'attaquant commence par faire un jet d'attaque (1d20). Il ajoute ensuite au résultat du dé sa caractéristique de Dextérité s'il s'agit d'une attaque avec Entites.Equipements à distance et sa caractéristique de Force s'il s'agit d'une attaque avec Entites.Equipements au corps-à-corps.
+- Si la somme est supérieur à la classe d'armure de la cible, l'attaquant lance le dé de dégât de l'Entites.Equipements et la cible perd en point de vies le résultat du jet de dé. Dans le cas contraire, l'attaquant finit son action sans infliger de dégâts à la cible.
 
 #### Ramasser un équipement *(uniquement pour les personnages)*
-Si un joueur est sur une case contenant un équipement (une equipement ou une armure), il peut prendre l'équipement pour l'ajouter à son inventaire (l'équipement disparaît de la carte)
+Si un joueur est sur une case contenant un équipement (une Entites.Equipements ou une armure), il peut prendre l'équipement pour l'ajouter à son inventaire (l'équipement disparaît de la carte)
 
 #### Fin d'un donjon
 Un donjon se termine lorsqu'un joueur est tué (défaite) ou lorsque tous les monstres sont éliminés (victoire).
@@ -244,7 +244,7 @@ Tour 3:
 Caelynn
   Vie : 10/12
   Armure: aucune
-  equipement.Arme: fronde (degat: 1d4, portee: 6)
+  Entites.Equipements.Arme: fronde (degat: 1d4, portee: 6)
   Inventaire: [1] baton
   Force: 8
   Dextérité: 16
@@ -255,7 +255,7 @@ Caelynn il vous reste 2 actions que souhaitez vous faire ?
   - commenter action précédente (com <texte>)
   - attaquer (att <Case>)
   - se déplacer (dep <Case>)
-  - s'équiper (equ <numero equipement>)
+  - s'équiper (equ <numero Entites.Equipements>)
 ```
 
 ```

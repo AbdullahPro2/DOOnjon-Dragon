@@ -1,6 +1,6 @@
-package Personnage.Joueur;
+package Entites.Personnages.Joueurs;
 
-import equipement.*;
+import Entites.Equipements.*;
 import java.util.ArrayList;
 import java.util.List;
 import utils.De;

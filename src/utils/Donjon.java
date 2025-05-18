@@ -1,5 +1,11 @@
 package utils;
 
+import Entites.Entite;
+import Entites.Equipements.Arme;
+import Entites.Equipements.Armure;
+import Entites.Obstacle;
+import Entites.Personnages.Joueurs.Joueur;
+import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Personnage;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -7,11 +13,11 @@ import java.util.Scanner;
 public class Donjon {
   private int m_longueur;
   private int m_largeur;
-  private ArrayList<Personnage> m_playerssOnGround;
+  private ArrayList<Entite> m_EntityOnGround;
 
-  public void addEntityOnGround(Personnage pers)
+  public void addEntityOnGround(Entite ent)
   {
-    m_playerssOnGround.add(pers);
+    m_EntityOnGround.add(ent);
   }
   public Donjon() {
     Scanner myObj = new Scanner(System.in);
@@ -19,9 +25,15 @@ public class Donjon {
     m_longueur = Integer.parseInt(myObj.nextLine());
     System.out.print("Entrez la largeur souhaité pour le donjon: ");
     m_largeur = Integer.parseInt(myObj.nextLine());
-    m_playerssOnGround = new ArrayList<>();
-
+    m_EntityOnGround = new ArrayList<>();
   }
+
+  public Donjon(int longueur, int largeur) {
+    m_longueur = longueur;
+    m_largeur = largeur;
+    m_EntityOnGround = new ArrayList<>();
+  }
+
   public void printLine(int longueur){
     System.out.print("   *");
     for(int i = 0; i < longueur; i++)
@@ -53,24 +65,33 @@ public class Donjon {
       for (int j = 0; j < m_longueur; j++) {
         boolean entityPrinted = false;
 
-        for (Personnage entity : m_playerssOnGround) {
+        for (Entite entity : m_EntityOnGround) {
           if (entity.getM_x() == i && entity.getM_y() == j) {
-            System.out.print(entity.getM_nom().substring(0,3));
-            entityPrinted = true;
-            break;
+            if (entity instanceof Joueur) {
+              System.out.print(((Joueur) entity).getM_nom().substring(0, 3));
+              entityPrinted = true;
+            } else if (entity instanceof Monstre) {
+              System.out.print("X^");
+              entityPrinted = true;
+            } else if (entity instanceof Obstacle) {
+              System.out.print("[ ]");
+              entityPrinted = true;
+            } else {
+              System.out.print("*");
+              entityPrinted = true;
+            }
+          }
+          if (!entityPrinted) {
+            System.out.print(" . ");
           }
         }
 
-        if (!entityPrinted) {
-          System.out.print(" . ");
-        }
+        System.out.print("  |");
+        System.out.println();
       }
 
-      System.out.print("  |");
-      System.out.println();
+      printLine(m_longueur); // Bottom border
     }
-
-    printLine(m_longueur); // Bottom border
   }
 
   public int getM_largeur() {

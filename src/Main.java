@@ -17,20 +17,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String args[]){
         System.out.println("Bienvenue dans DOOnjon et Dragons");
-        // toutes les possibilites d' ARME:
-        Arme baton = new Arme(TypeArme.COURANTE,"baton",new De(1,6),1,-1,-1);
-        Arme masseArmes = new Arme(TypeArme.COURANTE,"masse d'armes",new De(1,6),1,-1,-1);
-        Arme epeeLongue = new Arme(TypeArme.GUERRE,"épée longue,",new De(1,8),1,-1,-1);
-        Arme rapiere = new Arme(TypeArme.GUERRE,"rapière",new De(1,8),1,-1,-1);
-        Arme arbaleteLegere = new Arme(TypeArme.DISTANCE,"arbalète légère",new De(1,8),16,-1,-1);
-        Arme fronde = new Arme(TypeArme.DISTANCE,"fronde",new De(1,4),6,-1,-1);
-        Arme arcCourt = new Arme(TypeArme.DISTANCE,"arc court",new De(1,6),16,-1,-1);
-        // toutes les possibilites d' ARMURE:
-        Armure armureEcailles = new Armure(TypeArmure.LEGERE, "armure d'écailles",9,-1,-1);
-        Armure demiPlate = new Armure(TypeArmure.LEGERE, "demi-plate",9,-1,-1);
-        Armure cotteMailles = new Armure(TypeArmure.LOURDE, "cotte de mailles",11,-1,-1);
-        Armure harnois = new Armure(TypeArmure.LOURDE, "harnois",12,-1,-1);
-
         System.out.println("Entrez le numero du donjon dans lequel vous voulez entrer : ");
         System.out.println("Donjon1 (facile)     Donjon2 (moyen)     Donjon3 (difficile)");
         Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal

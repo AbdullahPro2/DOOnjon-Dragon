@@ -35,13 +35,18 @@ public class Monstre extends Personnage {
     }
 
     @Override
+    public boolean estCiblePourJoueur() {
+        return true;
+    }
+
+    @Override
     public void attaquer() {
         int portee = m_race.getM_portee();
         List<Joueur> cibles = new ArrayList<>();
 
         // Filtrage des monstres à portée
         for (Entite e : Entite.getM_entites()) {
-            if (e != this && e instanceof Joueur) {
+            if (e != this && e.estCiblePourMonstre()) {
                 int distance = Math.abs(this.getM_x() - e.getM_x()) + Math.abs(this.getM_y() - e.getM_y());
                 if (distance <= portee) {
                     cibles.add((Joueur) e);

@@ -34,6 +34,11 @@ public class Joueur extends Personnage {
     }
 
     @Override
+    public boolean estCiblePourMonstre() {
+        return true;
+    }
+
+    @Override
     public void setPosition(int x, int y) {
         super.setPosition(x, y);
     }
@@ -134,7 +139,7 @@ public class Joueur extends Personnage {
 
         // Filtrage des monstres à portée
         for (Entite e : Entite.getM_entites()) {
-            if (e != this && e instanceof Monstre) {
+            if (e != this && e.estCiblePourJoueur()) {
                 int distance = Math.abs(this.getM_x() - e.getM_x()) + Math.abs(this.getM_y() - e.getM_y());
                 if (distance <= portee) {
                     cibles.add((Monstre) e);
@@ -247,16 +252,6 @@ public class Joueur extends Personnage {
 
         // Si aucun objet n'a été ramassé
         System.out.println("Il n'y a pas d'arme à ramasser");
-    }
-
-    public void commenter()
-    {
-
-    }
-
-    public void commenterMj()
-    {
-
     }
 
     @Override

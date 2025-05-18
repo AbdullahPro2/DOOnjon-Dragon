@@ -12,6 +12,14 @@ public abstract class Entite {
     private int m_y;
     private static List<Entite> m_entites = new ArrayList<>();
 
+    public boolean estCiblePourJoueur() {
+        return false;
+    }
+
+    public boolean estCiblePourMonstre() {
+        return false;
+    }
+
     public Entite(int x, int y) {
         this.m_x = x;
         this.m_y = y;

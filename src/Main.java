@@ -11,6 +11,9 @@ import Entites.Equipements.TypeArmure;
 import utils.De;
 import utils.Donjon;
 
+import java.util.Objects;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String args[]){
         System.out.println("Bienvenue dans DOOnjon et Dragons");
@@ -28,9 +31,32 @@ public class Main {
         Armure cotteMailles = new Armure(TypeArmure.LOURDE, "cotte de mailles",11,-1,-1);
         Armure harnois = new Armure(TypeArmure.LOURDE, "harnois",12,-1,-1);
 
-
+        System.out.println("Entrez le numero du donjon dans lequel vous voulez entrer : ");
+        System.out.println("Donjon1 (facile)     Donjon2 (moyen)     Donjon3 (difficile)");
+        Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal
+        String choix = scanner.nextLine();  // Lit une ligne de texte
+        while (!Objects.equals(choix, "1") && !Objects.equals(choix, "2") && !Objects.equals(choix, "3"))
+        {
+            System.out.print("Veuillez répondre \"1\", \"2\" ou \"3\"");
+            choix = scanner.nextLine();  // Lit une ligne de texte
+        }
+        // Lancer le donjon correspondant
+        switch (choix) {
+            case "1":
+                creerDonjon1();
+                break;
+            case "2":
+                creerDonjon2();
+                break;
+            case "3":
+                creerDonjon3();
+                break;
+        }
 
     }
+
+
+
 
     public static void creerDonjon1()
     {

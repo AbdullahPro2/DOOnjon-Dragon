@@ -13,11 +13,11 @@ import java.util.Scanner;
 public class Donjon {
   private int m_longueur;
   private int m_largeur;
-  private ArrayList<Entite> m_EntityOnGround;
+  private ArrayList<Entite> m_entityOnGround;
 
   public void addEntityOnGround(Entite ent)
   {
-    m_EntityOnGround.add(ent);
+    m_entityOnGround.add(ent);
   }
   public Donjon() {
     Scanner myObj = new Scanner(System.in);
@@ -25,13 +25,13 @@ public class Donjon {
     m_longueur = Integer.parseInt(myObj.nextLine());
     System.out.print("Entrez la largeur souhaité pour le donjon: ");
     m_largeur = Integer.parseInt(myObj.nextLine());
-    m_EntityOnGround = new ArrayList<>();
+    m_entityOnGround = new ArrayList<>();
   }
 
   public Donjon(int longueur, int largeur) {
     m_longueur = longueur;
     m_largeur = largeur;
-    m_EntityOnGround = new ArrayList<>();
+    m_entityOnGround = new ArrayList<>();
   }
 
   public void printLine(int longueur){
@@ -65,7 +65,7 @@ public class Donjon {
       for (int j = 0; j < m_longueur; j++) {
         boolean entityPrinted = false;
 
-        for (Entite entity : m_EntityOnGround) {
+        for (Entite entity : m_entityOnGround) {
           if (entity.getM_x() == i && entity.getM_y() == j) {
             if (entity instanceof Joueur) {
               System.out.print(((Joueur) entity).getM_nom().substring(0, 3));

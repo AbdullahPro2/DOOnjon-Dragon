@@ -14,15 +14,15 @@ public class Armure extends Entite {
     this.m_classeArmure = classeArmure;
   }
 
-  public int getClasseArmure() {
+  public int getM_classeArmure() {
     return m_classeArmure;
   }
 
-  public String getNom() {
+  public String getM_nom() {
     return m_nom;
   }
 
-  public TypeArmure getTypeArmure() {
+  public TypeArmure getM_typeArmure() {
     return m_typeArmure;
   }
 

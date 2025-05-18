@@ -1,5 +1,8 @@
 package Entites;
 
+import Entites.Equipements.Arme;
+import Entites.Equipements.Armure;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,6 @@ public abstract class Entite {
         m_entites.add(this);
     }
 
-
     public int getX() {
         return m_x;
     }
@@ -24,15 +26,20 @@ public abstract class Entite {
         return m_y;
     }
 
+    public static List<Entite> getM_entites() {return m_entites;}
+
     public void setPosition(int x, int y) {
         this.m_x = x;
         this.m_y = y;
     }
 
+    public boolean estBloquant() {
+        return !(this instanceof Arme) && !(this instanceof Armure);
+    }
 
     public static boolean caseOccupee(int x, int y) {
         for (Entite e : m_entites) {
-            if (e.getX() == x && e.getY() == y) {
+            if (e.getX() == x && e.getY() == y && e.estBloquant()) {
                 return true;
             }
         }

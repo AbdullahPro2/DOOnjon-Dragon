@@ -14,6 +14,8 @@ package Entites{
         + <<create>> Entite(x : Integer, y: Integer)
         + getX() : Integer
         + getY() : Integer
+        + {static} getM_entites() : List<Entite>
+        + estBloquant() : boolean
         + setPosition(x : Integer, y : Integer)
         + caseOccupee(x : Integer, y : Integer)
     }
@@ -35,6 +37,7 @@ package Entites{
       enum TypeArme <<enumerate>>
       {
         COURANTE
+        DISTANCE
         GUERRE
       }
       ' Class Armure
@@ -42,9 +45,9 @@ package Entites{
         -m_nom : String
         - m_classeArmure : int
         + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer)
-        + getClasseArmure() : Integer
-        + getNom() : String
-        + getTypeArmure() : TypeArmure
+        + getM_classeArmure() : Integer
+        + getM_nom() : String
+        + getM_typeArmure() : TypeArmure
         + toString() : String
       }
 
@@ -59,6 +62,7 @@ package Entites{
         class Personnage{
             -m_nom : String
             -m_pv : Integer
+            -m_pvMax : Integer
             -m_force : Integer
             -m_dexterité : Integer
             -m_vitesse : Integer
@@ -67,14 +71,15 @@ package Entites{
             + setPosition(x : Integer, y : Integer)
             + seDeplacer(donjon : Donjon):void
             + saisirPositionValide(maxX : Integer, maxY : Integer) : Integer[]
-            + attaquer():void
-            + ramasser():void
+            + abstract attaquer() : void
             + getM_nom() : String
             + getM_pv() : Integer
+            + getM_pvMax() : Integer
             + getM_force() : Integer
             + getM_dexterite() : Integer
             + getM_vitesse() : Integer
             + getM_initiative : Integer
+            + setM_pv(pv : Integer) : void
             + setM_force(force : Integer) : void
             + setM_dexterite(dexterite : Integer) : void
             + setM_vitesse(dexterite : Integer) : void
@@ -85,6 +90,8 @@ package Entites{
                 +<<create>>Joueur(nom : String, classe : Classe, race : Race, x : Integer, y : Integer)
                 +setPosition(x : Integer, y : Integer)
                 +Equiper() : void
+                +attaquer() : void
+                +ramasser():void
                 +commenter():void
                 +mjCommenter():void
                 +toString() : String
@@ -126,6 +133,8 @@ package Entites{
             class Monstre {
                 - m_numero : Integer
                 + <<create>> Monstre(race : RaceMonstre, numero : Integer, x : Integer, y : Integer)
+                + attaquer() : void
+                + getM_race : RaceMonstre
                 + toString() : String
             }
 
@@ -133,12 +142,22 @@ package Entites{
                 - m_nom : String
                 - m_pv : Integer
                 - m_classeArmure : Integer
-                + getM_pv() : Integer
-                + getM_nom : String
+                - m_portee : Integer
+                - m_degats : Intege
+                - <<create>> RaceMonstre(nom: String, pv : Integer, classeArmure : Integer, portee : Integer, degats : Integer, de : De)
                 + {static} Dragon(): RaceMonstre
                 + {static} Demogorgon(): RaceMonstre
+                + getM_pv() : Integer
+                + getM_nom : String
+                + getM_degats : Integer
+                + getM_portee : Integer
+                + getM_classeArmure
                 + toString() : String
             }
+        }
+
+        class Obstacle {
+            + Obstacle(x : Integer, y : Integer)
         }
     }
 }
@@ -165,6 +184,7 @@ package utils
     - m_facesParDe: Integer
     + <<create>> De(nombreDes : Integer, facesParDe : Integer)
     + lanceDe(): Integer
+    + lanceDePrint(): Integer
     + toString(): String
   }
 }
@@ -179,7 +199,10 @@ Personnage .> Utils : "«call»"
 Entite <|-- Personnage
 Entite <|-- Arme
 Entite <|-- Armure
+Entite <|-- Obstacle
 Entite "1" o--> "*" Entite : -m_entites
+Entite ..> Arme : "uses"
+Entite ..> Armure : "uses"
 
 
 ' Relations de ClasseJoueur
@@ -192,9 +215,15 @@ Joueur "1" o--> "0..1" Arme : -m_arme\nporte une arme
 Joueur "1" o--> "0..1" Armure : -m_armure\nporte une armure
 Joueur "1" o--> "1" Race : -m_race\nest de la race
 Joueur "1" o--> "1" ClasseJoueur : -m_classe\na pour classe
+Joueur ..> De : "uses"
+Joueur ..> Monstre : "uses"
 
 ' Relations de Monstre
 Monstre "1" o--> "1" RaceMonstre : -m_race\nest de la race
+Monstre ..> Joueur : "uses"
+
+' Relations de RaceMonstre
+RaceMonstre "1" *--> "1" De : -m_deDegats\nfait les degats
 
 ' Class Arme Relations
 Arme .> TypeArme : "«uses»\n m_typeArme"

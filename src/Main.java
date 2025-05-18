@@ -18,9 +18,9 @@ public class Main {
         Arme masseArmes = new Arme(TypeArme.COURANTE,"masse d'armes",new De(1,6),1,-1,-1);
         Arme epeeLongue = new Arme(TypeArme.GUERRE,"épée longue,",new De(1,8),1,-1,-1);
         Arme rapiere = new Arme(TypeArme.GUERRE,"rapière",new De(1,8),1,-1,-1);
-        Arme arbaleteLegere = new Arme(TypeArme.COURANTE,"arbalète légère",new De(1,8),16,-1,-1);
-        Arme fronde = new Arme(TypeArme.COURANTE,"fronde",new De(1,4),6,-1,-1);
-        Arme arcCourt = new Arme(TypeArme.COURANTE,"arc court",new De(1,6),16,-1,-1);
+        Arme arbaleteLegere = new Arme(TypeArme.DISTANCE,"arbalète légère",new De(1,8),16,-1,-1);
+        Arme fronde = new Arme(TypeArme.DISTANCE,"fronde",new De(1,4),6,-1,-1);
+        Arme arcCourt = new Arme(TypeArme.DISTANCE,"arc court",new De(1,6),16,-1,-1);
         // toutes les possibilite de ARMURE:
         Armure armureEcailles = new Armure(TypeArmure.LEGERE, "armure d'écailles",9,-1,-1);
         Armure demiPlate = new Armure(TypeArmure.LEGERE, "demi-plate",9,-1,-1);

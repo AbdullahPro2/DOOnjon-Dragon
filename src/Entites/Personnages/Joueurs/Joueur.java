@@ -1,10 +1,13 @@
 package Entites.Personnages.Joueurs;
 
+import Entites.Entite;
+import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Personnage;
 import Entites.Equipements.Arme;
 import Entites.Equipements.Armure;
 import Entites.Equipements.TypeArme;
 import Entites.Equipements.TypeArmure;
+import utils.De;
 
 import java.util.*;
 
@@ -24,6 +27,10 @@ public class Joueur extends Personnage {
         super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
         m_arme = null;
         m_armure = null;
+    }
+
+    public Armure getM_armure(){
+        return m_armure;
     }
 
     @Override
@@ -100,14 +107,14 @@ public class Joueur extends Personnage {
             }
             if (m_armure!=null)
             {
-                if (m_armure.getTypeArmure() == TypeArmure.LOURDE)
+                if (m_armure.getM_typeArmure() == TypeArmure.LOURDE)
                 {
                     super.setM_vitesse(super.getM_vitesse()+4);
                 }
 
             }
             m_armure = armures.get(indice);
-            if (m_armure.getTypeArmure() == TypeArmure.LOURDE)
+            if (m_armure.getM_typeArmure() == TypeArmure.LOURDE)
             {
                 super.setM_vitesse(super.getM_vitesse()-4);
             }
@@ -115,8 +122,99 @@ public class Joueur extends Personnage {
 
     }
 
-    public void attaquer(){
+    @Override
+    public void attaquer() {
+        if (m_arme == null) {
+            System.out.println("Vous ne pouvez pas attaquer sans arme !");
+            return;
+        }
 
+        int portee = m_arme.getM_portee();
+        List<Monstre> cibles = new ArrayList<>();
+
+        // Filtrage des monstres à portée
+        for (Entite e : Entite.getM_entites()) {
+            if (e != this && e instanceof Monstre) {
+                int distance = Math.abs(this.getX() - e.getX()) + Math.abs(this.getY() - e.getY());
+                if (distance <= portee) {
+                    cibles.add((Monstre) e);
+                }
+            }
+        }
+
+        if (cibles.isEmpty()) {
+            System.out.println("Aucun monstre à portée (" + portee + "). Vous ne pouvez pas attaquer");
+            return;
+        }
+
+        // Affichage des cibles
+        System.out.println("Cibles à portée (" + portee + ") :");
+        for (int i = 0; i < cibles.size(); i++) {
+            System.out.println(i + " - " + cibles.get(i).getM_nom() + " " + cibles.get(i).getM_race().getM_pv() + "/" + cibles.get(i).getM_pvMax());
+        }
+
+        // Saisie du choix de l'utilisateur
+        int taille = cibles.size();
+        int choix;
+        if (taille == 1)
+        {
+            choix = 0;
+        }
+        else {
+            Scanner scanner = new Scanner(System.in);
+            choix = -1;
+            while (choix < 0 || choix >= taille) {
+                System.out.print("Choisissez une cible à attaquer (0 à " + (taille - 1) + ") : ");
+                if (scanner.hasNextInt()) {
+                    choix = scanner.nextInt();
+                } else {
+                    scanner.next(); // Consomme l'entrée invalide
+                }
+            }
+        }
+        Monstre cible = cibles.get(choix);
+        String nomMonstre = cible.getM_nom();
+        System.out.println("Vous attaquez le monstre : " + nomMonstre);
+
+        // Phase d'attaque
+
+        De deAttaque = new De(1,20);
+        int degatsArmure;
+        int resultDe = deAttaque.lanceDePrint();
+        if (m_arme.getM_typeArme()==TypeArme.DISTANCE)
+        {
+            degatsArmure = resultDe + getM_dexterite();
+            System.out.println("Votre attaque est de " + resultDe + " + " + getM_dexterite() + "(dexterite) = " + degatsArmure);
+        }
+        else{
+            degatsArmure = resultDe + getM_force();
+            System.out.println("Votre attaque est de " + resultDe + " + " + getM_force() + "(force) = " + degatsArmure);
+        }
+        int classeArmure = cible.getM_race().getM_classeArmure();
+        if (degatsArmure > classeArmure)
+        {
+            System.out.println("Votre attaque perce l'armure de " + nomMonstre + "(" + classeArmure + ")");
+            System.out.println("Vous lancez votre dé de dégats");
+            int degats = m_arme.getM_degats().lanceDePrint();
+
+            cible.setM_pv(cible.getM_pv()-degats);
+            if (cible.getM_pv() <= 0)
+            {
+                System.out.println("La cible " + cible + " a été tuée !");
+
+                // Retirer la cible de la liste des entités
+                Entite.getM_entites().remove(cible);
+            }
+            else
+            {
+                System.out.println("Le " + nomMonstre + " subit " + degats + " degats");
+                System.out.println("Il lui reste " + cible.getM_race().getM_pv() + " PV");
+            }
+        }
+        else{
+            System.out.println("Votre attaque ne perce pas l'armure de " + nomMonstre + "(" + classeArmure + ")");
+            System.out.println(nomMonstre + "ne subit aucun degats");
+        }
     }
 
     public void ramasser(){

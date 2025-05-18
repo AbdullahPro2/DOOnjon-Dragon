@@ -54,7 +54,7 @@ public class Donjon {
         boolean entityPrinted = false;
 
         for (Personnage entity : m_playerssOnGround) {
-          if (entity.getX() == i && entity.getY() == j) {
+          if (entity.getM_x() == i && entity.getM_y() == j) {
             System.out.print(entity.getM_nom().substring(0,3));
             entityPrinted = true;
             break;

@@ -18,11 +18,11 @@ public abstract class Entite {
         m_entites.add(this);
     }
 
-    public int getX() {
+    public int getM_x() {
         return m_x;
     }
 
-    public int getY() {
+    public int getM_y() {
         return m_y;
     }
 
@@ -39,7 +39,7 @@ public abstract class Entite {
 
     public static boolean caseOccupee(int x, int y) {
         for (Entite e : m_entites) {
-            if (e.getX() == x && e.getY() == y && e.estBloquant()) {
+            if (e.getM_x() == x && e.getM_y() == y && e.estBloquant()) {
                 return true;
             }
         }

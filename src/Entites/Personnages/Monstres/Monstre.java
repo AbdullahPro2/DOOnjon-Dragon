@@ -1,7 +1,6 @@
 package Entites.Personnages.Monstres;
 
 import Entites.Entite;
-import Entites.Equipements.TypeArme;
 import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Personnage;
 import utils.De;
@@ -26,7 +25,7 @@ public class Monstre extends Personnage {
             "nom='" + super.getM_nom() + '\'' +
             ", numero=" + m_numero +
             ", race=" + m_race +
-            ", position=(" + getX() + ", " + getY() + ")" +
+            ", position=(" + getM_x() + ", " + getM_y() + ")" +
             ", pv=" + getM_pv() +
             '}';
     }
@@ -43,7 +42,7 @@ public class Monstre extends Personnage {
         // Filtrage des monstres à portée
         for (Entite e : Entite.getM_entites()) {
             if (e != this && e instanceof Joueur) {
-                int distance = Math.abs(this.getX() - e.getX()) + Math.abs(this.getY() - e.getY());
+                int distance = Math.abs(this.getM_x() - e.getM_x()) + Math.abs(this.getM_y() - e.getM_y());
                 if (distance <= portee) {
                     cibles.add((Joueur) e);
                 }

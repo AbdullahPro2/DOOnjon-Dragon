@@ -12,8 +12,8 @@ package Entites{
         - m_y:Integer
         - {static} m_entites : List<Entite>
         + <<create>> Entite(x : Integer, y: Integer)
-        + getX() : Integer
-        + getY() : Integer
+        + getM_x() : Integer
+        + getM_y() : Integer
         + {static} getM_entites() : List<Entite>
         + estBloquant() : boolean
         + setPosition(x : Integer, y : Integer)
@@ -29,7 +29,7 @@ package Entites{
         - m_portee : Integer
         + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Integer)
         + getM_typeArme() : TypeArme
-        + getM_nomArme() : String
+        + getM_nom() : String
         + getM_degats(): De
         + getM_portee(): Integer
         + toString() : String

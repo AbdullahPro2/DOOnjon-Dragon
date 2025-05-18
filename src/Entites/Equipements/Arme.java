@@ -20,7 +20,7 @@ public class Arme extends Entite {
   public TypeArme getM_typeArme() {
     return m_typeArme;
   }
-  public String getM_nomArme() {
+  public String getM_nom() {
     return m_nom;
   }
   public De getM_degats()

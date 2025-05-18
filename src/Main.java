@@ -18,7 +18,7 @@ public class Main {
     public static void main(String args[]){
         System.out.println("Bienvenue dans DOOnjon et Dragons");
         System.out.println("Entrez le numero du donjon dans lequel vous voulez entrer : ");
-        System.out.println("Donjon1 (facile)     Donjon2 (moyen)     Donjon3 (difficile)");
+        System.out.println("Donjon1 (facile)     Donjon2 (moyen)     Donjon3 (difficile) : ");
         Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal
         String choix = scanner.nextLine();  // Lit une ligne de texte
         while (!Objects.equals(choix, "1") && !Objects.equals(choix, "2") && !Objects.equals(choix, "3"))

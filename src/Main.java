@@ -23,7 +23,7 @@ public class Main {
         String choix = scanner.nextLine();  // Lit une ligne de texte
         while (!Objects.equals(choix, "1") && !Objects.equals(choix, "2") && !Objects.equals(choix, "3"))
         {
-            System.out.print("Veuillez répondre \"1\", \"2\" ou \"3\"");
+            System.out.print("Veuillez répondre \"1\", \"2\" ou \"3\" : ");
             choix = scanner.nextLine();  // Lit une ligne de texte
         }
         // Lancer le donjon correspondant

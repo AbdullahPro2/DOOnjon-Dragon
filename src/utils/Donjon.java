@@ -40,7 +40,7 @@ public class Donjon {
     {
       System.out.print("---");
     }
-    System.out.print("--*");
+    System.out.print("*");
     System.out.println();
   }
 
@@ -69,29 +69,26 @@ public class Donjon {
           if (entity.getM_x() == i && entity.getM_y() == j) {
             if (entity instanceof Joueur) {
               System.out.print(((Joueur) entity).getM_nom().substring(0, 3));
-              entityPrinted = true;
             } else if (entity instanceof Monstre) {
-              System.out.print("X^");
-              entityPrinted = true;
+              System.out.print("X^ ");
             } else if (entity instanceof Obstacle) {
               System.out.print("[ ]");
-              entityPrinted = true;
             } else {
-              System.out.print("*");
-              entityPrinted = true;
+              System.out.print(" * ");
             }
-          }
-          if (!entityPrinted) {
-            System.out.print(" . ");
+            entityPrinted = true;
+            break; // stop looking at other entities for this cell
           }
         }
-
-        System.out.print("  |");
-        System.out.println();
+        if (!entityPrinted) {
+          System.out.print(" . ");
+        }
       }
-
-      printLine(m_longueur); // Bottom border
+      System.out.print("|"); // right border
+      System.out.println();
     }
+    printLine(m_longueur); // Bottom border
+
   }
 
   public int getM_largeur() {

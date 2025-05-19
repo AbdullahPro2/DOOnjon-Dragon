@@ -44,7 +44,7 @@ package Entites{
       }
       ' Class Armure
       class Armure{
-        -m_nom : String
+        - m_nom : String
         - m_classeArmure : int
         + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer)
         + getM_classeArmure() : Integer
@@ -191,16 +191,16 @@ package utils
 }
 
 ' Relations de Personnage
-Personnage <|-- Joueur
-Personnage <|-- Monstre
+Personnage <|-up- Joueur
+Personnage <|-up- Monstre
 Personnage .> Donjon : "uses"
 Personnage .> Utils : "«call»"
 
 ' Relations de Entite
-Entite <|-- Personnage
-Entite <|-- Arme
-Entite <|-- Armure
-Entite <|-- Obstacle
+Entite <|-up- Personnage
+Entite <|-up- Arme
+Entite <|-up- Armure
+Entite <|-up- Obstacle
 Entite "1" o--> "*" Entite : -m_entites
 Entite ..> Arme : "uses"
 Entite ..> Armure : "uses"

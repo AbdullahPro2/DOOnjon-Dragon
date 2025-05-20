@@ -4,10 +4,11 @@
 skinparam style strictuml
 skinparam classFontStyle Bold
 skinparam classAttributeIconSize 0
+skinparam linetype ortho
 hide empty members
 
 package Entites{
-    class Entite{
+    abstract class Entite{
         - m_x:Integer
         - m_y:Integer
         - {static} m_entites : List<Entite>
@@ -61,7 +62,7 @@ package Entites{
     }
 
     package Personnages {
-        class Personnage{
+        abstract class Personnage{
             -m_nom : String
             -m_pv : Integer
             -m_pvMax : Integer
@@ -71,9 +72,9 @@ package Entites{
             -m_initiative : Integer
             + <<create>> Personnage(nom : String, pv : Integer, x : Integer, y : Integer)
             + setPosition(x : Integer, y : Integer)
-            + seDeplacer(donjon : Donjon):void
+            + seDeplacer(donjon : Donjon
             + saisirPositionValide(maxX : Integer, maxY : Integer) : Integer[]
-            + abstract attaquer() : void
+            + {abstract} attaquer()
             + getM_nom() : String
             + getM_pv() : Integer
             + getM_pvMax() : Integer
@@ -81,19 +82,19 @@ package Entites{
             + getM_dexterite() : Integer
             + getM_vitesse() : Integer
             + getM_initiative : Integer
-            + setM_pv(pv : Integer) : void
-            + setM_force(force : Integer) : void
-            + setM_dexterite(dexterite : Integer) : void
-            + setM_vitesse(dexterite : Integer) : void
+            + setM_pv(pv : Integer)
+            + setM_force(force : Integer)
+            + setM_dexterite(dexterite : Integer)
+            + setM_vitesse(dexterite : Integer)
 
         }
         package Joueurs {
             class Joueur{
                 +<<create>>Joueur(nom : String, classe : Classe, race : Race, x : Integer, y : Integer)
                 +setPosition(x : Integer, y : Integer)
-                +Equiper() : void
-                +attaquer() : void
-                +ramasser():void
+                +Equiper()
+                +attaquer()
+                +ramasser()
                 +estCiblePourMonstre() : boolean
                 +toString() : String
             }
@@ -134,7 +135,7 @@ package Entites{
             class Monstre {
                 - m_numero : Integer
                 + <<create>> Monstre(race : RaceMonstre, numero : Integer, x : Integer, y : Integer)
-                + attaquer() : void
+                + attaquer()
                 + estCiblePourJoueur() : boolean
                 + getM_race : RaceMonstre
                 + toString() : String
@@ -169,9 +170,9 @@ package utils
     - m_longueur : Integer
     - m_largeur : Integer
     + <<Create>> Donjon()
-    + addEntityOnGround : void
+    + addEntityOnGround
     + printLine(longueur : Integer)
-    + DonjonGround() : void
+    + DonjonGround()
     + getM_longueur() : Integer
     + getM_largeur() : Integer
   }

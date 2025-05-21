@@ -80,6 +80,7 @@ package Entites{
             + seDeplacer(donjon : Donjon
             + saisirPositionValide(maxX : Integer, maxY : Integer) : Integer[]
             + {abstract} attaquer()
+            + commenterDeplacement(x : Integer, y : Integer)
             + getM_nom() : String
             + getM_pv() : Integer
             + getM_pvMax() : Integer
@@ -184,6 +185,7 @@ package utils
 
   class Utils <<static>>{
     + {static} dico : Map<Character, Integer>
+    + {static} dico2 : Map<Integer,Character>
   }
   class De
   {

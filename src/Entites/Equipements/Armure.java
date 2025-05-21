@@ -18,7 +18,7 @@ public class Armure extends Entite {
   @Override
   public void ramasser(Joueur joueur) {
     joueur.getM_classe().getM_armures().add(this);
-    System.out.println("Armure ramassée : " + this);
+    System.out.println("Armure ramassée : " + m_nom);
   }
 
   @Override

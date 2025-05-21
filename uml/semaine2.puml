@@ -4,10 +4,11 @@
 skinparam style strictuml
 skinparam classFontStyle Bold
 skinparam classAttributeIconSize 0
+skinparam linetype ortho
 hide empty members
 
 package Entites{
-    class Entite{
+    abstract class Entite{
         - m_x:Integer
         - m_y:Integer
         - {static} m_entites : List<Entite>
@@ -17,6 +18,7 @@ package Entites{
         + estCiblePourJoueur() : boolean
         + estCiblePourMonstre() : boolean
         + {static} getM_entites() : List<Entite>
+        + ramasser(Joueur : joueur)
         + estBloquant() : boolean
         + setPosition(x : Integer, y : Integer)
         + caseOccupee(x : Integer, y : Integer)
@@ -30,6 +32,8 @@ package Entites{
         - m_nom : String
         - m_portee : Integer
         + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Integer)
+        + ramasser(joueur : Joueur)
+        + estBloquant() : boolean
         + getM_typeArme() : TypeArme
         + getM_nom() : String
         + getM_degats(): De
@@ -44,9 +48,11 @@ package Entites{
       }
       ' Class Armure
       class Armure{
-        -m_nom : String
+        - m_nom : String
         - m_classeArmure : int
         + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer)
+        + ramasser(joueur : Joueur)
+        + estBloquant() : boolean
         + getM_classeArmure() : Integer
         + getM_nom() : String
         + getM_typeArmure() : TypeArmure
@@ -61,7 +67,7 @@ package Entites{
     }
 
     package Personnages {
-        class Personnage{
+        abstract class Personnage{
             -m_nom : String
             -m_pv : Integer
             -m_pvMax : Integer
@@ -71,29 +77,30 @@ package Entites{
             -m_initiative : Integer
             + <<create>> Personnage(nom : String, pv : Integer, x : Integer, y : Integer)
             + setPosition(x : Integer, y : Integer)
-            + seDeplacer(donjon : Donjon):void
+            + seDeplacer(donjon : Donjon
             + saisirPositionValide(maxX : Integer, maxY : Integer) : Integer[]
-            + abstract attaquer() : void
+            + {abstract} attaquer()
+            + commenterDeplacement(x : Integer, y : Integer)
             + getM_nom() : String
             + getM_pv() : Integer
             + getM_pvMax() : Integer
             + getM_force() : Integer
             + getM_dexterite() : Integer
             + getM_vitesse() : Integer
-            + getM_initiative : Integer
-            + setM_pv(pv : Integer) : void
-            + setM_force(force : Integer) : void
-            + setM_dexterite(dexterite : Integer) : void
-            + setM_vitesse(dexterite : Integer) : void
+            + getM_initiative() : Integer
+            + setM_pv(pv : Integer)
+            + setM_force(force : Integer)
+            + setM_dexterite(dexterite : Integer)
+            + setM_vitesse(dexterite : Integer)
 
         }
         package Joueurs {
             class Joueur{
                 +<<create>>Joueur(nom : String, classe : Classe, race : Race, x : Integer, y : Integer)
                 +setPosition(x : Integer, y : Integer)
-                +Equiper() : void
-                +attaquer() : void
-                +ramasser():void
+                +Equiper()
+                +attaquer()
+                +ramasser()
                 +estCiblePourMonstre() : boolean
                 +toString() : String
             }
@@ -134,7 +141,7 @@ package Entites{
             class Monstre {
                 - m_numero : Integer
                 + <<create>> Monstre(race : RaceMonstre, numero : Integer, x : Integer, y : Integer)
-                + attaquer() : void
+                + attaquer()
                 + estCiblePourJoueur() : boolean
                 + getM_race : RaceMonstre
                 + toString() : String
@@ -145,7 +152,7 @@ package Entites{
                 - m_pv : Integer
                 - m_classeArmure : Integer
                 - m_portee : Integer
-                - m_degats : Intege
+                - m_degats : Integer
                 - <<create>> RaceMonstre(nom: String, pv : Integer, classeArmure : Integer, portee : Integer, degats : Integer, de : De)
                 + {static} Dragon(): RaceMonstre
                 + {static} Demogorgon(): RaceMonstre
@@ -169,15 +176,16 @@ package utils
     - m_longueur : Integer
     - m_largeur : Integer
     + <<Create>> Donjon()
-    + addEntityOnGround : void
+    + addEntityOnGround
     + printLine(longueur : Integer)
-    + DonjonGround() : void
+    + DonjonGround()
     + getM_longueur() : Integer
     + getM_largeur() : Integer
   }
 
   class Utils <<static>>{
     + {static} dico : Map<Character, Integer>
+    + {static} dico2 : Map<Integer,Character>
   }
   class De
   {
@@ -191,16 +199,16 @@ package utils
 }
 
 ' Relations de Personnage
-Personnage <|-- Joueur
-Personnage <|-- Monstre
+Personnage <|-up- Joueur
+Personnage <|-up- Monstre
 Personnage .> Donjon : "uses"
 Personnage .> Utils : "«call»"
 
 ' Relations de Entite
-Entite <|-- Personnage
-Entite <|-- Arme
-Entite <|-- Armure
-Entite <|-- Obstacle
+Entite <|-up- Personnage
+Entite <|-up- Arme
+Entite <|-up- Armure
+Entite <|-up- Obstacle
 Entite "1" o--> "*" Entite : -m_entites
 Entite ..> Arme : "uses"
 Entite ..> Armure : "uses"
@@ -229,8 +237,10 @@ RaceMonstre "1" *--> "1" De : -m_deDegats\nfait les degats
 ' Class Arme Relations
 Arme .> TypeArme : "«uses»\n m_typeArme"
 Arme "1" *--> "1\n -m_degats" De : fait les dégâts
-' Class Armure Relations
+Arme .> Joueur : "uses"
+'Class Armure Relations
 Armure .> TypeArmure : "«uses»\n m_typeArmure"
+Armure .> Joueur : "uses"
 
 ' Class Donjon Relations
 Donjon "1" o--> "*" Entite : -m_entityOnGround\ncontient des personnages

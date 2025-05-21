@@ -1,5 +1,6 @@
 package Entites.Equipements;
 
+import Entites.Personnages.Joueurs.Joueur;
 import utils.De;
 import Entites.Entite;
 
@@ -29,6 +30,17 @@ public class Arme extends Entite {
   }
   public int getM_portee() {
     return m_portee;
+  }
+
+  @Override
+  public void ramasser(Joueur joueur) {
+    joueur.getM_classe().getM_armes().add(this);
+    System.out.println("Arme ramassée : " + m_nom);
+  }
+
+  @Override
+  public boolean estBloquant() {
+    return false; // Les armes ne bloquent pas
   }
 
   @Override

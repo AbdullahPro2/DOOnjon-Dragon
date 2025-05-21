@@ -7,6 +7,8 @@ import utils.Utils;
 
 import java.util.Scanner;
 
+import static utils.Utils.dico2;
+
 public abstract class Personnage extends Entite {
     private String m_nom;
     private int m_pv;
@@ -48,9 +50,14 @@ public abstract class Personnage extends Entite {
             x = tabCoord[0];
             y = tabCoord[1];
         }
-
         // Une fois la position valide et libre, on affecte la nouvelle position
         setPosition(x, y);
+        commenterDeplacement(x,y);
+    }
+
+    public void commenterDeplacement(int x, int y)
+    {
+        System.out.println(m_nom + " se place sur la case" + dico2.get(y)+x);
     }
 
     public int[] saisirPositionValide(int maxX, int maxY) {

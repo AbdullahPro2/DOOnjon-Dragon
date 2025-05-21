@@ -1,6 +1,7 @@
 package Entites.Equipements;
 
 import Entites.Entite;
+import Entites.Personnages.Joueurs.Joueur;
 
 public class Armure extends Entite {
   private TypeArmure m_typeArmure;
@@ -12,6 +13,17 @@ public class Armure extends Entite {
     this.m_typeArmure = typeArmure;
     this.m_nom = nom;
     this.m_classeArmure = classeArmure;
+  }
+
+  @Override
+  public void ramasser(Joueur joueur) {
+    joueur.getM_classe().getM_armures().add(this);
+    System.out.println("Armure ramassée : " + this);
+  }
+
+  @Override
+  public boolean estBloquant() {
+    return false; // Les armes ne bloquent pas
   }
 
   public int getM_classeArmure() {

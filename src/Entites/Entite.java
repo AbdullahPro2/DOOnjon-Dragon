@@ -2,6 +2,7 @@ package Entites;
 
 import Entites.Equipements.Arme;
 import Entites.Equipements.Armure;
+import Entites.Personnages.Joueurs.Joueur;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public abstract class Entite {
     }
 
     public boolean estBloquant() {
-        return !(this instanceof Arme) && !(this instanceof Armure);
+        return true; // Par défaut, une entité est bloquante
     }
 
     public static boolean caseOccupee(int x, int y) {
@@ -53,5 +54,9 @@ public abstract class Entite {
         }
         return false;
     }
+    public void ramasser(Joueur joueur) {
+        // Par défaut : ne fait rien
+    }
+
 
 }

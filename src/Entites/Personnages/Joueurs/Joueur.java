@@ -225,33 +225,21 @@ public class Joueur extends Personnage {
     public void ramasser() {
         Iterator<Entite> iterator = Entite.getM_entites().iterator();
 
-        // Parcours de toutes les entités dans le jeu
         while (iterator.hasNext()) {
             Entite e = iterator.next();
 
-            // Vérifie si l'entité est une Arme ou une Armure et si elle se trouve aux mêmes coordonnées
-            if ((e instanceof Arme || e instanceof Armure) && e.getM_x() == this.getM_x() && e.getM_y() == this.getM_y()) {
-
-                // Si c'est une Arme, l'ajouter à l'inventaire du joueur
-                if (e instanceof Arme) {
-                    this.m_classe.getM_armes().add((Arme) e);
-                    System.out.println("Arme ramassée : " + e);
-                }
-
-                // Si c'est une Armure, l'ajouter à l'inventaire du joueur
-                if (e instanceof Armure) {
-                    this.m_classe.getM_armures().add((Armure) e);
-                    System.out.println("Armure ramassée : " + e);
-                }
-
-                // Une fois ramassée, on peut retirer l'arme ou l'armure du jeu
-                iterator.remove(); // Supprimer l'élément de la liste de manière sécurisée
-                break; // On sort de la boucle après avoir ramassé un objet
+            if (e.getM_x() == this.getM_x() && e.getM_y() == this.getM_y()) {
+                e.ramasser(this);  // Appelle la version spécifique (Arme ou Armure)
+                iterator.remove(); // Supprimer l'entité du sol
+                return;
             }
         }
 
-        // Si aucun objet n'a été ramassé
-        System.out.println("Il n'y a pas d'arme à ramasser");
+        System.out.println("Il n'y a rien à ramasser ici.");
+    }
+
+    public ClasseJoueur getM_classe() {
+        return m_classe;
     }
 
     @Override

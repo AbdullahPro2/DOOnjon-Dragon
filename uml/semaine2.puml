@@ -18,6 +18,7 @@ package Entites{
         + estCiblePourJoueur() : boolean
         + estCiblePourMonstre() : boolean
         + {static} getM_entites() : List<Entite>
+        + ramasser(Joueur : joueur)
         + estBloquant() : boolean
         + setPosition(x : Integer, y : Integer)
         + caseOccupee(x : Integer, y : Integer)
@@ -31,6 +32,8 @@ package Entites{
         - m_nom : String
         - m_portee : Integer
         + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Integer)
+        + ramasser(joueur : Joueur)
+        + estBloquant() : boolean
         + getM_typeArme() : TypeArme
         + getM_nom() : String
         + getM_degats(): De
@@ -48,6 +51,8 @@ package Entites{
         - m_nom : String
         - m_classeArmure : int
         + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer)
+        + ramasser(joueur : Joueur)
+        + estBloquant() : boolean
         + getM_classeArmure() : Integer
         + getM_nom() : String
         + getM_typeArmure() : TypeArmure
@@ -81,7 +86,7 @@ package Entites{
             + getM_force() : Integer
             + getM_dexterite() : Integer
             + getM_vitesse() : Integer
-            + getM_initiative : Integer
+            + getM_initiative() : Integer
             + setM_pv(pv : Integer)
             + setM_force(force : Integer)
             + setM_dexterite(dexterite : Integer)
@@ -146,7 +151,7 @@ package Entites{
                 - m_pv : Integer
                 - m_classeArmure : Integer
                 - m_portee : Integer
-                - m_degats : Intege
+                - m_degats : Integer
                 - <<create>> RaceMonstre(nom: String, pv : Integer, classeArmure : Integer, portee : Integer, degats : Integer, de : De)
                 + {static} Dragon(): RaceMonstre
                 + {static} Demogorgon(): RaceMonstre
@@ -230,8 +235,10 @@ RaceMonstre "1" *--> "1" De : -m_deDegats\nfait les degats
 ' Class Arme Relations
 Arme .> TypeArme : "«uses»\n m_typeArme"
 Arme "1" *--> "1\n -m_degats" De : fait les dégâts
-' Class Armure Relations
+Arme .> Joueur : "uses"
+'Class Armure Relations
 Armure .> TypeArmure : "«uses»\n m_typeArmure"
+Armure .> Joueur : "uses"
 
 ' Class Donjon Relations
 Donjon "1" o--> "*" Entite : -m_entityOnGround\ncontient des personnages

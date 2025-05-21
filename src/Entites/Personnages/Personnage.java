@@ -2,7 +2,7 @@ package Entites.Personnages;
 
 import Entites.Entite;
 import utils.De;
-import utils.Donjon;
+import deroulement.*;
 import utils.Utils;
 
 import java.util.Scanner;

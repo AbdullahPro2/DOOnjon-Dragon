@@ -137,4 +137,6 @@ public abstract class Personnage extends Entite {
     public void setM_vitesse(int vitesse) {this.m_vitesse = vitesse;}
 
     public void setM_pv(int pv){this.m_pv = pv;}
+
+
 }

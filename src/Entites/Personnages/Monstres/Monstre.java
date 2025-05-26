@@ -29,6 +29,11 @@ public class Monstre extends Personnage {
             ", pv=" + getM_pv() +
             '}';
     }
+    @Override
+    public String getDisplaySymbol() {
+        String nom = getM_race().getM_nom();
+        return nom.equals("Dragon") ? " X(" : " X^";
+    }
 
     public RaceMonstre getM_race() {
         return m_race;
@@ -120,4 +125,8 @@ public class Monstre extends Personnage {
         }
     }
 
+    @Override
+    public boolean isMonstre() {
+        return true;
+    }
 }

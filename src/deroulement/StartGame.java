@@ -4,6 +4,7 @@ import Entites.Entite;
 import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Personnage;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -15,34 +16,106 @@ public class StartGame {
   private ArrayList<Joueur> m_joueurs = new ArrayList<>();
   private ArrayList<Monstre> m_monstres = new ArrayList<>();
   private ArrayList<Personnage> m_initiativeOrder = new ArrayList<>();
-  public  void startGame() {
-    String userChoice = promptDonjonSelection();
-    launchDonjon(userChoice);
-    m_donjon.createDonjon();
-    m_donjon.display();
-    loadCharactersFromDonjon();;
-    m_initiativeOrder.addAll(m_joueurs);
-    m_initiativeOrder.addAll(m_monstres);
-    sortInitiativeOrder();
-    for(Joueur j: m_joueurs)
-    {
-      j.EquiperDepart();
-    }
-    int i = 0;
-    while(!jouerEstMort() && !tousMonstresMorts()) {
-      for (Personnage p : m_initiativeOrder) {
-        if (p.isJoueur()) {
-          Joueur j = (Joueur) p;
-          executerTour(j);
-        } else if (p.isMonstre()) {
-          Monstre m = (Monstre) p;
-          executerTour(m);
+
+  public void startGame() {
+    int[] difficulties = {1, 2, 3}; // 1: Easy, 2: Medium, 3: Hard
+    int tour = 1;
+    for (int difficulty : difficulties) {
+      System.out.println("\n===Donjon " + difficulty + " ===");
+      launchDonjon(difficulty);
+      m_donjon.createDonjon();
+      m_donjon.display();
+
+      m_joueurs.clear();
+      m_monstres.clear();
+      m_initiativeOrder.clear();
+
+      loadCharactersFromDonjon();
+      m_initiativeOrder.addAll(m_joueurs);
+      m_initiativeOrder.addAll(m_monstres);
+      sortInitiativeOrder();
+
+      for (Joueur j : m_joueurs) {
+        j.EquiperDepart();
+      }
+
+      boolean joueurMort = false;
+
+      while (!joueurEstMort() && !tousMonstresMorts()) {
+        for (Personnage p : m_initiativeOrder) {
+          if (p.getM_initiative() <= 0) continue; // skip dead ones
+          if (p.isJoueur()) {
+            Joueur j = (Joueur) p;
+            printTourInformation(difficulty, tour, j);
+            m_donjon.display();
+            executerTour(j);
+          } else if (p.isMonstre()) {
+            Monstre m = (Monstre) p;
+            printTourInformation(difficulty, tour, m);
+            m_donjon.display();
+            executerTour(m);
+          }
+
+          if (joueurEstMort()) {
+            joueurMort = true;
+            break;
+          }
+          tour++;
         }
+
+        if (joueurMort) {
+          break;
+        }
+      }
+
+      if (joueurMort) {
+        System.out.println("\nUn joueur est mort. Fin du jeu !");
+        return;
+      } else {
+        System.out.println("\nTous les monstres ont été vaincus ! Passage au niveau suivant.");
+      }
+    }
+
+    System.out.println("\nFélicitations ! Vous avez terminé tous les donjons !");
+  }
+  private void printTourInformation(int difficulty, int tour, Personnage courant)
+  {
+    System.out.println();
+    System.out.println();
+    System.out.println();
+
+    for(int i = 0; i < m_donjon.m_largeur; i++)
+      System.out.print("***");
+    System.out.println();
+    System.out.println("Donjon : " +  difficulty);
+    System.out.println();
+    for(int i = 0; i < m_donjon.m_largeur; i++)
+      System.out.print("***");
+    System.out.println();
+    System.out.println("Tour: " + tour);
+    for(Personnage p : m_initiativeOrder)
+    {
+      if (p.isJoueur()) {
+        Joueur j = (Joueur) p;
+        if(Objects.equals(courant.getM_nom(), j.getM_nom()))
+        {
+          System.out.println("-> " +j.getM_nom() + " ( " + j.getM_race().getM_nomRace() +  " " + j.getM_classe().getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() +" )");
+        }
+        else
+          System.out.println("   " + j.getM_nom() + " ( " + j.getM_race().getM_nomRace() +  " " + j.getM_classe().getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() +" )");
+        } else if (p.isMonstre()) {
+        Monstre m = (Monstre) p;
+        if(Objects.equals(courant.getM_nom(), m.getM_nom()))
+        {
+          System.out.println("-> " +m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/" + m.getM_pvMax() +" )");
+        }
+        else
+          System.out.println("   " + m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/" + m.getM_pvMax() +" )");
       }
     }
   }
-  private boolean jouerEstMort()
-  {
+
+  private boolean joueurEstMort() {
     for (Joueur j : m_joueurs) {
       if(j.getM_initiative() <= 0)
       {
@@ -51,8 +124,7 @@ public class StartGame {
     }
     return false;
   }
-  private boolean tousMonstresMorts()
-  {
+  private boolean tousMonstresMorts() {
     for (Monstre m : m_monstres) {
       if(m.getM_initiative() > 0)
       {
@@ -61,7 +133,7 @@ public class StartGame {
     }
     return true;
   }
-    private void loadCharactersFromDonjon() {
+  private void loadCharactersFromDonjon() {
       for (Entite e : m_donjon.getM_entityOnGround()) {
         if (e.isJoueur()) {
           m_joueurs.add((Joueur)e);
@@ -70,7 +142,6 @@ public class StartGame {
         }
       }
     }
-
   private void sortInitiativeOrder() {
     for (int i = 0; i < m_initiativeOrder.size() - 1; i++) {
       for (int j = 0; j < m_initiativeOrder.size() - 1 - i; j++) {
@@ -136,59 +207,19 @@ public class StartGame {
 
     System.out.println("Fin du tour de " + p.getM_nom());
   }
-
-
-  /**
-   * Demander l'utilisateur à choisir une difficulté de Donjon jusqu'à ce qu'un choix valide soit donné.
-   * @return Donjon Valide : "1", "2", or "3".
-   */
-  private static String promptDonjonSelection() {
-    Scanner scanner = new Scanner(System.in);
-    String choice;
-    System.out.println("Entrez le numéro du donjon dans lequel vous voulez entrer :");
-    System.out.print("Donjon1 (facile)     Donjon2 (moyen)     Donjon3 (difficile) : ");
-    choice = scanner.nextLine().trim();
-
-    while (!isValidChoice(choice)) {
-      System.out.print("Veuillez répondre \"1\", \"2\" ou \"3\" : ");
-      choice = scanner.nextLine().trim();
-    }
-    return choice;
-  }
-
-  /**
-   * Vérifie si la saisie utilisateur est un numéro de donjon valide.
-   * @param choice La saisie de l'utilisateur.
-   * @return  vrai si c'est "1", "2" ou "3", faux sinon.
-   */
-  private static boolean isValidChoice(String choice) {
-    return Objects.equals(choice, "1") ||
-        Objects.equals(choice, "2") ||
-        Objects.equals(choice, "3");
-  }
-
-  private void launchDonjon(String choice) {
+  private void launchDonjon(int choice) {
     switch (choice) {
-      case "1" -> {
+      case 1 -> {
        this.m_donjon = new EasyDonjon();
       }
-      case "2" -> {
+      case 2 -> {
         this.m_donjon = new MediumDonjon();
       }
-      case "3" -> {
+      case 3 -> {
         this.m_donjon = new HardDonjon();
       }
     }
   }
 
-//  public void determineInitiativeOrder() {
-//    De de = new De(1,20);
-//    for (Entite e : m_donjon.getM_entityOnGround()) {
-//      int roll = de.lanceDe();
-//      if (e.isPersonnage()) {
-//        int initiative = ((Personnage) e).getM_initiative();
-//        System.out.println(initiative + roll);
-//      }
-//    }
-//  }
+
 }

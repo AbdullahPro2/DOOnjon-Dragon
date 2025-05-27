@@ -26,8 +26,7 @@ public class StartGame {
     sortInitiativeOrder();
     for(Joueur j: m_joueurs)
     {
-      j.Equiper();
-      j.Equiper();
+      j.EquiperDepart();
     }
     int i = 0;
     while(!jouerEstMort() && !tousMonstresMorts()) {
@@ -112,7 +111,7 @@ public class StartGame {
           break;
         case "3":
           if (p.isJoueur()) {
-            ((Joueur)p).Equiper();
+            ((Joueur)p).EquiperChoix();
           } else {
             System.out.println("Action non valide.");
             continue;

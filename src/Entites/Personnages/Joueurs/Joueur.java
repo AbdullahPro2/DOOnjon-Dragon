@@ -242,6 +242,36 @@ public class Joueur extends Personnage {
         return m_classe;
     }
 
+
+
+    public int droitlanceSort()
+    {
+        //retourne -1 si le joueur n'a pas accès à des sorts
+        //retourne 0 si le joueur peut au moins lancer un sort
+        if (!m_classe.getM_nomClass().equals("Clercs") || !m_classe.getM_nomClass().equals("Magiciens"))
+        {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    public int demandeSort(){
+        //retourne 1 si le joueur lance Guérison
+        //retourne 2 si le joueur lance Boogie Woogie
+        //retourne 3 si le joueur lance
+        int sortLance=1;
+        if (m_classe.getM_nomClass().equals("Magiciens"))
+        {
+            System.out.println("Quel sort voulez-vous lancer : \n 1) Guerison    2) Boogie Woogie    3) Arme magique");
+            Scanner scanner = new Scanner(System.in);
+            String numSort = scanner.nextLine();  // Lit une ligne de texte
+            sortLance = Integer.parseInt(numSort);
+        }
+        return sortLance;
+    }
+
     @Override
     public String toString() {
         return "Joueur{" +

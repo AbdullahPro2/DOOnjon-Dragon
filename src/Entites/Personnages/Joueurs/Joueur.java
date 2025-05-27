@@ -28,6 +28,11 @@ public class Joueur extends Personnage {
         m_arme = null;
         m_armure = null;
     }
+    @Override
+    public String getDisplaySymbol() {
+        String nom = getM_nom();
+        return nom.length() >= 3 ? nom.substring(0, 3).toUpperCase() : nom.toUpperCase();
+    }
 
     public Armure getM_armure(){
         return m_armure;
@@ -46,12 +51,13 @@ public class Joueur extends Personnage {
 
     public void Equiper()
     {
+        System.out.println("Joueur : " + this.getM_nom());
         Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal
         System.out.print("Veux-tu equiper une arme (1) ou une armue (2) ? ");
         String choix = scanner.nextLine();  // Lit une ligne de texte
         while (!Objects.equals(choix, "1") && !Objects.equals(choix, "2"))
         {
-            System.out.print("Veuillez répondre \"1\" pour une équiper une arme et \"2\" pour une armure");
+            System.out.print("Veuillez répondre \"1\" pour une équiper une arme et \"2\" pour une armure: ");
             choix = scanner.nextLine();  // Lit une ligne de texte
         }
         if (choix.equals("1"))
@@ -62,14 +68,14 @@ public class Joueur extends Personnage {
                 System.out.println(String.valueOf(i+1) + ") " +  armes.get(i).toString());
             }
             int indice = -1;
-            System.out.print("Mettre le numero de l'arme que vous voulez equiper");
+            System.out.print("Mettre le numero de l'arme que vous voulez equiper: ");
             String indiceStr = scanner.nextLine();  // Lit une ligne de texte
             try {
                 indice = Integer.parseInt(indiceStr)-1;
             }
             catch(NumberFormatException e){
                 while(indice == -1) {
-                    System.out.print("Mettez s'il vous plait un numero valide");
+                    System.out.print("Mettez s'il vous plait un numero valide: ");
                     indiceStr = scanner.nextLine();  // Lit une ligne de texte
                     indice = Integer.parseInt(indiceStr)-1;
                 }
@@ -98,14 +104,14 @@ public class Joueur extends Personnage {
                 System.out.println(String.valueOf(i+1) + ") " +  armures.get(i).toString());
             }
             int indice = -1;
-            System.out.print("Mettre le numero de l'armure que vous voulez equiper");
+            System.out.print("Mettre le numero de l'armure que vous voulez equiper : ");
             String indiceStr = scanner.nextLine();  // Lit une ligne de texte
             try {
                 indice = Integer.parseInt(indiceStr)-1;
             }
             catch(NumberFormatException e){
                 while(indice == -1) {
-                    System.out.print("Mettez s'il vous plait un numero valide");
+                    System.out.print("Mettez s'il vous plait un numero valide: ");
                     indiceStr = scanner.nextLine();  // Lit une ligne de texte
                     indice = Integer.parseInt(indiceStr)-1;
                 }
@@ -272,6 +278,10 @@ public class Joueur extends Personnage {
         return sortLance;
     }
 
+    @Override
+    public boolean isJoueur() {
+        return true;
+    }
     @Override
     public String toString() {
         return "Joueur{" +

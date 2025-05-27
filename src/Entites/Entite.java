@@ -20,7 +20,12 @@ public abstract class Entite {
     public boolean estCiblePourMonstre() {
         return false;
     }
-
+    public boolean isJoueur() {
+        return false;
+    }
+    public boolean isMonstre() {
+        return false;
+    }
     public Entite(int x, int y) {
         this.m_x = x;
         this.m_y = y;
@@ -40,6 +45,9 @@ public abstract class Entite {
     public void setPosition(int x, int y) {
         this.m_x = x;
         this.m_y = y;
+    }
+    public String getDisplaySymbol() {
+        return " * "; // default symbol
     }
 
     public boolean estBloquant() {

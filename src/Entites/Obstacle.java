@@ -6,5 +6,9 @@ public class Obstacle extends Entite{
     {
         super(x, y);
     }
+    @Override
+    public String getDisplaySymbol() {
+        return "[ ]";
+    }
 
 }

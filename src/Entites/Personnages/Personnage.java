@@ -2,7 +2,7 @@ package Entites.Personnages;
 
 import Entites.Entite;
 import utils.De;
-import utils.Donjon;
+import deroulement.*;
 import utils.Utils;
 
 import java.util.Scanner;
@@ -137,4 +137,6 @@ public abstract class Personnage extends Entite {
     public void setM_vitesse(int vitesse) {this.m_vitesse = vitesse;}
 
     public void setM_pv(int pv){this.m_pv = pv;}
+
+
 }

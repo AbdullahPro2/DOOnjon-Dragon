@@ -248,6 +248,10 @@ public class Joueur extends Personnage {
         return m_classe;
     }
 
+    public Race getM_race() {
+        return m_race;
+    }
+
     @Override
     public boolean isJoueur() {
         return true;

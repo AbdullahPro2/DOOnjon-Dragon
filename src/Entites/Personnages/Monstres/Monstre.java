@@ -32,7 +32,7 @@ public class Monstre extends Personnage {
     @Override
     public String getDisplaySymbol() {
         String nom = getM_race().getM_nom();
-        return nom.equals("Dragon") ? " X(" : " X^";
+        return nom.equals("Dragon") ? "X("+m_numero : "X^"+m_numero;
     }
 
     public RaceMonstre getM_race() {

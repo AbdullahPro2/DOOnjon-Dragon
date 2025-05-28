@@ -109,8 +109,9 @@ public class Monstre extends Personnage {
             System.out.println("Votre attaque perce l'armure de " + nomJoueur + "(" + classeArmure + ")");
             System.out.println("Vous lancez votre dé de dégats");
             int degats = m_race.getM_deDegats().lanceDePrint();
-            cible.setM_pv(cible.getM_pv()-degats);
-            if (cible.getM_pv() <= 0)
+            int pv = cible.getM_pv();
+            cible.setM_pv(pv-degats);
+            if (pv <= 0)
             {
                 System.out.println("La cible " + cible + " a été tuée !");
 

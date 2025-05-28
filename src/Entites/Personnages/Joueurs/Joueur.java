@@ -71,7 +71,7 @@ public class Joueur extends Personnage {
                     if (indice >= 0 && indice < armes.size()) {
                         valide = true;  // On sortira de la boucle au prochain test
                     } else {
-                        System.out.println("Veuillez entrer un numéro entre 1 et " + armes.size());
+                        System.out.println("Veuillez entrer un numéro valide");
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Ce n'est pas un nombre valide. Essayez encore.");
@@ -117,7 +117,7 @@ public class Joueur extends Personnage {
                         if (indice >= 0 && indice < armures.size()) {
                             valide = true;  // On sortira de la boucle au prochain test
                         } else {
-                            System.out.println("Veuillez entrer un numéro entre 1 et " + armures.size());
+                            System.out.println("Veuillez entrer un numéro valide");
                         }
                     } catch (NumberFormatException e) {
                         System.out.println("Ce n'est pas un nombre valide. Essayez encore.");

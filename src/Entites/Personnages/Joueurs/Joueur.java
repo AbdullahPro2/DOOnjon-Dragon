@@ -49,8 +49,7 @@ public class Joueur extends Personnage {
     }
 
 
-    public void Equiper(String choix)
-    {
+    public void Equiper(String choix) {
         Scanner scanner = new Scanner(System.in);
         if (choix.equals("1"))
         {
@@ -141,8 +140,7 @@ public class Joueur extends Personnage {
         Equiper(choix);
     }
 
-    public void EquiperDepart()
-    {
+    public void EquiperDepart() {
         System.out.println("Joueur : " + this.getM_nom());
         System.out.print("Veuillez equiper une arme\n");
         Equiper("1");
@@ -264,10 +262,7 @@ public class Joueur extends Personnage {
         return m_classe;
     }
 
-
-
-    public int droitlanceSort()
-    {
+    public int droitlanceSort() {
         //retourne -1 si le joueur n'a pas accès à des sorts
         //retourne 0 si le joueur peut au moins lancer un sort
         if (!m_classe.getM_nomClass().equals("Clercs") || !m_classe.getM_nomClass().equals("Magiciens"))
@@ -304,14 +299,13 @@ public class Joueur extends Personnage {
     }
     @Override
     public String toString() {
-        return "Joueur{" +
-                "nom='" + super.getM_nom() + '\'' +
-                ", race=" + m_race.toString() +
-                ", classe=" + m_classe.toString() +
-                ", force=" + getM_force() +
-                ", dexterite=" + getM_dexterite() +
-                ", vitesse=" + getM_vitesse() +
-                ", pv=" + getM_pv() +
-                '}';
+        return super.getM_nom() + '\n' +
+            "pv : " + getM_pv() + '\n' +
+            "Armure : " + (this.m_arme != null ? this.m_arme.toString() : " ") + '\n' +
+            "race : " + m_race.toString() + '\n' +
+            "classe : " + m_classe.toString() + '\n' +
+            "force : " + getM_force() + '\n' +
+            "dexterite : " + getM_dexterite() + '\n' +
+            "vitesse : " + getM_vitesse() + '\n';
     }
 }

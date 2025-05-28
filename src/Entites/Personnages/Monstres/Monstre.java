@@ -99,7 +99,11 @@ public class Monstre extends Personnage {
         int resultDe = deAttaque.lanceDePrint();
         int degatsArmure = resultDe + m_race.getM_degats();
         System.out.println("Votre attaque est de " + resultDe + " + " + getM_race().getM_degats() + " = " + degatsArmure);
-        int classeArmure = cible.getM_armure().getM_classeArmure();
+        int classeArmure=0;
+        if (cible.getM_armure()!=null)
+        {
+            classeArmure = cible.getM_armure().getM_classeArmure();
+        }
         if (degatsArmure > classeArmure)
         {
             System.out.println("Votre attaque perce l'armure de " + nomJoueur + "(" + classeArmure + ")");

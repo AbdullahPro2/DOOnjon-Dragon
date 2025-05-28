@@ -37,9 +37,8 @@ public abstract class Personnage extends Entite {
     }
 
     public void SeDeplacer(Donjon donjon) {
-        Scanner scanner = new Scanner(System.in);
-        int maxX = donjon.getM_largeur();
-        int maxY = donjon.getM_longueur();
+        int maxX = donjon.getM_longueur();
+        int maxY = donjon.getM_largeur();
         int[] tabCoord = saisirPositionValide(maxX, maxY);
         int x = tabCoord[0];
         int y = tabCoord[1];
@@ -51,13 +50,13 @@ public abstract class Personnage extends Entite {
             y = tabCoord[1];
         }
         // Une fois la position valide et libre, on affecte la nouvelle position
-        setPosition(x, y);
-        commenterDeplacement(x,y);
+        setPosition(y, x);
+        commenterDeplacement(y,x);
     }
 
     public void commenterDeplacement(int x, int y)
     {
-        System.out.println(m_nom + " se place sur la case" + dico2.get(y)+x);
+        System.out.println(m_nom + " se place sur la case " + dico2.get(y)+x);
     }
 
     public int[] saisirPositionValide(int maxX, int maxY) {
@@ -93,7 +92,7 @@ public abstract class Personnage extends Entite {
 
             // Vérifie le chiffre (doit être un nombre entre 0 et nombre de lignes-1)
             if (Character.isDigit(chiffre)) {
-                y = chiffre - '0';  // Convertit '2' → 2, etc.
+                y = (chiffre - '0') -1;  // Convertit '2' → 1, etc.
                 if (y < 0 || y > maxY) {
                     System.out.println("Chiffre invalide. Veuillez entrer un nombre qui se trouve sur la grille.");
                     y = -1;  // Réinitialisation pour continuer la boucle

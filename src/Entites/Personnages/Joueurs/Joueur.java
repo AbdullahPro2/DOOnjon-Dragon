@@ -49,17 +49,9 @@ public class Joueur extends Personnage {
     }
 
 
-    public void Equiper()
+    public void Equiper(String choix)
     {
-        System.out.println("Joueur : " + this.getM_nom());
-        Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal
-        System.out.print("Veux-tu equiper une arme (1) ou une armue (2) ? ");
-        String choix = scanner.nextLine();  // Lit une ligne de texte
-        while (!Objects.equals(choix, "1") && !Objects.equals(choix, "2"))
-        {
-            System.out.print("Veuillez répondre \"1\" pour une équiper une arme et \"2\" pour une armure: ");
-            choix = scanner.nextLine();  // Lit une ligne de texte
-        }
+        Scanner scanner = new Scanner(System.in);
         if (choix.equals("1"))
         {
             ArrayList<Arme> armes = m_classe.getM_armes();
@@ -68,14 +60,18 @@ public class Joueur extends Personnage {
                 System.out.println(String.valueOf(i+1) + ") " +  armes.get(i).toString());
             }
             int indice = -1;
+            String indiceStr="-1";
             System.out.print("Mettre le numero de l'arme que vous voulez equiper: ");
-            String indiceStr = scanner.nextLine();  // Lit une ligne de texte
+            while (0 > indice || indice > armes.size()) {
+                System.out.print("Entrez s'il vous plait un numero valide: ");
+                indiceStr = scanner.nextLine();  // Lit une ligne de texte
+            }
             try {
                 indice = Integer.parseInt(indiceStr)-1;
             }
             catch(NumberFormatException e){
-                while(indice == -1) {
-                    System.out.print("Mettez s'il vous plait un numero valide: ");
+                while(0 > indice || indice >armes.size()) {
+                    System.out.print("Entrez s'il vous plait un numero valide: ");
                     indiceStr = scanner.nextLine();  // Lit une ligne de texte
                     indice = Integer.parseInt(indiceStr)-1;
                 }
@@ -98,39 +94,59 @@ public class Joueur extends Personnage {
         }
         else
         {
+            System.out.print("Veuillez equiper une armure\n");
             ArrayList<Armure> armures = m_classe.getM_armures();
-            for (int i=0; i<armures.size();i++)
-            {
-                System.out.println(String.valueOf(i+1) + ") " +  armures.get(i).toString());
-            }
-            int indice = -1;
-            System.out.print("Mettre le numero de l'armure que vous voulez equiper : ");
-            String indiceStr = scanner.nextLine();  // Lit une ligne de texte
-            try {
-                indice = Integer.parseInt(indiceStr)-1;
-            }
-            catch(NumberFormatException e){
-                while(indice == -1) {
-                    System.out.print("Mettez s'il vous plait un numero valide: ");
-                    indiceStr = scanner.nextLine();  // Lit une ligne de texte
-                    indice = Integer.parseInt(indiceStr)-1;
+            int lenArmures = armures.size();
+            if (lenArmures > 0) {
+                for (int i = 0; i < lenArmures; i++) {
+                    System.out.println(String.valueOf(i + 1) + ") " + armures.get(i).toString());
                 }
-            }
-            if (m_armure!=null)
-            {
-                if (m_armure.getM_typeArmure() == TypeArmure.LOURDE)
-                {
-                    super.setM_vitesse(super.getM_vitesse()+4);
+                int indice = -1;
+                System.out.print("Mettre le numero de l'armure que vous voulez equiper : ");
+                String indiceStr = scanner.nextLine();  // Lit une ligne de texte
+                try {
+                    indice = Integer.parseInt(indiceStr) - 1;
+                } catch (NumberFormatException e) {
+                    while (indice == -1) {
+                        System.out.print("Mettez s'il vous plait un numero valide: ");
+                        indiceStr = scanner.nextLine();  // Lit une ligne de texte
+                        indice = Integer.parseInt(indiceStr) - 1;
+                    }
                 }
+                if (m_armure != null) {
+                    if (m_armure.getM_typeArmure() == TypeArmure.LOURDE) {
+                        super.setM_vitesse(super.getM_vitesse() + 4);
+                    }
 
-            }
-            m_armure = armures.get(indice);
-            if (m_armure.getM_typeArmure() == TypeArmure.LOURDE)
-            {
-                super.setM_vitesse(super.getM_vitesse()-4);
+                }
+                m_armure = armures.get(indice);
+                if (m_armure.getM_typeArmure() == TypeArmure.LOURDE) {
+                    super.setM_vitesse(super.getM_vitesse() - 4);
+                }
             }
         }
 
+    }
+
+    public void EquiperChoix() {
+        System.out.println("Joueur : " + this.getM_nom());
+        Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal
+        System.out.print("Veux-tu equiper une arme (1) ou une armure (2) ? ");
+        String choix = scanner.nextLine();  // Lit une ligne de texte
+        while (!Objects.equals(choix, "1") && !Objects.equals(choix, "2"))
+        {
+            System.out.print("Veuillez répondre \"1\" pour une équiper une arme et \"2\" pour une armure: ");
+            choix = scanner.nextLine();  // Lit une ligne de texte
+        }
+        Equiper(choix);
+    }
+
+    public void EquiperDepart()
+    {
+        System.out.println("Joueur : " + this.getM_nom());
+        System.out.print("Veuillez equiper une arme\n");
+        Equiper("1");
+        Equiper("2");
     }
 
     @Override
@@ -246,6 +262,36 @@ public class Joueur extends Personnage {
 
     public ClasseJoueur getM_classe() {
         return m_classe;
+    }
+
+
+
+    public int droitlanceSort()
+    {
+        //retourne -1 si le joueur n'a pas accès à des sorts
+        //retourne 0 si le joueur peut au moins lancer un sort
+        if (!m_classe.getM_nomClass().equals("Clercs") || !m_classe.getM_nomClass().equals("Magiciens"))
+        {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    public int demandeSort(){
+        //retourne 1 si le joueur lance Guérison
+        //retourne 2 si le joueur lance Boogie Woogie
+        //retourne 3 si le joueur lance
+        int sortLance=1;
+        if (m_classe.getM_nomClass().equals("Magiciens"))
+        {
+            System.out.println("Quel sort voulez-vous lancer : \n 1) Guerison    2) Boogie Woogie    3) Arme magique");
+            Scanner scanner = new Scanner(System.in);
+            String numSort = scanner.nextLine();  // Lit une ligne de texte
+            sortLance = Integer.parseInt(numSort);
+        }
+        return sortLance;
     }
 
     public Race getM_race() {

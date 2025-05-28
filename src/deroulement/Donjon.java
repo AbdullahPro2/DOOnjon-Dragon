@@ -16,7 +16,7 @@ public abstract class Donjon {
   protected int m_longueur;
   protected int m_largeur;
   protected ArrayList<Entite> m_entityOnGround;
-  Scanner scanner = new Scanner(System.in);
+  private Scanner scanner = new Scanner(System.in);
 
   public Donjon(int longueur, int largeur) {
 

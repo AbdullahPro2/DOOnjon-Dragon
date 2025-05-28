@@ -78,8 +78,7 @@ public class StartGame {
 
     System.out.println("\nFélicitations ! Vous avez terminé tous les donjons !");
   }
-  private void printTourInformation(int difficulty, int tour, Personnage courant)
-  {
+  private void printTourInformation(int difficulty, int tour, Personnage courant) {
     System.out.println();
     System.out.println();
     System.out.println();
@@ -220,6 +219,4 @@ public class StartGame {
       }
     }
   }
-
-
 }

@@ -153,8 +153,7 @@ public class Joueur extends Personnage {
         equiper(choix);
     }
 
-    public void equiperDepart()
-    {
+    public void equiperDepart() {
         System.out.println("Joueur : " + this.getM_nom());
         System.out.print("Veuillez equiper une arme\n");
         equiper("1");
@@ -316,14 +315,13 @@ public class Joueur extends Personnage {
     }
     @Override
     public String toString() {
-        return "Joueur{" +
-                "nom='" + super.getM_nom() + '\'' +
-                ", race=" + m_race.toString() +
-                ", classe=" + m_classe.toString() +
-                ", force=" + getM_force() +
-                ", dexterite=" + getM_dexterite() +
-                ", vitesse=" + getM_vitesse() +
-                ", pv=" + getM_pv() +
-                '}';
+        return super.getM_nom() + '\n' +
+            "pv : " + getM_pv() + '\n' +
+            "Armure : " + (this.m_arme != null ? this.m_arme.toString() : " ") + '\n' +
+            "race : " + m_race.toString() + '\n' +
+            "classe : " + m_classe.toString() + '\n' +
+            "force : " + getM_force() + '\n' +
+            "dexterite : " + getM_dexterite() + '\n' +
+            "vitesse : " + getM_vitesse() + '\n';
     }
 }

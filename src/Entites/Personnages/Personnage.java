@@ -63,49 +63,56 @@ public abstract class Personnage extends Entite {
         Scanner scanner = new Scanner(System.in);
         int x = -1;
         int y = -1;
+        boolean valide = false;
 
-        // Boucle jusqu'à ce que l'utilisateur entre une position valide
-        while (x == -1 || y == -1) {
-            System.out.print("Donner la position à laquelle vous voulez vous déplacer (exemple : A2 ou E6) : ");
+        while (!valide) {
+            System.out.print("Donner la position à laquelle vous voulez vous déplacer (exemple : A2 ou E16) : ");
             String pos = scanner.nextLine().trim();
 
-            // Vérifie que l'entrée est au moins de la forme "lettre" + "chiffre"
-            if (pos.length() < 2) {
-                System.out.println("Entrée invalide. Veuillez utiliser le format \"lettre\"\"chiffre\" (ex : A2).");
+            if (pos.length() < 2 ) {
+                System.out.println("Entrée invalide. Utilisez le format 'lettre' + 'chiffre' (ex: B4, J12, ...).");
                 continue;
             }
 
             char lettre = pos.charAt(0);
-            char chiffre = pos.charAt(1);
+            String chiffreStr = pos.substring(1);  // Gère aussi les positions comme A10
 
-            // Vérifie la lettre (doit être une clé valide dans le dictionnaire)
-            if (Utils.dico.containsKey(lettre)) {
-                x = Utils.dico.get(lettre);
-                if (x < 0 || x > maxX) {
-                    System.out.println("Lettre invalide. Veuillez entrer une lettre qui se trouve sur la grille.");
-                    x = -1;  // Réinitialisation pour continuer la boucle
-                }
-            } else {
-                System.out.println("Lettre invalide. Veuillez entrer une lettre qui se trouve sur la grille.");
-                x = -1;  // Réinitialisation pour continuer la boucle
+            if (!Utils.dico.containsKey(lettre)) {
+                System.out.println("Lettre invalide. Elle ne correspond à aucune colonne de la grille.");
+                continue;
             }
 
-            // Vérifie le chiffre (doit être un nombre entre 0 et nombre de lignes-1)
-            if (Character.isDigit(chiffre)) {
-                y = (chiffre - '0') -1;  // Convertit '2' → 1, etc.
-                if (y < 0 || y > maxY) {
-                    System.out.println("Chiffre invalide. Veuillez entrer un nombre qui se trouve sur la grille.");
-                    y = -1;  // Réinitialisation pour continuer la boucle
-                }
-            } else {
-                System.out.println("Chiffre invalide. Veuillez entrer un nombre qui se trouve sur la grille.");
-                y = -1;  // Réinitialisation pour continuer la boucle
+            x = Utils.dico.get(lettre);
+            if (x < 0 || x > maxX) {
+                System.out.println("Lettre invalide. Elle est en dehors des limites de la grille.");
+                continue;
             }
+
+            try {
+                y = Integer.parseInt(chiffreStr) - 1;  // Convertit "2" → 1, "10" → 9, etc.
+            } catch (NumberFormatException e) {
+                System.out.println("Chiffre invalide. Ce n'est pas un nombre.");
+                continue;
+            }
+
+            if (y < 0 || y > maxY) {
+                System.out.println("Chiffre invalide. Il est en dehors des limites de la grille.");
+                continue;
+            }
+
+            int distance = Math.abs(getM_x() - x) + Math.abs(getM_y() - y);
+            if (distance > m_vitesse) {
+                System.out.println("Position trop éloignée. Votre vitesse ne vous permet pas d'y aller.");
+                continue;
+            }
+
+            // Tous les tests sont passés
+            valide = true;
         }
 
-        // Retourne les coordonnées valides
         return new int[] { x, y };
     }
+
 
     public abstract void attaquer();
 

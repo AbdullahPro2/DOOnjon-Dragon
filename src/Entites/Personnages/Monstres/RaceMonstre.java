@@ -4,6 +4,7 @@ import utils.De;
 
 public class RaceMonstre {
     private String m_nom;
+    private int m_pv;
     private int m_classeArmure;
     private int m_portee;
     private int m_degats;

@@ -36,7 +36,7 @@ public class StartGame {
       sortInitiativeOrder();
 
       for (Joueur j : m_joueurs) {
-        j.EquiperDepart();
+        j.equiperDepart();
       }
 
       boolean joueurMort = false;
@@ -78,8 +78,7 @@ public class StartGame {
 
     System.out.println("\nFélicitations ! Vous avez terminé tous les donjons !");
   }
-  private void printTourInformation(int difficulty, int tour, Personnage courant)
-  {
+  private void printTourInformation(int difficulty, int tour, Personnage courant) {
     System.out.println();
     System.out.println();
     System.out.println();
@@ -182,7 +181,7 @@ public class StartGame {
           break;
         case "3":
           if (p.isJoueur()) {
-            ((Joueur)p).EquiperChoix();
+            ((Joueur)p).equiperChoix();
           } else {
             System.out.println("Action non valide.");
             continue;
@@ -220,6 +219,4 @@ public class StartGame {
       }
     }
   }
-
-
 }

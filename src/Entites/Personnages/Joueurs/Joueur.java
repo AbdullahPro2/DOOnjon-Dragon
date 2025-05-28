@@ -49,7 +49,7 @@ public class Joueur extends Personnage {
     }
 
 
-    public void Equiper(String choix) {
+    public void equiper(String choix) {
         Scanner scanner = new Scanner(System.in);
         if (choix.equals("1"))
         {
@@ -139,7 +139,7 @@ public class Joueur extends Personnage {
 
     }
 
-    public void EquiperChoix() {
+    public void equiperChoix() {
         System.out.println("Joueur : " + this.getM_nom());
         Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal
         System.out.print("Veux-tu equiper une arme (1) ou une armure (2) ? ");
@@ -149,14 +149,14 @@ public class Joueur extends Personnage {
             System.out.print("Veuillez répondre \"1\" pour une équiper une arme et \"2\" pour une armure: ");
             choix = scanner.nextLine();  // Lit une ligne de texte
         }
-        Equiper(choix);
+        equiper(choix);
     }
 
-    public void EquiperDepart() {
+    public void equiperDepart() {
         System.out.println("Joueur : " + this.getM_nom());
         System.out.print("Veuillez equiper une arme\n");
-        Equiper("1");
-        Equiper("2");
+        equiper("1");
+        equiper("2");
     }
 
     @Override

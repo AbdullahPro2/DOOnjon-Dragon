@@ -49,7 +49,8 @@ public class Joueur extends Personnage {
     }
 
 
-    public void equiper(String choix) {
+    public void equiper(String choix)
+    {
         Scanner scanner = new Scanner(System.in);
         if (choix.equals("1"))
         {
@@ -274,7 +275,10 @@ public class Joueur extends Personnage {
         return m_classe;
     }
 
-    public int droitlanceSort() {
+
+
+    public int droitlanceSort()
+    {
         //retourne -1 si le joueur n'a pas accès à des sorts
         //retourne 0 si le joueur peut au moins lancer un sort
         if (!m_classe.getM_nomClass().equals("Clercs") || !m_classe.getM_nomClass().equals("Magiciens"))

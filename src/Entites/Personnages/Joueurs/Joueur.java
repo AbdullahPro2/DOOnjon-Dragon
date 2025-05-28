@@ -60,14 +60,18 @@ public class Joueur extends Personnage {
                 System.out.println(String.valueOf(i+1) + ") " +  armes.get(i).toString());
             }
             int indice = -1;
+            String indiceStr="-1";
             System.out.print("Mettre le numero de l'arme que vous voulez equiper: ");
-            String indiceStr = scanner.nextLine();  // Lit une ligne de texte
+            while (0 > indice || indice > armes.size()) {
+                System.out.print("Entrez s'il vous plait un numero valide: ");
+                indiceStr = scanner.nextLine();  // Lit une ligne de texte
+            }
             try {
                 indice = Integer.parseInt(indiceStr)-1;
             }
             catch(NumberFormatException e){
-                while(indice == -1) {
-                    System.out.print("Mettez s'il vous plait un numero valide: ");
+                while(0 > indice || indice >armes.size()) {
+                    System.out.print("Entrez s'il vous plait un numero valide: ");
                     indiceStr = scanner.nextLine();  // Lit une ligne de texte
                     indice = Integer.parseInt(indiceStr)-1;
                 }

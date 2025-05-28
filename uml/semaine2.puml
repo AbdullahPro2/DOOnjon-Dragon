@@ -1,6 +1,5 @@
 @startuml
 'https://plantuml.com/use-case-diagram
-!theme cerulean
 skinparam style strictuml
 skinparam classFontStyle Bold
 skinparam classAttributeIconSize 0

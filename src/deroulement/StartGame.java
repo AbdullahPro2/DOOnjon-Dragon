@@ -36,7 +36,7 @@ public class StartGame {
       sortInitiativeOrder();
 
       for (Joueur j : m_joueurs) {
-        j.EquiperDepart();
+        j.equiperDepart();
       }
 
       boolean joueurMort = false;
@@ -182,7 +182,7 @@ public class StartGame {
           break;
         case "3":
           if (p.isJoueur()) {
-            ((Joueur)p).EquiperChoix();
+            ((Joueur)p).equiperChoix();
           } else {
             System.out.println("Action non valide.");
             continue;

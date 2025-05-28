@@ -97,7 +97,9 @@ package Entites{
             class Joueur{
                 +<<create>>Joueur(nom : String, classe : Classe, race : Race, x : Integer, y : Integer)
                 +setPosition(x : Integer, y : Integer)
-                +Equiper()
+                +equiper(choix : String)
+                +equiperChoix()
+                +equiperDepart()
                 +attaquer()
                 +ramasser()
                 +estCiblePourMonstre() : boolean

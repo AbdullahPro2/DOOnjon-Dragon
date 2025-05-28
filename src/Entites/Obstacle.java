@@ -8,7 +8,7 @@ public class Obstacle extends Entite{
     }
     @Override
     public String getDisplaySymbol() {
-        return "[ ]";
+        return "▓▓▓"; // Bright black background
     }
 
 }

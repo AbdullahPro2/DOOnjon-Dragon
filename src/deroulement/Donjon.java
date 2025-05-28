@@ -90,7 +90,7 @@ public abstract class Donjon {
   private void printLine() {
     System.out.print("   *");
     for (int i = 0; i < m_longueur; i++) {
-      System.out.print("---");
+      System.out.print("───");
     }
     System.out.println("*");
   }
@@ -104,7 +104,7 @@ public abstract class Donjon {
     printLine();
 
     for (int i = 0; i < m_largeur; i++) {
-      System.out.printf("%2d |", i + 1);
+      System.out.printf("%2d │", i + 1);
       for (int j = 0; j < m_longueur; j++) {
         boolean printed = false;
         for (Entite entity : m_entityOnGround) {
@@ -118,7 +118,7 @@ public abstract class Donjon {
           System.out.print(" . ");
         }
       }
-      System.out.println("|");
+      System.out.println("│");
     }
     printLine();
   }

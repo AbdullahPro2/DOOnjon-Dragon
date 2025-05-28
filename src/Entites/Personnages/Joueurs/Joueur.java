@@ -60,22 +60,26 @@ public class Joueur extends Personnage {
                 System.out.println(String.valueOf(i+1) + ") " +  armes.get(i).toString());
             }
             int indice = -1;
-            String indiceStr="-1";
-            System.out.print("Mettre le numero de l'arme que vous voulez equiper: ");
-            while (0 > indice || indice > armes.size()) {
-                System.out.print("Entrez s'il vous plait un numero valide: ");
-                indiceStr = scanner.nextLine();  // Lit une ligne de texte
-            }
-            try {
-                indice = Integer.parseInt(indiceStr)-1;
-            }
-            catch(NumberFormatException e){
-                while(0 > indice || indice >armes.size()) {
-                    System.out.print("Entrez s'il vous plait un numero valide: ");
-                    indiceStr = scanner.nextLine();  // Lit une ligne de texte
-                    indice = Integer.parseInt(indiceStr)-1;
+            boolean valide = false;
+
+            while (!valide) {
+                System.out.print("Mettre le numero de l'arme que vous voulez equiper: ");
+                String indiceStr = scanner.nextLine();  // Lit une ligne de texte
+
+                try {
+                    indice = Integer.parseInt(indiceStr) - 1;
+                    if (indice >= 0 && indice < armes.size()) {
+                        valide = true;  // On sortira de la boucle au prochain test
+                    } else {
+                        System.out.println("Veuillez entrer un numéro entre 1 et " + armes.size());
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Ce n'est pas un nombre valide. Essayez encore.");
                 }
             }
+
+            // À ce stade, indice est un entier valide entre 0 et armes.size() - 1
+            System.out.println("Vous avez choisi l'arme : " + armes.get(indice).getM_nom());
             if (m_arme!=null)
             {
                 if (m_arme.getM_typeArme() == TypeArme.GUERRE)
@@ -102,17 +106,25 @@ public class Joueur extends Personnage {
                     System.out.println(String.valueOf(i + 1) + ") " + armures.get(i).toString());
                 }
                 int indice = -1;
-                System.out.print("Mettre le numero de l'armure que vous voulez equiper : ");
-                String indiceStr = scanner.nextLine();  // Lit une ligne de texte
-                try {
-                    indice = Integer.parseInt(indiceStr) - 1;
-                } catch (NumberFormatException e) {
-                    while (indice == -1) {
-                        System.out.print("Mettez s'il vous plait un numero valide: ");
-                        indiceStr = scanner.nextLine();  // Lit une ligne de texte
+                boolean valide = false;
+
+                while (!valide) {
+                    System.out.print("Mettre le numero de l'armure que vous voulez equiper: ");
+                    String indiceStr = scanner.nextLine();  // Lit une ligne de texte
+
+                    try {
                         indice = Integer.parseInt(indiceStr) - 1;
+                        if (indice >= 0 && indice < armures.size()) {
+                            valide = true;  // On sortira de la boucle au prochain test
+                        } else {
+                            System.out.println("Veuillez entrer un numéro entre 1 et " + armures.size());
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Ce n'est pas un nombre valide. Essayez encore.");
                     }
                 }
+                // À ce stade, indice est un entier valide entre 0 et armes.size() - 1
+                System.out.println("Vous avez choisi l'armure : " + armures.get(indice).getM_nom());
                 if (m_armure != null) {
                     if (m_armure.getM_typeArmure() == TypeArmure.LOURDE) {
                         super.setM_vitesse(super.getM_vitesse() + 4);

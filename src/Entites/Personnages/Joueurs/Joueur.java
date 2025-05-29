@@ -246,12 +246,12 @@ public class Joueur extends Personnage {
             else
             {
                 System.out.println("Le " + nomMonstre + " subit " + degats + " degats");
-                System.out.println("Il lui reste " + cible.getM_race().getM_pv() + " PV");
+                System.out.println("Il lui reste " + cible.getM_pv() + " PV");
             }
         }
         else{
             System.out.println("Votre attaque ne perce pas l'armure de " + nomMonstre + "(" + classeArmure + ")");
-            System.out.println(nomMonstre + "ne subit aucun degats");
+            System.out.println(nomMonstre + " ne subit aucun degats");
         }
     }
 

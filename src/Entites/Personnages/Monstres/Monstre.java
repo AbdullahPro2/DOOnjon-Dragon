@@ -126,7 +126,7 @@ public class Monstre extends Personnage {
         }
         else{
             System.out.println("Votre attaque ne perce pas l'armure de " + nomJoueur + "(" + classeArmure + ")");
-            System.out.println(nomJoueur + "ne subit aucun degats");
+            System.out.println(nomJoueur + " ne subit aucun degats");
         }
     }
 

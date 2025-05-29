@@ -93,9 +93,6 @@ public class MediumDonjon extends Donjon {
     Armure armureEcailles = new Armure(TypeArmure.LEGERE, "armure d'écailles", 9, 17, 1);
     Armure cotteMailles = new Armure(TypeArmure.LOURDE, "cotte de mailles", 11, 17, 8);
 
-    // Jouer cree les joueurs
-    createPlayers(4);
-
     // Ajout sur la carte
     addEntityOnGround(m1);
     addEntityOnGround(m2);

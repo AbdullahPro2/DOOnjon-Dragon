@@ -1,7 +1,9 @@
 package deroulement;
 
 import Entites.Entite;
+import Entites.Personnages.Joueurs.ClasseJoueur;
 import Entites.Personnages.Joueurs.Joueur;
+import Entites.Personnages.Joueurs.Race;
 import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Personnage;
 import java.sql.SQLOutput;
@@ -16,17 +18,20 @@ public class StartGame {
   private ArrayList<Joueur> m_joueurs = new ArrayList<>();
   private ArrayList<Monstre> m_monstres = new ArrayList<>();
   private ArrayList<Personnage> m_initiativeOrder = new ArrayList<>();
+  private Scanner scanner = new Scanner(System.in);
+
 
   public void startGame() {
     int[] difficulties = {1, 2, 3}; // 1: Easy, 2: Medium, 3: Hard
     int tour = 1;
+    createPlayers(4);
     for (int difficulty : difficulties) {
       System.out.println("\n===Donjon " + difficulty + " ===");
       launchDonjon(difficulty);
       m_donjon.createDonjon();
+      ajouterJoueurs();
       m_donjon.display();
 
-      m_joueurs.clear();
       m_monstres.clear();
       m_initiativeOrder.clear();
 
@@ -34,7 +39,6 @@ public class StartGame {
       m_initiativeOrder.addAll(m_joueurs);
       m_initiativeOrder.addAll(m_monstres);
       sortInitiativeOrder();
-
       for (Joueur j : m_joueurs) {
         j.equiperDepart();
       }
@@ -43,7 +47,8 @@ public class StartGame {
 
       while (!joueurEstMort() && !tousMonstresMorts()) {
         for (Personnage p : m_initiativeOrder) {
-          if (p.getM_initiative() <= 0) continue; // skip dead ones
+          if (p.getM_pv() <= 0)
+            continue; // skip dead ones
           if (p.isJoueur()) {
             Joueur j = (Joueur) p;
             printTourInformation(difficulty, tour, j);
@@ -78,73 +83,86 @@ public class StartGame {
 
     System.out.println("\nFélicitations ! Vous avez terminé tous les donjons !");
   }
+
+  private void ajouterJoueurs()
+  {
+    for(int i = 0; i < m_joueurs.size(); i++)
+    {
+      int pos[] = m_donjon.getStartingCoordinates(i);
+      m_joueurs.get(i).setPosition(pos[0], pos[1]);
+      m_donjon.addEntityOnGround(m_joueurs.get(i));
+    }
+  }
   private void printTourInformation(int difficulty, int tour, Personnage courant) {
     System.out.println();
     System.out.println();
     System.out.println();
 
-    for(int i = 0; i < m_donjon.m_largeur; i++)
+    for (int i = 0; i < m_donjon.m_largeur; i++)
       System.out.print("***");
     System.out.println();
-    System.out.println("Donjon : " +  difficulty);
+    System.out.println("Donjon : " + difficulty);
     System.out.println();
-    for(int i = 0; i < m_donjon.m_largeur; i++)
+    for (int i = 0; i < m_donjon.m_largeur; i++)
       System.out.print("***");
     System.out.println();
     System.out.println("Tour: " + tour);
-    for(Personnage p : m_initiativeOrder)
-    {
+    for (Personnage p : m_initiativeOrder) {
       if (p.isJoueur()) {
         Joueur j = (Joueur) p;
-        if(Objects.equals(courant.getM_nom(), j.getM_nom()))
-        {
-          System.out.println("-> " +j.getM_nom() + " ( " + j.getM_race().getM_nomRace() +  " " + j.getM_classe().getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() +" )");
-        }
-        else
-          System.out.println("   " + j.getM_nom() + " ( " + j.getM_race().getM_nomRace() +  " " + j.getM_classe().getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() +" )");
-        } else if (p.isMonstre()) {
+        if (Objects.equals(courant.getM_nom(), j.getM_nom())) {
+          System.out.println(
+              "-> " + j.getM_nom() + " ( " + j.getM_race().getM_nomRace() + " " + j.getM_classe()
+                  .getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() + " )");
+        } else
+          System.out.println(
+              "   " + j.getM_nom() + " ( " + j.getM_race().getM_nomRace() + " " + j.getM_classe()
+                  .getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() + " )");
+      } else if (p.isMonstre()) {
         Monstre m = (Monstre) p;
-        if(Objects.equals(courant.getM_nom(), m.getM_nom()))
-        {
-          System.out.println("-> " +m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/" + m.getM_pvMax() +" )");
-        }
-        else
-          System.out.println("   " + m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/" + m.getM_pvMax() +" )");
+        if (Objects.equals(courant.getM_nom(), m.getM_nom())) {
+          System.out.println(
+              "-> " + m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/"
+                  + m.getM_pvMax() + " )");
+        } else
+          System.out.println(
+              "   " + m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/"
+                  + m.getM_pvMax() + " )");
       }
     }
   }
 
   private boolean joueurEstMort() {
     for (Joueur j : m_joueurs) {
-      if(j.getM_initiative() <= 0)
-      {
+      if (j.getM_initiative() <= 0) {
         return true;
       }
     }
     return false;
   }
+
   private boolean tousMonstresMorts() {
     for (Monstre m : m_monstres) {
-      if(m.getM_initiative() > 0)
-      {
+      if (m.getM_initiative() > 0) {
         return false;
       }
     }
     return true;
   }
+
   private void loadCharactersFromDonjon() {
-      for (Entite e : m_donjon.getM_entityOnGround()) {
-        if (e.isJoueur()) {
-          m_joueurs.add((Joueur)e);
-        } else if (e.isMonstre()) {
-          m_monstres.add((Monstre) e);
-        }
+    for (Entite e : m_donjon.getM_entityOnGround()) {
+     if (e.isMonstre()) {
+        m_monstres.add((Monstre) e);
       }
     }
+  }
+
   private void sortInitiativeOrder() {
     for (int i = 0; i < m_initiativeOrder.size() - 1; i++) {
       for (int j = 0; j < m_initiativeOrder.size() - 1 - i; j++) {
-        if (m_initiativeOrder.get(j).getM_initiative() < m_initiativeOrder.get(j + 1).getM_initiative()) {
+        if (m_initiativeOrder.get(j).getM_initiative() < m_initiativeOrder.get(j + 1)
+            .getM_initiative()) {
           Personnage temp = m_initiativeOrder.get(j);
           m_initiativeOrder.set(j, m_initiativeOrder.get(j + 1));
           m_initiativeOrder.set(j + 1, temp);
@@ -152,6 +170,7 @@ public class StartGame {
       }
     }
   }
+
   private void executerTour(Personnage p) {
     Scanner scanner = new Scanner(System.in);
     int actionsRestantes = 3;
@@ -181,7 +200,7 @@ public class StartGame {
           break;
         case "3":
           if (p.isJoueur()) {
-            ((Joueur)p).equiperChoix();
+            ((Joueur) p).equiperChoix();
           } else {
             System.out.println("Action non valide.");
             continue;
@@ -189,7 +208,7 @@ public class StartGame {
           break;
         case "4":
           if (p.isJoueur()) {
-            ((Joueur)p).ramasser();
+            ((Joueur) p).ramasser();
           } else {
             System.out.println("Action non valide.");
             continue;
@@ -206,10 +225,11 @@ public class StartGame {
 
     System.out.println("Fin du tour de " + p.getM_nom());
   }
+
   private void launchDonjon(int choice) {
     switch (choice) {
       case 1 -> {
-       this.m_donjon = new EasyDonjon();
+        this.m_donjon = new EasyDonjon();
       }
       case 2 -> {
         this.m_donjon = new MediumDonjon();
@@ -219,4 +239,82 @@ public class StartGame {
       }
     }
   }
+
+// Jouer cree les joueurs
+
+  // Ajouter nouveau joueur
+  public void createPlayers(int nbJoueurs) {
+    for (int i = 0; i < nbJoueurs; i++) {
+      String nom = askPlayerName(i);
+      Race race = askRace(nom);
+      ClasseJoueur classe = askClass(nom);
+      Joueur j = new Joueur(nom, race, classe, 0, 0);
+      m_joueurs.add(j);
+    }
+  }
+
+  // Demander joueur nom
+  protected String askPlayerName(int i) {
+    String nom = "";
+    do {
+      System.out.print("Entrez le nom du joueur " + (i + 1) + " : ");
+      nom = scanner.nextLine().trim();
+      if (nom.length() < 3) {
+        System.out.println("Le nom doit contenir au moins 3 caractères.");
+      }
+    } while (nom.length() < 3);
+    return nom.toUpperCase();
+  }
+
+  // Demander joueur RACE
+  protected Race askRace(String nom) {
+    int index = 0;
+    while (index < 1 || index > 4) {
+      System.out.println("Choisir la race de " + nom + " (entrez l'index) :");
+      System.out.println("1 : Elfe");
+      System.out.println("2 : Halfelin");
+      System.out.println("3 : Humain");
+      System.out.println("4 : Nain");
+      try {
+        System.out.print("Race : ");
+        index = Integer.parseInt(scanner.nextLine());
+      } catch (NumberFormatException e) {
+        System.out.println("Veuillez entrer un nombre valide !");
+      }
+    }
+    return switch (index) {
+      case 1 -> Race.Elfe();
+      case 2 -> Race.Halfelin();
+      case 3 -> Race.Humain();
+      default -> Race.Nain();
+    };
+  }
+
+  // Demander Joueur Class
+  protected ClasseJoueur askClass(String nom) {
+    int index = 0;
+    while (index < 1 || index > 4) {
+      System.out.println("Choisir la classe de " + nom + " (entrez l'index) :");
+      System.out.println("1 : Clercs");
+      System.out.println("2 : Guerriers");
+      System.out.println("3 : Magiciens");
+      System.out.println("4 : Roublards");
+      try {
+        System.out.print("Classe : ");
+        index = Integer.parseInt(scanner.nextLine());
+      } catch (NumberFormatException e) {
+        System.out.println("Veuillez entrer un nombre valide !");
+      }
+    }
+
+    return switch (index) {
+      case 1 -> ClasseJoueur.Clercs();
+      case 2 -> ClasseJoueur.Guerriers();
+      case 3 -> ClasseJoueur.Magiciens();
+      default -> ClasseJoueur.Roublards();
+    };
+
+
+  }
+
 }

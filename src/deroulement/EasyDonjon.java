@@ -123,7 +123,6 @@ public class EasyDonjon extends Donjon {
 
 
     // Jouer cree les joueurs
-    createPlayers(4);
 
     // Ajout sur la carte
     addEntityOnGround(m1);

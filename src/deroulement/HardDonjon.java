@@ -53,9 +53,6 @@ public class HardDonjon extends Donjon {
     Armure armureEcailles = new Armure(TypeArmure.LEGERE, "armure d'écailles", 9, 12, 11);
     Armure demiPlate = new Armure(TypeArmure.LEGERE, "demi-plate", 9, 13,1);
 
-    // Jouer cree les joueurs
-    createPlayers(4);
-
     // Ajout sur la carte
     addEntityOnGround(m1);
     addEntityOnGround(m2);

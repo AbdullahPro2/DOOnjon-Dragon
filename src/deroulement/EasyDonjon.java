@@ -15,7 +15,7 @@ public class EasyDonjon extends Donjon {
   }
 
   @Override
-  protected int[] getStartingCoordinates(int i) {
+  public int[] getStartingCoordinates(int i) {
     return switch (i) {
       case 0 -> new int[]{19, 8};
       case 1 -> new int[]{19, 16};

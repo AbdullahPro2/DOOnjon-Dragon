@@ -47,7 +47,7 @@ public abstract class Entite {
         this.m_y = y;
     }
     public String getDisplaySymbol() {
-        return " X "; // default symbol
+        return " * "; // default symbol
     }
 
     public boolean estBloquant() {

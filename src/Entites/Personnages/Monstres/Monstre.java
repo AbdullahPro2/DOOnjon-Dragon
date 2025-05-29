@@ -19,16 +19,7 @@ public class Monstre extends Personnage {
         m_race = race;
         m_numero = numero;
     }
-    @Override
-    public String toString() {
-        return "Monstre{" +
-            "nom='" + super.getM_nom() + '\'' +
-            ", numero=" + m_numero +
-            ", race=" + m_race +
-            ", position=(" + getM_x() + ", " + getM_y() + ")" +
-            ", pv=" + getM_pv() +
-            '}';
-    }
+
     @Override
     public String getDisplaySymbol() {
         String nom = getM_race().getM_nom();
@@ -129,9 +120,27 @@ public class Monstre extends Personnage {
             System.out.println(nomJoueur + " ne subit aucun degats");
         }
     }
-
+    public String afficheApresTour()
+    {
+        return getM_nom() + '\n' +
+            "    Vie : " + getM_pv()+"/"+getM_pvMax() + '\n' +
+            "    Inventaire  [1] ca marche pas je n'ai pas compris ou est inventaire " + '\n' +
+            "    force : " + getM_force() + '\n' +
+            "    dexterite : " + getM_dexterite() + '\n' +
+            "    vitesse : " + getM_vitesse() + '\n';
+    }
     @Override
     public boolean isMonstre() {
         return true;
+    }
+    @Override
+    public String toString() {
+        return "Monstre{" +
+            "nom='" + super.getM_nom() + '\'' +
+            ", numero=" + m_numero +
+            ", race=" + m_race +
+            ", position=(" + getM_x() + ", " + getM_y() + ")" +
+            ", pv=" + getM_pv() +
+            '}';
     }
 }

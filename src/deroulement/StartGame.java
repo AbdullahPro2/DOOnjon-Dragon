@@ -193,6 +193,7 @@ public class StartGame {
 
       switch (choix) {
         case "1":
+          System.out.println("déplacement Possible pour  " + p.getM_nom() + " " + p.getM_vitesse()/3 + " cases");
           p.SeDeplacer(m_donjon); // méthode à définir dans Joueur/Monstre
           break;
         case "2":
@@ -221,6 +222,8 @@ public class StartGame {
 
       actionsRestantes--;
       m_donjon.display();
+      System.out.println(p.afficheApresTour());
+
     }
 
     System.out.println("Fin du tour de " + p.getM_nom());

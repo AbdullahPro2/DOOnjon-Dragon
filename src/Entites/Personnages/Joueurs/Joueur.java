@@ -313,10 +313,23 @@ public class Joueur extends Personnage {
     public boolean isJoueur() {
         return true;
     }
+
+    public String afficheApresTour()
+    {
+        return getM_nom() + '\n' +
+            "    Vie : " + getM_pv()+"/"+getM_pvMax() + '\n' +
+            "    Armure : " + (this.m_armure != null ? this.m_arme.toString() : " Aucun ") + '\n' +
+            "    Arm : " + (this.m_arme != null ? this.m_arme.toString() : " Aucun ") + '\n' +
+            "    Inventaire  [1] ca marche pas je n'ai pas compris ou est inventaire " + '\n' +
+            "    force : " + getM_force() + '\n' +
+            "    dexterite : " + getM_dexterite() + '\n' +
+            "    vitesse : " + getM_vitesse() + '\n';
+    }
+
     @Override
     public String toString() {
         return super.getM_nom() + '\n' +
-            "pv : " + getM_pv() + '\n' +
+            "Vie : " + getM_pv() + '\n' +
             "Armure : " + (this.m_arme != null ? this.m_arme.toString() : " ") + '\n' +
             "race : " + m_race.toString() + '\n' +
             "classe : " + m_classe.toString() + '\n' +

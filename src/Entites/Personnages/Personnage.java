@@ -101,7 +101,7 @@ public abstract class Personnage extends Entite {
             }
 
             int distance = Math.abs(getM_x() - y) + Math.abs(getM_y() - x);
-            if (distance > m_vitesse) {
+            if (distance > m_vitesse/3) {
                 System.out.println("Position trop éloignée. Votre vitesse ne vous permet pas d'y aller.");
                 continue;
             }

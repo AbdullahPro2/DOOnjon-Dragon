@@ -43,7 +43,7 @@ public abstract class Personnage extends Entite {
         int x = tabCoord[0];
         int y = tabCoord[1];
         // Vérification que la case n'est pas occupée, sinon demander une nouvelle position
-        while (super.caseOccupee(x, y)) {
+        while (super.caseOccupee(y, x)) {
             System.out.println("La case est déjà occupée. Veuillez choisir une autre position.");
             tabCoord = saisirPositionValide(maxX, maxY);  // Demander une nouvelle position
             x = tabCoord[0];

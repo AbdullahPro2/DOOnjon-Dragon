@@ -6,11 +6,9 @@ import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Joueurs.Race;
 import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Personnage;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-import utils.De;
 
 public class StartGame {
 
@@ -83,9 +81,7 @@ public class StartGame {
 
     System.out.println("\nFélicitations ! Vous avez terminé tous les donjons !");
   }
-
-  private void ajouterJoueurs()
-  {
+  private void ajouterJoueurs() {
     for(int i = 0; i < m_joueurs.size(); i++)
     {
       int pos[] = m_donjon.getStartingCoordinates(i);
@@ -131,16 +127,14 @@ public class StartGame {
       }
     }
   }
-
   private boolean joueurEstMort() {
     for (Joueur j : m_joueurs) {
-      if (j.getM_initiative() <= 0) {
+      if (j.getM_pv() <= 0) {
         return true;
       }
     }
     return false;
   }
-
   private boolean tousMonstresMorts() {
     for (Monstre m : m_monstres) {
       if (m.getM_initiative() > 0) {
@@ -149,7 +143,6 @@ public class StartGame {
     }
     return true;
   }
-
   private void loadCharactersFromDonjon() {
     for (Entite e : m_donjon.getM_entityOnGround()) {
      if (e.isMonstre()) {
@@ -157,7 +150,6 @@ public class StartGame {
       }
     }
   }
-
   private void sortInitiativeOrder() {
     for (int i = 0; i < m_initiativeOrder.size() - 1; i++) {
       for (int j = 0; j < m_initiativeOrder.size() - 1 - i; j++) {
@@ -170,7 +162,6 @@ public class StartGame {
       }
     }
   }
-
   private void executerTour(Personnage p) {
     Scanner scanner = new Scanner(System.in);
     int actionsRestantes = 3;
@@ -228,7 +219,6 @@ public class StartGame {
 
     System.out.println("Fin du tour de " + p.getM_nom());
   }
-
   private void launchDonjon(int choice) {
     switch (choice) {
       case 1 -> {
@@ -255,7 +245,6 @@ public class StartGame {
       m_joueurs.add(j);
     }
   }
-
   // Demander joueur nom
   protected String askPlayerName(int i) {
     String nom = "";
@@ -268,7 +257,6 @@ public class StartGame {
     } while (nom.length() < 3);
     return nom.toUpperCase();
   }
-
   // Demander joueur RACE
   protected Race askRace(String nom) {
     int index = 0;
@@ -292,7 +280,6 @@ public class StartGame {
       default -> Race.Nain();
     };
   }
-
   // Demander Joueur Class
   protected ClasseJoueur askClass(String nom) {
     int index = 0;

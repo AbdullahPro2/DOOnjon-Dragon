@@ -23,8 +23,7 @@ public class EasyDonjon extends Donjon {
       default -> new int[]{15, 3};
     };
   }
-  public void createDonjon()
-  {
+  public void createDonjon() {
     // Monsters - par default
     Monstre m1 = new Monstre(RaceMonstre.Dragon(), 1, 3, 6);
     Monstre m2 = new Monstre(RaceMonstre.Demogorgon(), 1, 3, 17);

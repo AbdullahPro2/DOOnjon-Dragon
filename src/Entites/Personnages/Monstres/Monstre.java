@@ -124,7 +124,6 @@ public class Monstre extends Personnage {
     {
         return getM_nom() + '\n' +
             "    Vie : " + getM_pv()+"/"+getM_pvMax() + '\n' +
-            "    Inventaire  [1] ca marche pas je n'ai pas compris ou est inventaire " + '\n' +
             "    force : " + getM_force() + '\n' +
             "    dexterite : " + getM_dexterite() + '\n' +
             "    vitesse : " + getM_vitesse() + '\n';

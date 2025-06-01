@@ -87,6 +87,8 @@ package Entites{
             + setM_force(force : Integer)
             + setM_dexterite(dexterite : Integer)
             + setM_vitesse(dexterite : Integer)
+            + afficheApresTour() : String
+            + toString() : String
         }
         package Joueurs {
             class Joueur{
@@ -187,18 +189,14 @@ package deroulement {
                 # m_largeur : int
                 - scanner : Scanner
                 <<create>> Donjon(longueur : int, largeur : int)
-                + addEntityOnGround(ent : Entite)                + getM_entityOnGround() : ArrayList<Entite>
+                + addEntityOnGround(ent : Entite)
+                + getM_entityOnGround() : ArrayList<Entite>
                 + getM_largeur() : Integer
                 + getM_longueur() : Integer
-                - isOccupied(x : Integer, y : Integer) : boolean
                 - printLine()
                 + display()
-                + createPlayers(nbJoueurs : Integer)
+                + getStartingCoordinates(i : Integer) : integer[];
                 + createDonjon() : void <<abstract>>
-                # askPlayerName(i : int) : String
-                # askRace(nom : String) : Race
-                # askClass(nom : String) : ClasseJoueur
-                # getStartingCoordinates(playerIndex : Integer) : Integer[]
             }
            class EasyDonjon extends Donjon {
                 <<create>> EasyDonjon()
@@ -221,8 +219,8 @@ package deroulement {
            class StartGame {
                - m_joueurs : ArrayList<Joueur>
                - m_monstres : ArrayList<Monstre>
-               - m_initiativeOrder : ArrayList<Personnage>
                + startGame()
+               + ajouterJoueurs()
                - printTourInformation(difficulty : Integer, tour : Integer, courant : Personnage)
                - joueurEstMort() : Boolean
                - tousMonstresMorts() : Boolean
@@ -230,6 +228,10 @@ package deroulement {
                - sortInitiativeOrder()
                - executerTour(p : Personnage)
                - launchDonjon(choice : Integer)
+               + createPlayers(nbJoueurs : Integer)
+               + askPlayerName(i : Integer)
+               + askRace(nom : String) Race
+               + askClass(nom : String) ClasseJoueur
            }
 
 }
@@ -242,6 +244,9 @@ Donjon ..> ClasseJoueur : "utilise pour la création"
 
 ' Class Startgame Relations
 StartGame "1 " *--> "1 " Donjon : - m_donjon
+StartGame .> ClasseJoueur: "«uses»"
+StartGame .> Race: "«uses»"
+StartGame "*" o--> "1\n-m_initiativeOrder" Personnage : personnages dans jeux\t\t >
 
 
 ' Relations de Personnage

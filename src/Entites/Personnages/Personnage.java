@@ -54,8 +54,7 @@ public abstract class Personnage extends Entite {
         commenterDeplacement(y,x);
     }
 
-    public void commenterDeplacement(int x, int y)
-    {
+    public void commenterDeplacement(int x, int y) {
         System.out.println(m_nom + " se place sur la case " + dico2.get(y)+x);
     }
 

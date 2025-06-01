@@ -64,14 +64,6 @@ public abstract class Donjon {
     return m_longueur;
   }
 
-  private boolean isOccupied(int x, int y) {
-    for (Entite entity : m_entityOnGround) {
-      if (entity.getM_x() == x && entity.getM_y() == y) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   // Pour placer les entité sur carte aleatoirement
 //  public void spawnEntityAtFreeLocation(Entite entity) {

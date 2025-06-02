@@ -344,4 +344,9 @@ public class Joueur extends Personnage {
             "dexterite : " + getM_dexterite() + '\n' +
             "vitesse : " + getM_vitesse() + '\n';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj.getClass() == Joueur.class;
+    }
 }

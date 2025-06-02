@@ -105,7 +105,6 @@ public class EasyDonjon extends Donjon {
     Obstacle o72 = new Obstacle(23, 17);
     Obstacle o73 = new Obstacle(24, 17);
 
-
     // Armes sur la carte - par default
     Arme masseArmes = new Arme(TypeArme.COURANTE, "masse d'armes", new De(1, 6), 1, 11, 11);
     Arme epeeLongue = new Arme(TypeArme.GUERRE, "épée longue", new De(1, 8), 1, 11, 12);
@@ -119,9 +118,6 @@ public class EasyDonjon extends Donjon {
     Armure armureEcailles1 = new Armure(TypeArmure.LEGERE, "armure d'écailles", 9, 22, 2);
     Armure demiPlate1 = new Armure(TypeArmure.LEGERE, "demi-plate", 9, 22, 20);
     Armure cotteMailles1 = new Armure(TypeArmure.LOURDE, "cotte de mailles", 11, 22, 21);
-
-
-    // Jouer cree les joueurs
 
     // Ajout sur la carte
     addEntityOnGround(m1);

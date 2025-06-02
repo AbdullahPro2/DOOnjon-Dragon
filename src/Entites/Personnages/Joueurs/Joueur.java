@@ -24,7 +24,7 @@ public class Joueur extends Personnage {
         m_classe=classe;
         super.setM_force(super.getM_force()+race.getM_BonusForce());
         super.setM_dexterite(super.getM_dexterite()+race.getM_BonusDexterite());
-        super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
+        super.setM_vitesse(1000); //super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
         m_arme = null;
         m_armure = null;
     }

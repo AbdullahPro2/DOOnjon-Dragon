@@ -66,5 +66,7 @@ public abstract class Entite {
         // Par défaut : ne fait rien
     }
 
-
+    public static void setM_entites(List<Entite> m_entites) {
+        Entite.m_entites = m_entites;
+    }
 }

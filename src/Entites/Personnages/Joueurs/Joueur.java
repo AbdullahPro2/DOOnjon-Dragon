@@ -188,7 +188,7 @@ public class Joueur extends Personnage {
         // Affichage des cibles
         System.out.println("Cibles à portée (" + portee + ") :");
         for (int i = 0; i < cibles.size(); i++) {
-            System.out.println(i + " - " + cibles.get(i).getM_nom() + " " + cibles.get(i).getM_race().getM_pv() + "/" + cibles.get(i).getM_pvMax());
+            System.out.println(i + " - " + cibles.get(i).getM_nom() + " " + cibles.get(i).getM_pv() + "/" + cibles.get(i).getM_pvMax());
         }
 
         // Saisie du choix de l'utilisateur
@@ -256,19 +256,26 @@ public class Joueur extends Personnage {
     }
 
     public void ramasser() {
-        Iterator<Entite> iterator = Entite.getM_entites().iterator();
+        List<Entite> entites = Entite.getM_entites();
+        List<Entite> entitesARetirer = new ArrayList<>();
 
-        while (iterator.hasNext()) {
-            Entite e = iterator.next();
+        boolean ramasse = false;
 
+        for (Entite e : entites) {
             if (e.getM_x() == this.getM_x() && e.getM_y() == this.getM_y()) {
                 e.ramasser(this);  // Appelle la version spécifique (Arme ou Armure)
-                iterator.remove(); // Supprimer l'entité du sol
-                return;
+                entitesARetirer.add(e);  // Marque pour suppression
+                ramasse = true;
             }
         }
 
-        System.out.println("Il n'y a rien à ramasser ici.");
+        // Supprime toutes les entités ramassées
+        entites.removeAll(entitesARetirer);
+        Entite.setM_entites(entites);
+
+        if (!ramasse) {
+            System.out.println("Il n'y a rien à ramasser ici.");
+        }
     }
 
     public ClasseJoueur getM_classe() {

@@ -13,6 +13,7 @@ package Entites{
         + <<create>> Entite(x : Integer, y: Integer)
         + getM_x() : Integer
         + getM_y() : Integer
+        + setM_entites()
         + estCiblePourJoueur() : boolean
         + estCiblePourMonstre() : boolean
         + {static} getM_entites() : List<Entite>

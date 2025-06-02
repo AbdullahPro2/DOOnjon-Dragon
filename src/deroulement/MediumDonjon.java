@@ -5,13 +5,15 @@ import Entites.Equipements.Armure;
 import Entites.Equipements.TypeArme;
 import Entites.Equipements.TypeArmure;
 import Entites.Obstacle;
+import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Monstres.RaceMonstre;
+import java.util.ArrayList;
 import utils.De;
 
 public class MediumDonjon extends Donjon {
-  public MediumDonjon() {
-    super(20,20);
+  public MediumDonjon(ArrayList<Joueur> joueurs) {
+    super(20,20, joueurs);
   }
 
   @Override
@@ -94,11 +96,11 @@ public class MediumDonjon extends Donjon {
     Armure cotteMailles = new Armure(TypeArmure.LOURDE, "cotte de mailles", 11, 17, 8);
 
     // Ajout sur la carte
-    addEntityOnGround(m1);
-    addEntityOnGround(m2);
-    addEntityOnGround(m3);
-    addEntityOnGround(m4);
-    addEntityOnGround(m5);
+    addMonstreOnGround(m1);
+    addMonstreOnGround(m2);
+    addMonstreOnGround(m3);
+    addMonstreOnGround(m4);
+    addMonstreOnGround(m5);
     addEntityOnGround(o1);
     addEntityOnGround(o2);
     addEntityOnGround(o3);

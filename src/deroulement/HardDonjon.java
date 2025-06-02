@@ -5,13 +5,15 @@ import Entites.Equipements.Armure;
 import Entites.Equipements.TypeArme;
 import Entites.Equipements.TypeArmure;
 import Entites.Obstacle;
+import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Monstres.RaceMonstre;
+import java.util.ArrayList;
 import utils.De;
 
 public class HardDonjon extends Donjon {
-  public HardDonjon() {
-    super(15,15);
+  public HardDonjon(ArrayList<Joueur> joueurs) {
+    super(15,15, joueurs);
   }
 
   @Override
@@ -54,12 +56,12 @@ public class HardDonjon extends Donjon {
     Armure demiPlate = new Armure(TypeArmure.LEGERE, "demi-plate", 9, 13,1);
 
     // Ajout sur la carte
-    addEntityOnGround(m1);
-    addEntityOnGround(m2);
-    addEntityOnGround(m3);
-    addEntityOnGround(m4);
-    addEntityOnGround(m5);
-    addEntityOnGround(m6);
+    addMonstreOnGround(m1);
+    addMonstreOnGround(m2);
+    addMonstreOnGround(m3);
+    addMonstreOnGround(m4);
+    addMonstreOnGround(m5);
+    addMonstreOnGround(m6);
     addEntityOnGround(o1);
     addEntityOnGround(o2);
     addEntityOnGround(o3);

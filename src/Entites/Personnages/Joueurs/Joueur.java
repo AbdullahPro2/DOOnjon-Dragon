@@ -7,6 +7,7 @@ import Entites.Equipements.Arme;
 import Entites.Equipements.Armure;
 import Entites.Equipements.TypeArme;
 import Entites.Equipements.TypeArmure;
+import deroulement.Donjon;
 import utils.De;
 
 import java.util.*;
@@ -365,5 +366,56 @@ public class Joueur extends Personnage {
     @Override
     public boolean equals(Object obj) {
         return obj != null && obj.getClass() == Joueur.class;
+    }
+
+    @Override
+    public boolean shouldBeMoved(String choix) {
+        return choix.equals("1"); // 1 = move players
+    }
+
+    @Override
+    public void actionAffichage(int actionsRestantes)
+    {
+        System.out.println("Actions restantes : " + actionsRestantes);
+        System.out.println("Choisissez une action :");
+        System.out.println("1 - Se déplacer");
+        System.out.println("2 - Attaquer");
+        System.out.println("3 - S'équiper");
+        System.out.println("4 - Ramasser un équipement");
+    }
+    @Override
+    public void executerTour(Donjon donjon) {
+        Scanner scanner = new Scanner(System.in);
+        int actionsRestantes = 3;
+
+        System.out.println("\n=== Tour de " + getM_nom() + " ===");
+
+        while (actionsRestantes > 0) {
+            actionAffichage(actionsRestantes);
+            System.out.print("Votre choix : ");
+            String choix = scanner.nextLine().trim();
+            switch (choix) {
+                case "1":
+                    System.out.println("Déplacement possible pour " + getM_nom() + " " + getM_vitesse() / 3 + " cases");
+                    SeDeplacer(donjon);
+                    break;
+                case "2":
+                    attaquer();
+                    break;
+                case "3":
+                    equiperChoix();
+                    break;
+                case "4":
+                    ramasser();
+                    break;
+                default:
+                    System.out.println("Choix invalide.");
+                    continue;
+            }
+            actionsRestantes--;
+            donjon.display();
+            System.out.println(afficheApresTour());
+        }
+        System.out.println("Fin du tour de " + getM_nom());
     }
 }

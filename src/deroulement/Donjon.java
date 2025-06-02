@@ -2,6 +2,7 @@ package deroulement;
 
 import Entites.Entite;
 import Entites.Personnages.Joueurs.Joueur;
+import Entites.Personnages.Monstres.Monstre;
 import java.util.ArrayList;
 
 public abstract class Donjon {
@@ -9,16 +10,29 @@ public abstract class Donjon {
   protected int m_longueur;
   protected int m_largeur;
   protected ArrayList<Entite> m_entityOnGround;
-  public Donjon(int longueur, int largeur) {
+  protected ArrayList<Joueur> m_joueurOnGround;
+  protected ArrayList<Monstre> m_monstreOnGround;
 
-
+  public Donjon(int longueur, int largeur, ArrayList<Joueur> joueurs) {
     this.m_longueur = longueur;
     this.m_largeur = largeur;
     this.m_entityOnGround = new ArrayList<>();
+    this.m_monstreOnGround = new ArrayList<>();
+    this.m_joueurOnGround = joueurs;
   }
 
   public void addEntityOnGround(Entite ent) {
     m_entityOnGround.add(ent);
+  }
+  public void addMonstreOnGround(Monstre ent) {
+    m_monstreOnGround.add(ent);
+  }
+  public ArrayList<Joueur> getM_joueurOnGround() {
+    return m_joueurOnGround;
+  }
+
+  public ArrayList<Monstre> getM_monstreOnGround() {
+    return m_monstreOnGround;
   }
 
   public ArrayList<Entite> getM_entityOnGround() {
@@ -41,8 +55,8 @@ public abstract class Donjon {
     }
     System.out.println("*");
   }
-  protected abstract int[] getStartingCoordinates(int i);
-  public abstract void createDonjon();
+
+
 
   public void display() {
     System.out.print("    ");
@@ -55,22 +69,37 @@ public abstract class Donjon {
     for (int i = 0; i < m_largeur; i++) {
       System.out.printf("%2d │", i + 1);
       for (int j = 0; j < m_longueur; j++) {
-        Entite joueur = null;
-        Entite autre = null;
+        Joueur joueur = null;
+        for (Joueur player : m_joueurOnGround) {
+          if (player.getM_x() == i && player.getM_y() == j) {
+            joueur = player;
+            break;
+          }
+        }
 
-        for (Entite entity : m_entityOnGround) {
-          if (entity.getM_x() == i && entity.getM_y() == j) {
-            if (entity.isJoueur()) {
-              joueur = entity;
+        Monstre monstre = null;
+        if (joueur == null) {
+          for (Monstre monster : m_monstreOnGround) {
+            if (monster.getM_x() == i && monster.getM_y() == j) {
+              monstre = monster;
               break;
-            } else if (autre == null) {
-              autre = entity; // store first non-player entity
+            }
+          }
+        }
+        Entite autre = null;
+        if (joueur == null && monstre == null) {
+          for (Entite entity : m_entityOnGround) {
+            if (entity.getM_x() == i && entity.getM_y() == j) {
+              autre = entity;
+              break;
             }
           }
         }
 
         if (joueur != null) {
           System.out.print(joueur.getDisplaySymbol());
+        } else if (monstre != null) {
+          System.out.print(monstre.getDisplaySymbol());
         } else if (autre != null) {
           System.out.print(autre.getDisplaySymbol());
         } else {
@@ -82,7 +111,29 @@ public abstract class Donjon {
     printLine();
   }
 
+  protected abstract int[] getStartingCoordinates(int i);
+  public abstract void createDonjon();
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Functionality pour choisir map pour future amelioration

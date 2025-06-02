@@ -327,12 +327,36 @@ public class Joueur extends Personnage {
             "    Vie : " + getM_pv()+"/"+getM_pvMax() + '\n' +
             "    Armure : " + (this.m_armure != null ? this.m_arme.toString() : " Aucun ") + '\n' +
             "    Arm : " + (this.m_arme != null ? this.m_arme.toString() : " Aucun ") + '\n' +
-            "    Inventaire  [1] ca marche pas je n'ai pas compris ou est inventaire " + '\n' +
+            "    Inventaire  " + inventaireAffichage() + '\n' +
             "    force : " + getM_force() + '\n' +
             "    dexterite : " + getM_dexterite() + '\n' +
             "    vitesse : " + getM_vitesse() + '\n';
     }
+    public String inventaireAffichage() {
+        String str = " Empty ";
+        int i = 1;
+        if (!m_classe.getM_armes().isEmpty()) {
+            str = " Armes : ";
+        for (Arme arm : m_classe.getM_armes()) {
+            if (!Objects.equals(arm.getM_nom(), m_arme.getM_nom())) {
+                str += " [" + i + "] " + m_arme.getM_nom();
+            }
+        }
+        }
+        if(!m_classe.getM_armures().isEmpty())
+        {
+        str += " Armures : ";
+        for(Armure armure: m_classe.getM_armures())
+        {
+            if(!Objects.equals(armure.getM_nom(), m_armure.getM_nom()))
+            {
+                str += " [" + i + "] " + m_arme.getM_nom();
+            }
+        }
+        }
 
+        return str;
+    }
     @Override
     public String toString() {
         return super.getM_nom() + '\n' +

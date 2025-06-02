@@ -142,4 +142,9 @@ public class Monstre extends Personnage {
             ", pv=" + getM_pv() +
             '}';
     }
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj.getClass() == Monstre.class;
+    }
 }
+

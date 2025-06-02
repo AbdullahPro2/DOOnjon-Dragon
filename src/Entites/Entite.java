@@ -4,6 +4,7 @@ import Entites.Equipements.Arme;
 import Entites.Equipements.Armure;
 import Entites.Personnages.Joueurs.Joueur;
 
+import Entites.Personnages.Monstres.Monstre;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,5 +67,8 @@ public abstract class Entite {
         // Par défaut : ne fait rien
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && this.getClass() == obj.getClass();
+    }
 }

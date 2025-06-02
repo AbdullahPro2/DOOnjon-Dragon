@@ -45,8 +45,8 @@ public class StartGame {
 
       while (!joueurEstMort() && !tousMonstresMorts()) {
         for (Personnage p : m_initiativeOrder) {
-          if (p.getM_pv() <= 0)
-            continue; // skip dead ones
+//          if (p.getM_pv() <= 0)
+//            continue; // skip dead ones
           if (p.isJoueur()) {
             Joueur j = (Joueur) p;
             printTourInformation(difficulty, tour, j);
@@ -168,7 +168,7 @@ public class StartGame {
 
     System.out.println("\n=== Tour de " + p.getM_nom() + " ===");
 
-    while (actionsRestantes > 0) {
+    while (actionsRestantes > 0 && (!joueurEstMort() && !tousMonstresMorts())) {
       System.out.println("Actions restantes : " + actionsRestantes);
       System.out.println("Choisissez une action :");
       System.out.println("1 - Se déplacer");

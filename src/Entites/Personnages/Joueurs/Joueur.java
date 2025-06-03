@@ -140,6 +140,7 @@ public class Joueur extends Personnage {
 
     }
 
+    @Override
     public void equiperChoix() {
         System.out.println("Joueur : " + this.getM_nom());
         Scanner scanner = new Scanner(System.in);  // Crée un scanner lié au terminal
@@ -255,6 +256,7 @@ public class Joueur extends Personnage {
         }
     }
 
+    @Override
     public void ramasser() {
         List<Entite> entites = Entite.getM_entites();
         List<Entite> entitesARetirer = new ArrayList<>();

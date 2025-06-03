@@ -112,6 +112,15 @@ public abstract class Personnage extends Entite {
         return new int[] { x, y };
     }
 
+    public void ramasser() {
+        // Par défaut : rien
+        System.out.println("Action non valide.");
+    }
+
+    public void equiperChoix() {
+        // Par défaut : rien
+        System.out.println("Action non valide.");
+    }
 
     public abstract void attaquer();
 

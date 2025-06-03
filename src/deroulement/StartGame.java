@@ -184,31 +184,25 @@ public class StartGame {
 
       switch (choix) {
         case "1":
-          System.out.println("déplacement Possible pour  " + p.getM_nom() + " " + p.getM_vitesse()/3 + " cases");
-          p.SeDeplacer(m_donjon); // méthode à définir dans Joueur/Monstre
+          System.out.println("Déplacement possible pour " + p.getM_nom() + " " + p.getM_vitesse() / 3 + " cases");
+          p.SeDeplacer(m_donjon);
           break;
+
         case "2":
-          p.attaquer(); // méthode à définir dans Joueur/Monstre
+          p.attaquer();
           break;
+
         case "3":
-          if (p.isJoueur()) {
-            ((Joueur) p).equiperChoix();
-          } else {
-            System.out.println("Action non valide.");
-            continue;
-          }
+          p.equiperChoix(); // Ne fait rien pour les monstres
           break;
+
         case "4":
-          if (p.isJoueur()) {
-            ((Joueur) p).ramasser();
-          } else {
-            System.out.println("Action non valide.");
-            continue;
-          }
+          p.ramasser(); // Ne fait rien pour les monstres
           break;
+
         default:
           System.out.println("Choix invalide.");
-          continue; // ne consomme pas d'action
+          continue;
       }
 
       actionsRestantes--;

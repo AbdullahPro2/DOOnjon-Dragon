@@ -3,6 +3,7 @@ package deroulement;
 import Entites.Personnages.Joueurs.ClasseJoueur;
 import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Joueurs.Race;
+import Entites.Personnages.MaitreJeu;
 import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Personnage;
 import utils.Utils;
@@ -13,6 +14,7 @@ import java.util.Scanner;
 
 public class StartGame {
   Donjon m_donjon;
+  MaitreJeu maitreJeu = new MaitreJeu();
   private final ArrayList<Joueur> m_joueurs = new ArrayList<>();
   private final ArrayList<Personnage> m_initiativeOrder = new ArrayList<>();
   private final Scanner scanner = new Scanner(System.in);
@@ -39,6 +41,16 @@ public class StartGame {
         for (Personnage p : m_initiativeOrder) {
           printTourInformation(difficulty, tour, p);
           m_donjon.display();
+          int choice = maitreJeu.demanderInterventionMaitreDejeu();
+          if(choice == 1) maitreJeu.DeplacerJoueurMonstre(m_initiativeOrder, m_donjon);
+          else if (choice == 2) {
+            maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder,m_donjon);
+          }
+          else if(choice == 3)
+          {
+            maitreJeu.ajouterObstacle(m_donjon);
+          }
+
           p.executerTour(m_donjon);
           }
           tour++;

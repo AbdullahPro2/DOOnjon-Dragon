@@ -135,15 +135,6 @@ public class Monstre extends Personnage {
         System.out.println("2 - Attaquer");
     }
     @Override
-    public boolean equals(Object obj) {
-        return obj != null && obj.getClass() == Monstre.class;
-    }
-
-    @Override
-    public boolean shouldBeMoved(String choix) {
-        return choix.equals("0"); // 0 = move monsters
-    }
-    @Override
     public void executerTour(Donjon donjon) {
         Scanner scanner = new Scanner(System.in);
         int actionsRestantes = 3;

@@ -360,16 +360,6 @@ public class Joueur extends Personnage {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return obj != null && obj.getClass() == Joueur.class;
-    }
-
-    @Override
-    public boolean shouldBeMoved(String choix) {
-        return choix.equals("1"); // 1 = move players
-    }
-
-    @Override
     public void actionAffichage(int actionsRestantes)
     {
         System.out.println("Actions restantes : " + actionsRestantes);
@@ -408,6 +398,8 @@ public class Joueur extends Personnage {
                     System.out.println("Choix invalide.");
                     continue;
             }
+
+
             actionsRestantes--;
             donjon.display();
             System.out.println(afficheApresTour());

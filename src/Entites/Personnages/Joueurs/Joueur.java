@@ -390,7 +390,7 @@ public class Joueur extends Personnage {
 
         System.out.println("\n=== Tour de " + getM_nom() + " ===");
 
-        while (actionsRestantes > 0) {
+        while (actionsRestantes > 0 && getM_pv() > 0) {
             actionAffichage(actionsRestantes);
             System.out.print("Votre choix : ");
             String choix = scanner.nextLine().trim();

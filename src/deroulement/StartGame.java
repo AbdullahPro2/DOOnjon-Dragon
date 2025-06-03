@@ -47,11 +47,6 @@ public class StartGame {
                     continue;
                 }
 
-                // Retire les monstres morts de la liste d'initiative après leur tour
-                if (p instanceof Monstre && p.getM_pv() <= 0) {
-                    m_initiativeOrder.remove(p);
-                }
-
               printTourInformation(difficulty, tour, p);
               m_donjon.display();
               p.executerTour(m_donjon);

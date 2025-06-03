@@ -26,6 +26,6 @@ public class MaitreJeu {
   @Override
   public String toString()
   {
-
+    return "To string de maitre de jeu";
   }
 }

@@ -15,7 +15,7 @@ public class MaitreJeu {
       choix = scanner.nextLine().trim();
     }
 
-    System.out.println("Les entités sélectionnées :");
+    System.out.println("Les entités pour sélectionnées :");
     for (Personnage p : initiativeOrder) {
       if (p.shouldBeMoved(choix)) {
         System.out.println(p.getM_nom());
@@ -23,5 +23,9 @@ public class MaitreJeu {
     }
   }
 
+  @Override
+  public String toString()
+  {
 
+  }
 }

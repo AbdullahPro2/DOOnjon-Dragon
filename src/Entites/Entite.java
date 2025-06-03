@@ -1,10 +1,7 @@
 package Entites;
 
-import Entites.Equipements.Arme;
-import Entites.Equipements.Armure;
 import Entites.Personnages.Joueurs.Joueur;
 
-import Entites.Personnages.Monstres.Monstre;
 import java.util.ArrayList;
 import java.util.List;
 

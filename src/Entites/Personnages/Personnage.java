@@ -149,9 +149,11 @@ public abstract class Personnage extends Entite {
     public void setM_force(int force) {this.m_force = force;}
 
     public void setM_vitesse(int vitesse) {this.m_vitesse = vitesse;}
-
     public void setM_pv(int pv){this.m_pv = pv;}
     public abstract  String afficheApresTour();
     public abstract String toString();
 
+    public abstract boolean shouldBeMoved(String choix);
+    public abstract void actionAffichage(int actionsRestantes);
+    public abstract void executerTour(Donjon donjon);
 }

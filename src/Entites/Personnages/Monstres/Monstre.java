@@ -3,6 +3,7 @@ package Entites.Personnages.Monstres;
 import Entites.Entite;
 import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Personnage;
+import deroulement.Donjon;
 import utils.De;
 
 import java.util.ArrayList;
@@ -142,9 +143,49 @@ public class Monstre extends Personnage {
             ", pv=" + getM_pv() +
             '}';
     }
+    public void actionAffichage(int actionsRestantes)
+    {
+        System.out.println("Actions restantes : " + actionsRestantes);
+        System.out.println("Choisissez une action :");
+        System.out.println("1 - Se déplacer");
+        System.out.println("2 - Attaquer");
+    }
     @Override
     public boolean equals(Object obj) {
         return obj != null && obj.getClass() == Monstre.class;
+    }
+
+    @Override
+    public boolean shouldBeMoved(String choix) {
+        return choix.equals("0"); // 0 = move monsters
+    }
+    @Override
+    public void executerTour(Donjon donjon) {
+        Scanner scanner = new Scanner(System.in);
+        int actionsRestantes = 3;
+
+        System.out.println("\n=== Tour de " + getM_nom() + " ===");
+        while (actionsRestantes > 0) {
+            actionAffichage(actionsRestantes);
+            System.out.print("Votre choix : ");
+            String choix = scanner.nextLine().trim();
+            switch (choix) {
+                case "1":
+                    System.out.println("Déplacement possible pour " + getM_nom() + " " + getM_vitesse() / 3 + " cases");
+                    SeDeplacer(donjon);
+                    break;
+                case "2":
+                    attaquer();
+                    break;
+                default:
+                    System.out.println("Choix invalide.");
+                    continue;
+            }
+            actionsRestantes--;
+            donjon.display();
+            System.out.println(afficheApresTour());
+        }
+        System.out.println("Fin du tour de " + getM_nom());
     }
 }
 

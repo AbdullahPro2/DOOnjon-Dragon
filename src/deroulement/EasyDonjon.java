@@ -5,13 +5,15 @@ import Entites.Equipements.Armure;
 import Entites.Equipements.TypeArme;
 import Entites.Equipements.TypeArmure;
 import Entites.Obstacle;
+import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Monstres.RaceMonstre;
+import java.util.ArrayList;
 import utils.De;
 
 public class EasyDonjon extends Donjon {
-  public EasyDonjon() {
-    super(25,25);
+  public EasyDonjon(ArrayList<Joueur> joueurs) {
+    super(25,25, joueurs);
   }
 
   @Override
@@ -23,6 +25,7 @@ public class EasyDonjon extends Donjon {
       default -> new int[]{15, 3};
     };
   }
+
   public void createDonjon() {
     // Monsters - par default
     Monstre m1 = new Monstre(RaceMonstre.Dragon(), 1, 3, 6);
@@ -120,10 +123,10 @@ public class EasyDonjon extends Donjon {
     Armure cotteMailles1 = new Armure(TypeArmure.LOURDE, "cotte de mailles", 11, 22, 21);
 
     // Ajout sur la carte
-    addEntityOnGround(m1);
-    addEntityOnGround(m2);
-    addEntityOnGround(m3);
-    addEntityOnGround(m4);
+    addMonstreOnGround(m1);
+    addMonstreOnGround(m2);
+    addMonstreOnGround(m3);
+    addMonstreOnGround(m4);
     addEntityOnGround(o1);
     addEntityOnGround(o2);
     addEntityOnGround(o3);

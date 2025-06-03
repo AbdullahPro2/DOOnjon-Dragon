@@ -1,6 +1,5 @@
 package deroulement;
 
-import Entites.Entite;
 import Entites.Personnages.Joueurs.ClasseJoueur;
 import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Joueurs.Race;
@@ -11,12 +10,10 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class StartGame {
-
   Donjon m_donjon;
-  private ArrayList<Joueur> m_joueurs = new ArrayList<>();
-  private ArrayList<Monstre> m_monstres = new ArrayList<>();
-  private ArrayList<Personnage> m_initiativeOrder = new ArrayList<>();
-  private Scanner scanner = new Scanner(System.in);
+  private final ArrayList<Joueur> m_joueurs = new ArrayList<>();
+  private final ArrayList<Personnage> m_initiativeOrder = new ArrayList<>();
+  private final Scanner scanner = new Scanner(System.in);
 
 
   public void startGame() {
@@ -27,68 +24,36 @@ public class StartGame {
       System.out.println("\n===Donjon " + difficulty + " ===");
       launchDonjon(difficulty);
       m_donjon.createDonjon();
-      ajouterJoueurs();
+      updatePlayerPosition();
       m_donjon.display();
-
-      m_monstres.clear();
       m_initiativeOrder.clear();
-
-      loadCharactersFromDonjon();
-      m_initiativeOrder.addAll(m_joueurs);
-      m_initiativeOrder.addAll(m_monstres);
+      m_initiativeOrder.addAll(m_donjon.getM_monstreOnGround());
+      m_initiativeOrder.addAll(m_donjon.getM_joueurOnGround());
       sortInitiativeOrder();
-      for (Joueur j : m_joueurs) {
+      for (Joueur j : m_donjon.getM_joueurOnGround()) {
         j.equiperDepart();
       }
-
-      boolean joueurMort = false;
-
       while (!joueurEstMort() && !tousMonstresMorts()) {
         for (Personnage p : m_initiativeOrder) {
-//          if (p.getM_pv() <= 0)
-//            continue; // skip dead ones
-          if (p.isJoueur()) {
-            Joueur j = (Joueur) p;
-            printTourInformation(difficulty, tour, j);
-            m_donjon.display();
-            executerTour(j);
-          } else if (p.isMonstre()) {
-            Monstre m = (Monstre) p;
-            printTourInformation(difficulty, tour, m);
-            m_donjon.display();
-            executerTour(m);
-          }
-
-          if (joueurEstMort()) {
-            joueurMort = true;
-            break;
+          printTourInformation(difficulty, tour, p);
+          m_donjon.display();
+          p.executerTour(m_donjon);
           }
           tour++;
-        }
-
-        if (joueurMort) {
+        if (joueurEstMort()) {
           break;
         }
       }
-
-      if (joueurMort) {
+      if (joueurEstMort()) {
         System.out.println("\nUn joueur est mort. Fin du jeu !");
         return;
       } else {
         System.out.println("\nTous les monstres ont été vaincus ! Passage au niveau suivant.");
       }
     }
-
     System.out.println("\nFélicitations ! Vous avez terminé tous les donjons !");
   }
-  private void ajouterJoueurs() {
-    for(int i = 0; i < m_joueurs.size(); i++)
-    {
-      int pos[] = m_donjon.getStartingCoordinates(i);
-      m_joueurs.get(i).setPosition(pos[0], pos[1]);
-      m_donjon.addEntityOnGround(m_joueurs.get(i));
-    }
-  }
+
   private void printTourInformation(int difficulty, int tour, Personnage courant) {
     System.out.println();
     System.out.println();
@@ -128,7 +93,7 @@ public class StartGame {
     }
   }
   private boolean joueurEstMort() {
-    for (Joueur j : m_joueurs) {
+    for (Joueur j : m_donjon.getM_joueurOnGround()) {
       if (j.getM_pv() <= 0) {
         return true;
       }
@@ -136,19 +101,12 @@ public class StartGame {
     return false;
   }
   private boolean tousMonstresMorts() {
-    for (Monstre m : m_monstres) {
+    for (Monstre m : m_donjon.getM_monstreOnGround()) {
       if (m.getM_initiative() > 0) {
         return false;
       }
     }
     return true;
-  }
-  private void loadCharactersFromDonjon() {
-    for (Entite e : m_donjon.getM_entityOnGround()) {
-     if (e.isMonstre()) {
-        m_monstres.add((Monstre) e);
-      }
-    }
   }
   private void sortInitiativeOrder() {
     for (int i = 0; i < m_initiativeOrder.size() - 1; i++) {
@@ -162,68 +120,12 @@ public class StartGame {
       }
     }
   }
-  private void executerTour(Personnage p) {
-    Scanner scanner = new Scanner(System.in);
-    int actionsRestantes = 3;
 
-    System.out.println("\n=== Tour de " + p.getM_nom() + " ===");
-
-    while (actionsRestantes > 0 && (!joueurEstMort() && !tousMonstresMorts())) {
-      System.out.println("Actions restantes : " + actionsRestantes);
-      System.out.println("Choisissez une action :");
-      System.out.println("1 - Se déplacer");
-      System.out.println("2 - Attaquer");
-
-      if (p.isJoueur()) {
-        System.out.println("3 - S'équiper");
-        System.out.println("4 - Ramasser un équipement");
-      }
-
-      System.out.print("Votre choix : ");
-      String choix = scanner.nextLine().trim();
-
-      switch (choix) {
-        case "1":
-          System.out.println("Déplacement possible pour " + p.getM_nom() + " " + p.getM_vitesse() / 3 + " cases");
-          p.SeDeplacer(m_donjon);
-          break;
-
-        case "2":
-          p.attaquer();
-          break;
-
-        case "3":
-          p.equiperChoix(); // Ne fait rien pour les monstres
-          break;
-
-        case "4":
-          p.ramasser(); // Ne fait rien pour les monstres
-          break;
-
-        default:
-          System.out.println("Choix invalide.");
-          continue;
-      }
-
-      actionsRestantes--;
-      m_donjon.display();
-      System.out.println(p.afficheApresTour());
-
-    }
-
-    System.out.println("Fin du tour de " + p.getM_nom());
-  }
   private void launchDonjon(int choice) {
     switch (choice) {
-      case 1 -> {
-        this.m_donjon = new EasyDonjon();
-      }
-      case 2 -> {
-        this.m_donjon = new MediumDonjon();
-      }
-      case 3 -> {
-        this.m_donjon = new HardDonjon();
-      }
+      case 1 -> this.m_donjon = new EasyDonjon(m_joueurs);
+      case 2 -> this.m_donjon = new MediumDonjon(m_joueurs);
+      case 3 -> this.m_donjon = new HardDonjon(m_joueurs);
     }
   }
 
@@ -239,9 +141,17 @@ public class StartGame {
       m_joueurs.add(j);
     }
   }
+
+  private void updatePlayerPosition() {
+    for(int i = 0; i < m_joueurs.size(); i++)
+    {
+      int[] pos = m_donjon.getStartingCoordinates(i);
+      m_donjon.getM_joueurOnGround().get(i).setPosition(pos[0], pos[1]);
+    }
+  }
   // Demander joueur nom
   protected String askPlayerName(int i) {
-    String nom = "";
+    String nom;
     do {
       System.out.print("Entrez le nom du joueur " + (i + 1) + " : ");
       nom = scanner.nextLine().trim();

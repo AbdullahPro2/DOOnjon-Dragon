@@ -98,8 +98,17 @@ public abstract class Donjon {
             }
           }
         }
-        Entite autre = null;
+        Obstacle obstacle = null;
         if (joueur == null && monstre == null) {
+          for (Obstacle obst : m_obstacleOnGround) {
+            if (obst.getM_x() == i && obst.getM_y() == j) {
+              obstacle = obst;
+              break;
+            }
+          }
+        }
+        Entite autre = null;
+        if (joueur == null && monstre == null && obstacle ==null) {
           for (Entite equipement : m_equipementOnGround) {
             if (equipement.getM_x() == i && equipement.getM_y() == j) {
               autre = equipement;
@@ -112,6 +121,8 @@ public abstract class Donjon {
           System.out.print(joueur.getDisplaySymbol());
         } else if (monstre != null) {
           System.out.print(monstre.getDisplaySymbol());
+        } else if (obstacle != null) {
+          System.out.print(obstacle.getDisplaySymbol());
         } else if (autre != null) {
           System.out.print(autre.getDisplaySymbol());
         } else {

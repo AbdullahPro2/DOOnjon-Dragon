@@ -24,9 +24,9 @@ public class Joueur extends Personnage {
         super(nom, classe.getM_pv(),x,y);
         m_race=race;
         m_classe=classe;
-        super.setM_force(1000); //super.setM_force(super.getM_force()+race.getM_BonusForce());
+        super.setM_force(super.getM_force()+race.getM_BonusForce());
         super.setM_dexterite(super.getM_dexterite()+race.getM_BonusDexterite());
-        super.setM_vitesse(1000); //super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
+        super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
         m_arme = null;
         m_armure = null;
     }
@@ -253,16 +253,16 @@ public class Joueur extends Personnage {
 
     @Override
     public void ramasser(Donjon donjon) {
-
-        Entite equipementARetirer;
         boolean ramasse = false;
-        for (Entite e : donjon.getM_equipementOnGround()) {
+
+        // On parcourt la liste normalement
+        for (int i = 0; i < donjon.getM_equipementOnGround().size(); i++) {
+            Entite e = donjon.getM_equipementOnGround().get(i);
             if (e.getM_x() == this.getM_x() && e.getM_y() == this.getM_y()) {
-                e.ramasser(this);  // Appelle la version spécifique (Arme ouf Armure)
-                equipementARetirer = e;  // Marque pour suppression
-                // Supprime l'entité ramassée
-                donjon.getM_equipementOnGround().remove(equipementARetirer);
+                e.ramasser(this);  // Appelle Arme/Armure via le polymorphisme
+                donjon.getM_equipementOnGround().remove(i);  // Suppression SANS erreur car on sort juste après
                 ramasse = true;
+                break;  // Sortir immédiatement : on évite la ConcurrentModificationException
             }
         }
 
@@ -270,6 +270,7 @@ public class Joueur extends Personnage {
             System.out.println("Il n'y a rien à ramasser ici.");
         }
     }
+
 
     public ClasseJoueur getM_classe() {
         return m_classe;

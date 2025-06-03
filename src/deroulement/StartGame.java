@@ -70,29 +70,29 @@ public class StartGame {
       System.out.print("***");
     System.out.println();
     System.out.println("Tour: " + tour);
-    for (Personnage p : m_initiativeOrder) {
-      if (p.isJoueur()) {
-        Joueur j = (Joueur) p;
-        if (Objects.equals(courant.getM_nom(), j.getM_nom())) {
-          System.out.println(
-              "-> " + j.getM_nom() + " ( " + j.getM_race().getM_nomRace() + " " + j.getM_classe()
-                  .getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() + " )");
-        } else
-          System.out.println(
-              "   " + j.getM_nom() + " ( " + j.getM_race().getM_nomRace() + " " + j.getM_classe()
-                  .getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() + " )");
-      } else if (p.isMonstre()) {
-        Monstre m = (Monstre) p;
-        if (Objects.equals(courant.getM_nom(), m.getM_nom())) {
-          System.out.println(
-              "-> " + m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/"
-                  + m.getM_pvMax() + " )");
-        } else
-          System.out.println(
-              "   " + m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/"
-                  + m.getM_pvMax() + " )");
-      }
-    }
+//    for (Personnage p : m_initiativeOrder) {
+//      if (p.isJoueur()) {
+//        Joueur j = (Joueur) p;
+//        if (Objects.equals(courant.getM_nom(), j.getM_nom())) {
+//          System.out.println(
+//              "-> " + j.getM_nom() + " ( " + j.getM_race().getM_nomRace() + " " + j.getM_classe()
+//                  .getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() + " )");
+//        } else
+//          System.out.println(
+//              "   " + j.getM_nom() + " ( " + j.getM_race().getM_nomRace() + " " + j.getM_classe()
+//                  .getM_nomClass() + ", " + j.getM_pv() + "/" + j.getM_pvMax() + " )");
+//      } else if (p.isMonstre()) {
+//        Monstre m = (Monstre) p;
+//        if (Objects.equals(courant.getM_nom(), m.getM_nom())) {
+//          System.out.println(
+//              "-> " + m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/"
+//                  + m.getM_pvMax() + " )");
+//        } else
+//          System.out.println(
+//              "   " + m.getM_nom() + " " + m.getM_race().getM_nom() + " (" + m.getM_pv() + "/"
+//                  + m.getM_pvMax() + " )");
+//      }
+//    }
   }
 
   private boolean tousMonstresMorts() {

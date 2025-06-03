@@ -1,5 +1,8 @@
 package utils;
 
+import Entites.Personnages.Joueurs.Joueur;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,4 +22,14 @@ public class Utils {
             dico2.put(i, lettre);
         }
     }
+
+    public static boolean joueurEstMort(ArrayList<Joueur> joueurs) {
+        for (Joueur j : joueurs) {
+            if (j.getM_pv() <= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

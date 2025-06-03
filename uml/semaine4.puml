@@ -14,8 +14,6 @@ package Entites{
         + getM_x() : Integer
         + getM_y() : Integer
         + setM_entites()
-        + estCiblePourJoueur() : boolean
-        + estCiblePourMonstre() : boolean
         + {static} getM_entites() : List<Entite>
         + ramasser(Joueur : joueur)
         + estBloquant() : boolean
@@ -100,7 +98,6 @@ package Entites{
                 +equiperDepart()
                 +attaquer()
                 +ramasser()
-                +estCiblePourMonstre() : boolean
                 +toString() : String
             }
             class ClasseJoueur {
@@ -140,7 +137,6 @@ package Entites{
                 - m_numero : Integer
                 + <<create>> Monstre(race : RaceMonstre, numero : Integer, x : Integer, y : Integer)
                 + attaquer()
-                + estCiblePourJoueur() : boolean
                 + getM_race : RaceMonstre
                 + toString() : String
             }

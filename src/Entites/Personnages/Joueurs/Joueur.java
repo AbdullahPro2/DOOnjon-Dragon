@@ -9,6 +9,7 @@ import Entites.Equipements.TypeArme;
 import Entites.Equipements.TypeArmure;
 import deroulement.Donjon;
 import utils.De;
+import utils.Utils;
 
 import java.util.*;
 
@@ -23,7 +24,7 @@ public class Joueur extends Personnage {
         super(nom, classe.getM_pv(),x,y);
         m_race=race;
         m_classe=classe;
-        super.setM_force(super.getM_force()+race.getM_BonusForce());
+        super.setM_force(1000); //super.setM_force(super.getM_force()+race.getM_BonusForce());
         super.setM_dexterite(super.getM_dexterite()+race.getM_BonusDexterite());
         super.setM_vitesse(1000); //super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
         m_arme = null;
@@ -37,11 +38,6 @@ public class Joueur extends Personnage {
 
     public Armure getM_armure(){
         return m_armure;
-    }
-
-    @Override
-    public boolean estCiblePourMonstre() {
-        return true;
     }
 
     @Override
@@ -163,7 +159,7 @@ public class Joueur extends Personnage {
     }
 
     @Override
-    public void attaquer() {
+    public void attaquer(Donjon donjon) {
         if (m_arme == null) {
             System.out.println("Vous ne pouvez pas attaquer sans arme !");
             return;
@@ -173,12 +169,10 @@ public class Joueur extends Personnage {
         List<Monstre> cibles = new ArrayList<>();
 
         // Filtrage des monstres à portée
-        for (Entite e : Entite.getM_entites()) {
-            if (e != this && e.estCiblePourJoueur()) {
-                int distance = Math.abs(this.getM_x() - e.getM_x()) + Math.abs(this.getM_y() - e.getM_y());
-                if (distance <= portee) {
-                    cibles.add((Monstre) e);
-                }
+        for (Monstre m : donjon.getM_monstreOnGround()) {
+            int distance = Math.abs(this.getM_x() - m.getM_x()) + Math.abs(this.getM_y() - m.getM_y());
+            if (distance <= portee) {
+                cibles.add(m);
             }
         }
 
@@ -238,12 +232,12 @@ public class Joueur extends Personnage {
             int degats = m_arme.getM_degats().lanceDePrint();
             int pv = cible.getM_pv();
             cible.setM_pv(pv-degats);
-            if (pv <= 0)
+            if (cible.getM_pv() <= 0)
             {
-                System.out.println("La cible " + cible + " a été tuée !");
+                System.out.println("Le monstre " + cible.getM_nom() + " a été tuée !");
 
                 // Retirer la cible de la liste des entités
-                Entite.getM_entites().remove(cible);
+                donjon.getM_monstreOnGround().remove(cible);
             }
             else
             {
@@ -258,23 +252,19 @@ public class Joueur extends Personnage {
     }
 
     @Override
-    public void ramasser() {
-        List<Entite> entites = Entite.getM_entites();
-        List<Entite> entitesARetirer = new ArrayList<>();
+    public void ramasser(Donjon donjon) {
 
+        Entite equipementARetirer;
         boolean ramasse = false;
-
-        for (Entite e : entites) {
+        for (Entite e : donjon.getM_equipementOnGround()) {
             if (e.getM_x() == this.getM_x() && e.getM_y() == this.getM_y()) {
                 e.ramasser(this);  // Appelle la version spécifique (Arme ouf Armure)
-                entitesARetirer.add(e);  // Marque pour suppression
+                equipementARetirer = e;  // Marque pour suppression
+                // Supprime l'entité ramassée
+                donjon.getM_equipementOnGround().remove(equipementARetirer);
                 ramasse = true;
             }
         }
-
-        // Supprime toutes les entités ramassées
-        entites.removeAll(entitesARetirer);
-        Entite.setM_entites(entites);
 
         if (!ramasse) {
             System.out.println("Il n'y a rien à ramasser ici.");
@@ -319,10 +309,6 @@ public class Joueur extends Personnage {
         return m_race;
     }
 
-    @Override
-    public boolean isJoueur() {
-        return true;
-    }
 
     public String afficheApresTour()
     {
@@ -399,7 +385,7 @@ public class Joueur extends Personnage {
 
         System.out.println("\n=== Tour de " + getM_nom() + " ===");
 
-        while (actionsRestantes > 0 && getM_pv() > 0) {
+        while (actionsRestantes > 0 && getM_pv() > 0 && !Utils.joueurEstMort(donjon.getM_joueurOnGround())) {
             actionAffichage(actionsRestantes);
             System.out.print("Votre choix : ");
             String choix = scanner.nextLine().trim();
@@ -409,13 +395,13 @@ public class Joueur extends Personnage {
                     SeDeplacer(donjon);
                     break;
                 case "2":
-                    attaquer();
+                    attaquer(donjon);
                     break;
                 case "3":
                     equiperChoix();
                     break;
                 case "4":
-                    ramasser();
+                    ramasser(donjon);
                     break;
                 default:
                     System.out.println("Choix invalide.");

@@ -62,20 +62,20 @@ public class HardDonjon extends Donjon {
     addMonstreOnGround(m4);
     addMonstreOnGround(m5);
     addMonstreOnGround(m6);
-    addEntityOnGround(o1);
-    addEntityOnGround(o2);
-    addEntityOnGround(o3);
-    addEntityOnGround(o4);
-    addEntityOnGround(o5);
-    addEntityOnGround(o6);
-    addEntityOnGround(o7);
-    addEntityOnGround(o8);
-    addEntityOnGround(o9);
-    addEntityOnGround(o10);
-    addEntityOnGround(baton);
-    addEntityOnGround(masseArmes);
-    addEntityOnGround(armureEcailles);
-    addEntityOnGround(demiPlate);
+    addObstacleOnGround(o1);
+    addObstacleOnGround(o2);
+    addObstacleOnGround(o3);
+    addObstacleOnGround(o4);
+    addObstacleOnGround(o5);
+    addObstacleOnGround(o6);
+    addObstacleOnGround(o7);
+    addObstacleOnGround(o8);
+    addObstacleOnGround(o9);
+    addObstacleOnGround(o10);
+    addEquipementOnGround(baton);
+    addEquipementOnGround(masseArmes);
+    addEquipementOnGround(armureEcailles);
+    addEquipementOnGround(demiPlate);
   }
 @Override
   public void display() {

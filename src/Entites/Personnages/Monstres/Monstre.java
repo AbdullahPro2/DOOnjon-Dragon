@@ -5,6 +5,7 @@ import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Personnage;
 import deroulement.Donjon;
 import utils.De;
+import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,22 +33,15 @@ public class Monstre extends Personnage {
     }
 
     @Override
-    public boolean estCiblePourJoueur() {
-        return true;
-    }
-
-    @Override
-    public void attaquer() {
+    public void attaquer(Donjon donjon) {
         int portee = m_race.getM_portee();
         List<Joueur> cibles = new ArrayList<>();
 
         // Filtrage des monstres à portée
-        for (Entite e : Entite.getM_entites()) {
-            if (e != this && e.estCiblePourMonstre()) {
-                int distance = Math.abs(this.getM_x() - e.getM_x()) + Math.abs(this.getM_y() - e.getM_y());
-                if (distance <= portee) {
-                    cibles.add((Joueur) e);
-                }
+        for (Joueur j : donjon.getM_joueurOnGround()) {
+            int distance = Math.abs(this.getM_x() - j.getM_x()) + Math.abs(this.getM_y() - j.getM_y());
+            if (distance <= portee) {
+                cibles.add(j);
             }
         }
 
@@ -103,14 +97,7 @@ public class Monstre extends Personnage {
             int degats = m_race.getM_deDegats().lanceDePrint();
             int pv = cible.getM_pv();
             cible.setM_pv(pv-degats);
-            if (pv <= 0)
-            {
-                System.out.println("La cible " + cible + " a été tuée !");
-
-                // Retirer la cible de la liste des entités
-                Entite.getM_entites().remove(cible);
-            }
-            else
+            if (cible.getM_pv() > 0)
             {
                 System.out.println("Le " + nomJoueur + " subit " + degats + " degats");
                 System.out.println("Il lui reste " + cible.getM_pv() + " PV");
@@ -129,10 +116,7 @@ public class Monstre extends Personnage {
             "    dexterite : " + getM_dexterite() + '\n' +
             "    vitesse : " + getM_vitesse() + '\n';
     }
-    @Override
-    public boolean isMonstre() {
-        return true;
-    }
+
     @Override
     public String toString() {
         return "Monstre{" +
@@ -165,7 +149,7 @@ public class Monstre extends Personnage {
         int actionsRestantes = 3;
 
         System.out.println("\n=== Tour de " + getM_nom() + " ===");
-        while (actionsRestantes > 0 ) {
+        while (actionsRestantes > 0 && !Utils.joueurEstMort(donjon.getM_joueurOnGround())) {
             actionAffichage(actionsRestantes);
             System.out.print("Votre choix : ");
             String choix = scanner.nextLine().trim();
@@ -175,7 +159,7 @@ public class Monstre extends Personnage {
                     SeDeplacer(donjon);
                     break;
                 case "2":
-                    attaquer();
+                    attaquer(donjon);
                     break;
                 default:
                     System.out.println("Choix invalide.");

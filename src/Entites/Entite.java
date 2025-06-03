@@ -1,6 +1,8 @@
 package Entites;
 
 import Entites.Personnages.Joueurs.Joueur;
+import Entites.Personnages.Monstres.Monstre;
+import deroulement.Donjon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,25 +11,10 @@ public abstract class Entite {
 
     private int m_x;
     private int m_y;
-    private static List<Entite> m_entites = new ArrayList<>();
 
-    public boolean estCiblePourJoueur() {
-        return false;
-    }
-
-    public boolean estCiblePourMonstre() {
-        return false;
-    }
-    public boolean isJoueur() {
-        return false;
-    }
-    public boolean isMonstre() {
-        return false;
-    }
     public Entite(int x, int y) {
         this.m_x = x;
         this.m_y = y;
-        m_entites.add(this);
     }
 
     public int getM_x() {
@@ -38,8 +25,6 @@ public abstract class Entite {
         return m_y;
     }
 
-    public static List<Entite> getM_entites() {return m_entites;}
-
     public void setPosition(int x, int y) {
         this.m_x = x;
         this.m_y = y;
@@ -48,13 +33,19 @@ public abstract class Entite {
         return " * "; // default symbol
     }
 
-    public boolean estBloquant() {
-        return true; // Par défaut, une entité est bloquante
-    }
-
-    public static boolean caseOccupee(int x, int y) {
-        for (Entite e : m_entites) {
-            if (e.getM_x() == x && e.getM_y() == y && e.estBloquant()) {
+    public static boolean caseOccupee(int x, int y, Donjon donjon) {
+        for (Monstre m : donjon.getM_monstreOnGround()) {
+            if (m.getM_x() == x && m.getM_y() == y) {
+                return true;
+            }
+        }
+        for (Joueur j : donjon.getM_joueurOnGround()) {
+            if (j.getM_x() == x && j.getM_y() == y) {
+                return true;
+            }
+        }
+        for (Obstacle o : donjon.getM_obstacleOnGround()) {
+            if (o.getM_x() == x && o.getM_y() == y) {
                 return true;
             }
         }
@@ -64,9 +55,6 @@ public abstract class Entite {
         // Par défaut : ne fait rien
     }
 
-    public static void setM_entites(List<Entite> m_entites) {
-        Entite.m_entites = m_entites;
-    }
     @Override
     public boolean equals(Object obj) {
         return obj != null && this.getClass() == obj.getClass();

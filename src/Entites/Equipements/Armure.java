@@ -21,11 +21,6 @@ public class Armure extends Entite {
     System.out.println("Armure ramassée : " + m_nom);
   }
 
-  @Override
-  public boolean estBloquant() {
-    return false; // Les armes ne bloquent pas
-  }
-
   public int getM_classeArmure() {
     return m_classeArmure;
   }

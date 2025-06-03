@@ -39,11 +39,6 @@ public class Arme extends Entite {
   }
 
   @Override
-  public boolean estBloquant() {
-    return false; // Les armes ne bloquent pas
-  }
-
-  @Override
   public String toString() {
     return m_nom + " (" + m_typeArme + "), Dégâts: " + m_degats + ", Portée: " + m_portee + " cases";
   }

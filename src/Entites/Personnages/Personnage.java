@@ -43,7 +43,7 @@ public abstract class Personnage extends Entite {
         int x = tabCoord[0];
         int y = tabCoord[1];
         // Vérification que la case n'est pas occupée, sinon demander une nouvelle position
-        while (super.caseOccupee(y, x)) {
+        while (caseOccupee(y, x, donjon)) {
             System.out.println("La case est déjà occupée. Veuillez choisir une autre position.");
             tabCoord = saisirPositionValide(maxX, maxY);  // Demander une nouvelle position
             x = tabCoord[0];
@@ -112,7 +112,7 @@ public abstract class Personnage extends Entite {
         return new int[] { x, y };
     }
 
-    public void ramasser() {
+    public void ramasser(Donjon donjon) {
         // Par défaut : rien
         System.out.println("Action non valide.");
     }
@@ -122,7 +122,7 @@ public abstract class Personnage extends Entite {
         System.out.println("Action non valide.");
     }
 
-    public abstract void attaquer();
+    public abstract void attaquer(Donjon donjon);
 
     public int getM_dexterite() {
         return m_dexterite;

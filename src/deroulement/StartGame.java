@@ -5,6 +5,8 @@ import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Joueurs.Race;
 import Entites.Personnages.Monstres.Monstre;
 import Entites.Personnages.Personnage;
+import utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -33,18 +35,18 @@ public class StartGame {
       for (Joueur j : m_donjon.getM_joueurOnGround()) {
         j.equiperDepart();
       }
-      while (!joueurEstMort() && !tousMonstresMorts()) {
+      while (!Utils.joueurEstMort(m_joueurs) && !tousMonstresMorts()) {
         for (Personnage p : m_initiativeOrder) {
           printTourInformation(difficulty, tour, p);
           m_donjon.display();
           p.executerTour(m_donjon);
           }
           tour++;
-        if (joueurEstMort()) {
+        if (Utils.joueurEstMort(m_joueurs)) {
           break;
         }
       }
-      if (joueurEstMort()) {
+      if (Utils.joueurEstMort(m_joueurs)) {
         System.out.println("\nUn joueur est mort. Fin du jeu !");
         return;
       } else {
@@ -92,14 +94,7 @@ public class StartGame {
       }
     }
   }
-  private boolean joueurEstMort() {
-    for (Joueur j : m_donjon.getM_joueurOnGround()) {
-      if (j.getM_pv() <= 0) {
-        return true;
-      }
-    }
-    return false;
-  }
+
   private boolean tousMonstresMorts() {
     for (Monstre m : m_donjon.getM_monstreOnGround()) {
       if (m.getM_initiative() > 0) {

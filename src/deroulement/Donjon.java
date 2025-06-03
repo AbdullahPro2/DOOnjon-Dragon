@@ -1,6 +1,7 @@
 package deroulement;
 
 import Entites.Entite;
+import Entites.Obstacle;
 import Entites.Personnages.Joueurs.Joueur;
 import Entites.Personnages.Monstres.Monstre;
 import java.util.ArrayList;
@@ -9,24 +10,31 @@ public abstract class Donjon {
 
   protected int m_longueur;
   protected int m_largeur;
-  protected ArrayList<Entite> m_entityOnGround;
+  protected ArrayList<Entite> m_equipementOnGround;
   protected ArrayList<Joueur> m_joueurOnGround;
   protected ArrayList<Monstre> m_monstreOnGround;
+  protected ArrayList<Obstacle> m_obstacleOnGround;
 
   public Donjon(int longueur, int largeur, ArrayList<Joueur> joueurs) {
     this.m_longueur = longueur;
     this.m_largeur = largeur;
-    this.m_entityOnGround = new ArrayList<>();
+    this.m_equipementOnGround = new ArrayList<>();
     this.m_monstreOnGround = new ArrayList<>();
     this.m_joueurOnGround = joueurs;
+    this.m_obstacleOnGround = new ArrayList<>();
   }
 
-  public void addEntityOnGround(Entite ent) {
-    m_entityOnGround.add(ent);
+  public void addEquipementOnGround(Entite ent) {
+    m_equipementOnGround.add(ent);
   }
+
   public void addMonstreOnGround(Monstre ent) {
     m_monstreOnGround.add(ent);
   }
+  public void addObstacleOnGround(Obstacle o){
+    m_obstacleOnGround.add(o);
+  }
+
   public ArrayList<Joueur> getM_joueurOnGround() {
     return m_joueurOnGround;
   }
@@ -35,8 +43,12 @@ public abstract class Donjon {
     return m_monstreOnGround;
   }
 
-  public ArrayList<Entite> getM_entityOnGround() {
-    return m_entityOnGround;
+  public ArrayList<Entite> getM_equipementOnGround() {
+    return m_equipementOnGround;
+  }
+
+  public ArrayList<Obstacle> getM_obstacleOnGround() {
+    return m_obstacleOnGround;
   }
 
   public int getM_largeur() {
@@ -88,9 +100,9 @@ public abstract class Donjon {
         }
         Entite autre = null;
         if (joueur == null && monstre == null) {
-          for (Entite entity : m_entityOnGround) {
-            if (entity.getM_x() == i && entity.getM_y() == j) {
-              autre = entity;
+          for (Entite equipement : m_equipementOnGround) {
+            if (equipement.getM_x() == i && equipement.getM_y() == j) {
+              autre = equipement;
               break;
             }
           }

@@ -17,7 +17,7 @@ public class Monstre extends Personnage {
 
     public Monstre(RaceMonstre race, int numero, int x, int y)
     {
-        super(race.getM_nom()+" "+numero, race.getM_pv(),x,y);
+        super(race.getM_nom()+" "+numero, race.getM_pvRace(),x,y);
         m_race = race;
         m_numero = numero;
     }

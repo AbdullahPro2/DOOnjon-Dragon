@@ -99,6 +99,7 @@ public class Joueur extends Personnage {
             ArrayList<Armure> armures = m_classe.getM_armures();
             int lenArmures = armures.size();
             if (lenArmures > 0) {
+                System.out.print("Veuillez equiper une armure\n");
                 for (int i = 0; i < lenArmures; i++) {
                     System.out.println(String.valueOf(i + 1) + ") " + armures.get(i).toString());
                 }
@@ -237,7 +238,10 @@ public class Joueur extends Personnage {
                 System.out.println("Le monstre " + cible.getM_nom() + " a été tuée !");
 
                 // Retirer la cible de la liste des entités
-                donjon.getM_monstreOnGround().remove(cible);
+                boolean removed = donjon.getM_monstreOnGround().remove(cible);
+                if (!removed) {
+                    System.out.println("Échec de la suppression du monstre : " + cible.getM_nom());
+                }
             }
             else
             {
@@ -323,29 +327,53 @@ public class Joueur extends Personnage {
             "    vitesse : " + getM_vitesse() + '\n';
     }
     public String inventaireAffichage() {
-        String str = " Empty ";
-        int i = 1;
-        if (!m_classe.getM_armes().isEmpty()) {
-            str = " Armes : ";
-        for (Arme arm : m_classe.getM_armes()) {
-            if (!Objects.equals(arm.getM_nom(), m_arme.getM_nom())) {
-                str += " [" + i + "] " + m_arme.getM_nom();
-            }
-        }
-        }
-        if(!m_classe.getM_armures().isEmpty())
-        {
-        str += " Armures : ";
-        for(Armure armure: m_classe.getM_armures())
-        {
-            if(!Objects.equals(armure.getM_nom(), m_armure.getM_nom()))
-            {
-                str += " [" + i + "] " + m_arme.getM_nom();
-            }
-        }
+        StringBuilder str = new StringBuilder();
+
+        // Affichage de l'arme équipée
+        if (m_arme != null) {
+            str.append("Arme équipée : ").append(m_arme.getM_nom()).append("\n");
+        } else {
+            str.append("Aucune arme équipée.\n");
         }
 
-        return str;
+        // Affichage des autres armes
+        List<Arme> armes = m_classe.getM_armes();
+        if (!armes.isEmpty()) {
+            str.append("Armes dans l'inventaire :\n");
+            int i = 1;
+            for (Arme arme : armes) {
+                if (m_arme == null || !Objects.equals(arme.getM_nom(), m_arme.getM_nom())) {
+                    str.append("  [").append(i++).append("] ").append(arme.getM_nom()).append("\n");
+                }
+            }
+            if (i == 1) str.append("  (aucune autre arme)\n");
+        } else {
+            str.append("Aucune arme dans l'inventaire.\n");
+        }
+
+        // Affichage de l'armure équipée
+        if (m_armure != null) {
+            str.append("Armure équipée : ").append(m_armure.getM_nom()).append("\n");
+        } else {
+            str.append("Aucune armure équipée.\n");
+        }
+
+        // Affichage des autres armures
+        List<Armure> armures = m_classe.getM_armures();
+        if (!armures.isEmpty()) {
+            str.append("Armures dans l'inventaire :\n");
+            int j = 1;
+            for (Armure armure : armures) {
+                if (m_armure == null || !Objects.equals(armure.getM_nom(), m_armure.getM_nom())) {
+                    str.append("  [").append(j++).append("] ").append(armure.getM_nom()).append("\n");
+                }
+            }
+            if (j == 1) str.append("  (aucune autre armure)\n");
+        } else {
+            str.append("Aucune armure dans l'inventaire.\n");
+        }
+
+        return str.toString();
     }
     @Override
     public String toString() {

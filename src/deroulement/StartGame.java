@@ -9,6 +9,7 @@ import Entites.Personnages.Personnage;
 import utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -37,27 +38,32 @@ public class StartGame {
       for (Joueur j : m_donjon.getM_joueurOnGround()) {
         j.equiperDepart();
       }
-      while (!Utils.joueurEstMort(m_joueurs) && !tousMonstresMorts()) {
-        for (Personnage p : m_initiativeOrder) {
-          printTourInformation(difficulty, tour, p);
-          m_donjon.display();
-          int choice = maitreJeu.demanderInterventionMaitreDejeu();
-          if(choice == 1) maitreJeu.DeplacerJoueurMonstre(m_initiativeOrder, m_donjon);
-          else if (choice == 2) {
-            maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder,m_donjon);
-          }
-          else if(choice == 3)
-          {
-            maitreJeu.ajouterObstacle(m_donjon);
-          }
+        while (!Utils.joueurEstMort(m_joueurs) && !tousMonstresMorts()) {
+            // Copie de la liste originale
+            List<Personnage> ordreDuTour = new ArrayList<>(m_initiativeOrder);
 
-          p.executerTour(m_donjon);
-          }
-          tour++;
-        if (Utils.joueurEstMort(m_joueurs)) {
-          break;
+            for (Personnage p : ordreDuTour) {
+                // Ne pas exécuter le tour si le personnage est mort
+                if (p.getM_pv() <= 0) {
+                    m_initiativeOrder.remove(p); // Supprime les morts de la vraie liste
+                    continue;
+                }
+
+              printTourInformation(difficulty, tour, p);
+              m_donjon.display();
+              p.executerTour(m_donjon);
+
+              if (tousMonstresMorts()) {
+                break; // tous les monstres sont morts, fin immédiate
+              }
+            }
+
+            tour++;
+
+            if (Utils.joueurEstMort(m_joueurs)) {
+                break;
+            }
         }
-      }
       if (Utils.joueurEstMort(m_joueurs)) {
         System.out.println("\nUn joueur est mort. Fin du jeu !");
         return;
@@ -83,6 +89,7 @@ public class StartGame {
     System.out.println();
     System.out.println("Tour: " + tour);
     for (Personnage p : m_initiativeOrder) {
+      if (p.getM_pv() <= 0) continue; // Ne pas afficher les morts
       if (Objects.equals(courant.getM_nom(), p.getM_nom())) {
         System.out.println(" -> " + p.afficheTourInformation());
       } else {

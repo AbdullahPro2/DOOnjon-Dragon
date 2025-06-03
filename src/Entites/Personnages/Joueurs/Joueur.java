@@ -266,7 +266,7 @@ public class Joueur extends Personnage {
 
         for (Entite e : entites) {
             if (e.getM_x() == this.getM_x() && e.getM_y() == this.getM_y()) {
-                e.ramasser(this);  // Appelle la version spécifique (Arme ou Armure)
+                e.ramasser(this);  // Appelle la version spécifique (Arme ouf Armure)
                 entitesARetirer.add(e);  // Marque pour suppression
                 ramasse = true;
             }

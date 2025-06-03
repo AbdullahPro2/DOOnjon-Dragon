@@ -24,9 +24,9 @@ public class Joueur extends Personnage {
         super(nom, classe.getM_pv(),x,y);
         m_race=race;
         m_classe=classe;
-        super.setM_force(super.getM_force()+race.getM_BonusForce());
+        super.setM_force(1000); //super.setM_force(super.getM_force()+race.getM_BonusForce());
         super.setM_dexterite(super.getM_dexterite()+race.getM_BonusDexterite());
-        super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
+        super.setM_vitesse(1000); //super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
         m_arme = null;
         m_armure = null;
     }
@@ -237,7 +237,12 @@ public class Joueur extends Personnage {
                 System.out.println("Le monstre " + cible.getM_nom() + " a été tuée !");
 
                 // Retirer la cible de la liste des entités
-                donjon.getM_monstreOnGround().remove(cible);
+                boolean removed = donjon.getM_monstreOnGround().remove(cible);
+                if (!removed) {
+                    System.out.println("Échec de la suppression du monstre : " + cible.getM_nom());
+                }
+
+                System.out.println("/TEST : " + donjon.getM_monstreOnGround() + "/");
             }
             else
             {
@@ -358,11 +363,7 @@ public class Joueur extends Personnage {
             "dexterite : " + getM_dexterite() + '\n' +
             "vitesse : " + getM_vitesse() + '\n';
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && obj.getClass() == Joueur.class;
-    }
+    
 
     @Override
     public boolean shouldBeMoved(String choix) {

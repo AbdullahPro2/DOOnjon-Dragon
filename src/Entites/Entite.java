@@ -54,9 +54,4 @@ public abstract class Entite {
     public void ramasser(Joueur joueur) {
         // Par défaut : ne fait rien
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj != null && this.getClass() == obj.getClass();
-    }
 }

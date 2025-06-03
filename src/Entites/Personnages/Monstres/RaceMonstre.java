@@ -4,7 +4,7 @@ import utils.De;
 
 public class RaceMonstre {
     private String m_nom;
-    private int m_pv;
+    private int m_pvRace;
     private int m_classeArmure;
     private int m_portee;
     private int m_degats;
@@ -12,13 +12,13 @@ public class RaceMonstre {
     private RaceMonstre(String nom, int pv, int classeArmure, int portee, int degats, De de)
     {
         m_nom = nom;
-        m_pv = pv;
+        m_pvRace = pv;
         m_classeArmure = classeArmure;
         m_portee = portee;
         m_degats = degats;
         m_deDegats = de;
     }
-    public int getM_pv() { return m_pv; }
+    public int getM_pvRace() { return m_pvRace; }
     public String getM_nom() {return m_nom; }
 
     public int getM_classeArmure() {
@@ -60,7 +60,7 @@ public class RaceMonstre {
     @Override
     public String toString() {
         return "Race du Monstre : " + m_nom + "\n" +
-            "Points de vie : " + m_pv + "\n" +
+            "Points de vie max : " + m_pvRace + "\n" +
             "Classe d'armure : " + m_classeArmure;
     }
 

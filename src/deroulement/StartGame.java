@@ -8,6 +8,7 @@ import Entites.Personnages.Personnage;
 import utils.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -35,17 +36,33 @@ public class StartGame {
       for (Joueur j : m_donjon.getM_joueurOnGround()) {
         j.equiperDepart();
       }
-      while (!Utils.joueurEstMort(m_joueurs) && !tousMonstresMorts()) {
-        for (Personnage p : m_initiativeOrder) {
-          printTourInformation(difficulty, tour, p);
-          m_donjon.display();
-          p.executerTour(m_donjon);
-          }
-          tour++;
-        if (Utils.joueurEstMort(m_joueurs)) {
-          break;
+        while (!Utils.joueurEstMort(m_joueurs) && !tousMonstresMorts()) {
+            // Copie de la liste originale
+            List<Personnage> ordreDuTour = new ArrayList<>(m_initiativeOrder);
+
+            for (Personnage p : ordreDuTour) {
+                // Ne pas exécuter le tour si le personnage est mort
+                if (p.getM_pv() <= 0) {
+                    m_initiativeOrder.remove(p); // Supprime les morts de la vraie liste
+                    continue;
+                }
+
+                // Retire les monstres morts de la liste d'initiative après leur tour
+                if (p instanceof Monstre && p.getM_pv() <= 0) {
+                    m_initiativeOrder.remove(p);
+                }
+
+              printTourInformation(difficulty, tour, p);
+              m_donjon.display();
+              p.executerTour(m_donjon);
+            }
+
+            tour++;
+
+            if (Utils.joueurEstMort(m_joueurs)) {
+                break;
+            }
         }
-      }
       if (Utils.joueurEstMort(m_joueurs)) {
         System.out.println("\nUn joueur est mort. Fin du jeu !");
         return;

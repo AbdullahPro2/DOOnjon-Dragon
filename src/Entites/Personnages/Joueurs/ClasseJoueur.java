@@ -52,7 +52,7 @@ public class ClasseJoueur {
         "Guerriers",
         20,
         new ArrayList<>(List.of(
-            new Arme(TypeArme.GUERRE, "épée longue", new De(1, 8), 1,-1,-1),
+            new Arme(TypeArme.GUERRE, "épée longue", new De(1, 1000), 1,-1,-1)/*new Arme(TypeArme.GUERRE, "épée longue", new De(1, 8), 1,-1,-1)*/,
             new Arme(TypeArme.DISTANCE, "arbalète légère", new De(1, 8), 16,-1,-1)
         )),
         new ArrayList<>(List.of(
@@ -65,7 +65,7 @@ public class ClasseJoueur {
         "Magiciens",
         12,
         new ArrayList<>(List.of(
-            new Arme(TypeArme.COURANTE, "bâton", new De(1, 6), 1,-1,-1),
+            new Arme(TypeArme.COURANTE, "bâton", new De(1, 1000), 1,-1,-1)/*new Arme(TypeArme.COURANTE, "bâton", new De(1, 6), 1,-1,-1)*/,
             new Arme(TypeArme.DISTANCE, "fronde", new De(1, 4), 6,-1,-1)
         )),
         new ArrayList<>(List.of())

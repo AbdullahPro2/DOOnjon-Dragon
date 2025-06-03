@@ -171,5 +171,10 @@ public class Monstre extends Personnage {
         }
         System.out.println("Fin du tour de " + getM_nom());
     }
+    public String afficheTourInformation()
+    {
+        return " " + getM_nom() + " " + getM_race().getM_nom() + " (" + getM_pv() + "/"
+            + getM_pvMax() + " ) ";
+    }
 }
 

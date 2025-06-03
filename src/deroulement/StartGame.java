@@ -55,6 +55,10 @@ public class StartGame {
               printTourInformation(difficulty, tour, p);
               m_donjon.display();
               p.executerTour(m_donjon);
+
+              if (tousMonstresMorts()) {
+                break; // tous les monstres sont morts, fin immédiate
+              }
             }
 
             tour++;
@@ -88,6 +92,7 @@ public class StartGame {
     System.out.println();
     System.out.println("Tour: " + tour);
     for (Personnage p : m_initiativeOrder) {
+      if (p.getM_pv() <= 0) continue; // Ne pas afficher les morts
       if (Objects.equals(courant.getM_nom(), p.getM_nom())) {
         System.out.println(" -> " + p.afficheTourInformation());
       } else {

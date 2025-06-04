@@ -134,11 +134,6 @@ public class Monstre extends Personnage {
         System.out.println("1 - Se déplacer");
         System.out.println("2 - Attaquer");
     }
-
-    @Override
-    public boolean shouldBeMoved(String choix) {
-        return choix.equals("0"); // 0 = move monsters
-    }
     @Override
     public void executerTour(Donjon donjon) {
         Scanner scanner = new Scanner(System.in);

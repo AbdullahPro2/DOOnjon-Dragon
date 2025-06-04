@@ -153,7 +153,6 @@ public abstract class Personnage extends Entite {
     public abstract  String afficheApresTour();
     public abstract String toString();
 
-    public abstract boolean shouldBeMoved(String choix);
     public abstract void actionAffichage(int actionsRestantes);
     public abstract void executerTour(Donjon donjon);
     public abstract String afficheTourInformation();

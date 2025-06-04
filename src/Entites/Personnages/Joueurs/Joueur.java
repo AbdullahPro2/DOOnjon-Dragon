@@ -95,6 +95,7 @@ public class Joueur extends Personnage {
         }
         else
         {
+            System.out.print("Veuillez equiper une armure\n");
             ArrayList<Armure> armures = m_classe.getM_armures();
             int lenArmures = armures.size();
             if (lenArmures > 0) {
@@ -386,12 +387,6 @@ public class Joueur extends Personnage {
             "vitesse : " + getM_vitesse() + '\n';
     }
 
-
-    @Override
-    public boolean shouldBeMoved(String choix) {
-        return choix.equals("1"); // 1 = move players
-    }
-
     @Override
     public void actionAffichage(int actionsRestantes)
     {
@@ -431,6 +426,8 @@ public class Joueur extends Personnage {
                     System.out.println("Choix invalide.");
                     continue;
             }
+
+
             actionsRestantes--;
             donjon.display();
             System.out.println(afficheApresTour());

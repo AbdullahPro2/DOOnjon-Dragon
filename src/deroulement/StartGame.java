@@ -51,6 +51,16 @@ public class StartGame {
 
               printTourInformation(difficulty, tour, p);
               m_donjon.display();
+              int choice = maitreJeu.demanderInterventionMaitreDejeu();
+              if(choice == 1) maitreJeu.DeplacerJoueurMonstre(m_initiativeOrder, m_donjon);
+              else if (choice == 2) {
+                maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder,m_donjon);
+              }
+              else if(choice == 3)
+              {
+                maitreJeu.ajouterObstacle(m_donjon);
+              }
+
               p.executerTour(m_donjon);
 
               if (tousMonstresMorts()) {

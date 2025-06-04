@@ -167,5 +167,9 @@ public class Monstre extends Personnage {
         return " " + getM_nom() + " " + getM_race().getM_nom() + " (" + getM_pv() + "/"
             + getM_pvMax() + " ) ";
     }
+    @Override
+    public void retirerDuDonjon(Donjon donjon) {
+        donjon.getM_monstreOnGround().remove(this);
+    }
 }
 

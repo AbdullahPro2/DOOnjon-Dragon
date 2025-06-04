@@ -440,4 +440,8 @@ public class Joueur extends Personnage {
        return " " + getM_nom() + " ( " + getM_race().getM_nomRace() + " " + getM_classe()
             .getM_nomClass() + ", " + getM_pv() + "/" + getM_pvMax() + " ) ";
     }
+    @Override
+    public void retirerDuDonjon(Donjon donjon) {
+        donjon.getM_joueurOnGround().remove(this);
+    }
 }

@@ -42,34 +42,48 @@ public class StartGame {
             // Copie de la liste originale
             List<Personnage> ordreDuTour = new ArrayList<>(m_initiativeOrder);
 
-            for (Personnage p : ordreDuTour) {
-                // Ne pas exécuter le tour si le personnage est mort
-                if (p.getM_pv() <= 0) {
-                    m_initiativeOrder.remove(p); // Supprime les morts de la vraie liste
-                    continue;
-                }
-
-              printTourInformation(difficulty, tour, p);
-              m_donjon.display();
-              int choice = maitreJeu.demanderInterventionMaitreDejeu();
-              if(choice == 1) maitreJeu.DeplacerJoueurMonstre(m_initiativeOrder, m_donjon);
-              else if (choice == 2) {
-                maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder,m_donjon);
-              }
-              else if(choice == 3)
-              {
-                maitreJeu.ajouterObstacle(m_donjon);
-              }
-
-              p.executerTour(m_donjon);
-
-              if (tousMonstresMorts()) {
-                break; // tous les monstres sont morts, fin immédiate
-              }
+          for (Personnage p : ordreDuTour) {
+            if (p.getM_pv() <= 0) {
+              m_initiativeOrder.remove(p);
+              continue;
             }
 
-            tour++;
+            printTourInformation(difficulty, tour, p);
+            m_donjon.display();
 
+            int choice = maitreJeu.demanderInterventionMaitreDejeu();
+            switch (choice) {
+              case 1:
+                maitreJeu.DeplacerJoueurMonstre(m_initiativeOrder, m_donjon);
+                break;
+              case 2:
+                maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder, m_donjon);
+                // Vérifiez immédiatement si tous les monstres sont morts
+                if (tousMonstresMorts()) {
+                  break; // exits switch
+                }
+                break;
+              case 3:
+                maitreJeu.ajouterObstacle(m_donjon);
+                break;
+            }
+
+            // Vérifiez après l'intervention du Maître si les monstres sont morts
+            if (tousMonstresMorts()) {
+              break; // quitte immédiatement la boucle for pour aller au donjon suivant
+            }
+
+            if (Utils.joueurEstMort(m_joueurs)) {
+              break;
+            }
+
+            p.executerTour(m_donjon); // Regular turn
+
+            if (tousMonstresMorts()) {
+              break;
+            }
+          }
+            tour++;
             if (Utils.joueurEstMort(m_joueurs)) {
                 break;
             }

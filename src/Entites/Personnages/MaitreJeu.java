@@ -46,20 +46,50 @@ public class MaitreJeu {
   }
 
   public void infligerDegatsParMaitreDeJeu(ArrayList<Personnage> initiativeOrder, Donjon donjon) {
-    System.out.println("Hahaha j'interviens pour vous infliger");
-    Personnage choisi = choisirPersonnage(initiativeOrder);
-    affichagePersonnage(initiativeOrder);
-    System.out.print("Combien de dés voulez-vous lancer ? ");
-    int nbDes = Integer.parseInt(scanner.nextLine());
+    System.out.println("Hahaha j'interviens pour vous infliger des dégâts !");
+    Personnage cible = choisirPersonnage(initiativeOrder);
 
-    System.out.print("Combien de faces par dé ? ");
-    int nbFaces = Integer.parseInt(scanner.nextLine());
+    int nbDes = 0;
+    int nbFaces = 0;
+
+    while (nbDes <= 0) {
+      System.out.print("Combien de dés voulez-vous lancer ? ");
+      try {
+        nbDes = Integer.parseInt(scanner.nextLine());
+        if (nbDes <= 0) {
+          System.out.println("Le nombre de dés doit être supérieur à zéro.");
+        }
+      } catch (NumberFormatException e) {
+        System.out.println("Entrée invalide. Veuillez entrer un nombre entier.");
+      }
+    }
+
+    while (nbFaces <= 0) {
+      System.out.print("Combien de faces par dé ? ");
+      try {
+        nbFaces = Integer.parseInt(scanner.nextLine());
+        if (nbFaces <= 0) {
+          System.out.println("Le nombre de faces doit être supérieur à zéro.");
+        }
+      } catch (NumberFormatException e) {
+        System.out.println("Entrée invalide. Veuillez entrer un nombre entier.");
+      }
+    }
+
     De de = new De(nbDes, nbFaces);
     int total = de.lanceDe();
-    System.out.println("Total des dégâts infligés : " + total);
+
+    cible.setM_pv(cible.getM_pv() - total);
+    System.out.println("Total des dégâts infligés à " + cible.getM_nom() + " : " + total + " PV");
+
+    if (cible.getM_pv() <= 0) {
+      System.out.println(cible.getM_nom() + " est mort et a été retiré !");
+      initiativeOrder.remove(cible);
+      cible.retirerDuDonjon(donjon);
+    }
+
     donjon.display();
   }
-
   public void ajouterObstacle(Donjon donjon) {
     System.out.println("Ajout d’un obstacle dans le donjon…");
 

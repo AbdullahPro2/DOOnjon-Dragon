@@ -21,7 +21,7 @@ public class Joueur extends Personnage {
     private ClasseJoueur m_classe;
 
     public Joueur(String nom, Race race, ClasseJoueur classe, int x, int y){
-        super(nom, classe.getM_pv(),x,y);
+        super(nom, 100000,x,y); //super(nom, classe.getM_pv(),x,y);
         m_race=race;
         m_classe=classe;
         super.setM_force(super.getM_force()+race.getM_BonusForce());

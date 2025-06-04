@@ -25,9 +25,9 @@ public abstract class Personnage extends Entite {
         m_nom = nom;
         m_pv = pv;
         m_pvMax = pv;
-        m_force = de.lanceDe()+3;
+        m_force = de.lanceDe()+1000; //m_force = de.lanceDe()+3;
         m_dexterite = de.lanceDe()+3;
-        m_vitesse = de.lanceDe()+3;
+        m_vitesse = de.lanceDe()+1000; //m_vitesse = de.lanceDe()+3;
         m_initiative = de.lanceDe()+3;
     }
 

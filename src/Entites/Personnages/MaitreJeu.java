@@ -86,7 +86,7 @@ public class MaitreJeu {
     boolean positionValide = false;
 
     while (!positionValide) {
-      System.out.print("Donner la position à laquelle vous voulez vous déplacer (exemple : A2 ou E16) : ");
+      System.out.print("Entrez la case sur laquelle effectuer l'action (exemple : A2 ou E16) :");
       String input = scanner.nextLine().trim().toUpperCase();
 
       if (input.length() < 2) {

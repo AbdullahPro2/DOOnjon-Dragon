@@ -46,7 +46,7 @@ public class MaitreJeu {
   }
 
   public void infligerDegatsParMaitreDeJeu(ArrayList<Personnage> initiativeOrder, Donjon donjon) {
-    System.out.println("Hahaha j'interviens pour vous infliger");
+    System.out.println("Hahaha j'interviens pour vous infliger des dégats");
     Personnage choisi = choisirPersonnage(initiativeOrder);
     affichagePersonnage(initiativeOrder);
     System.out.print("Combien de dés voulez-vous lancer ? ");

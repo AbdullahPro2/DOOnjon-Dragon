@@ -214,15 +214,20 @@ public class Joueur extends Personnage {
         // Phase d'attaque
 
         De deAttaque = new De(1,20);
-        int degatsArmure;
+        int degatsArmure = m_arme.getM_bonusAttaque();
         int resultDe = deAttaque.lanceDePrint();
+        if (degatsArmure > 0)
+        {
+            afficheBonusAttaque(degatsArmure);
+        }
+        resultDe += degatsArmure;
         if (m_arme.getM_typeArme()==TypeArme.DISTANCE)
         {
-            degatsArmure = resultDe + getM_dexterite();
+            degatsArmure += resultDe + getM_dexterite();
             System.out.println("Votre attaque est de " + resultDe + " + " + getM_dexterite() + "(dexterite) = " + degatsArmure);
         }
         else{
-            degatsArmure = resultDe + getM_force();
+            degatsArmure += resultDe + getM_force();
             System.out.println("Votre attaque est de " + resultDe + " + " + getM_force() + "(force) = " + degatsArmure);
         }
         int classeArmure = cible.getM_race().getM_classeArmure();
@@ -231,8 +236,10 @@ public class Joueur extends Personnage {
             System.out.println("Votre attaque perce l'armure de " + nomMonstre + "(" + classeArmure + ")");
             System.out.println("Vous lancez votre dé de dégats");
             int degats = m_arme.getM_degats().lanceDePrint();
+            afficheBonusAttaque(m_arme.getM_bonusAttaque());
             int pv = cible.getM_pv();
-            cible.setM_pv(pv-degats);
+            cible.setM_pv(pv-degats-m_arme.getM_bonusAttaque());
+            degats += m_arme.getM_degats().lanceDePrint();
             if (cible.getM_pv() <= 0)
             {
                 System.out.println("Le monstre " + cible.getM_nom() + " a été tuée !");
@@ -253,6 +260,11 @@ public class Joueur extends Personnage {
             System.out.println("Votre attaque ne perce pas l'armure de " + nomMonstre + "(" + classeArmure + ")");
             System.out.println(nomMonstre + " ne subit aucun degats");
         }
+    }
+
+    public void afficheBonusAttaque(int degatsArmure)
+    {
+        System.out.println("On ajoute votre bonus de dégats (+" + degatsArmure + ")");
     }
 
     @Override
@@ -311,7 +323,7 @@ public class Joueur extends Personnage {
             case "3":
                 nomSort = "Arme Magique";
                 afficherSort(nomSort);
-                sortArmeMagique();
+                sortArmeMagique(donjon);
                 break;
             default:
                 System.out.println("Choix invalide.");
@@ -319,8 +331,8 @@ public class Joueur extends Personnage {
     }
 
     public void sortGuerison(Donjon donjon){
-        afficherToutJoueurs(donjon);
-        int choix = afficheDemandePersonnage(donjon.getM_joueurOnGround().size());
+        int len = afficherToutJoueurs(donjon);
+        int choix = afficheDemande(len, "du joueur");
         Joueur cible = donjon.getM_joueurOnGround().get(choix-1);
         De de = new De(1,10);
         int heal = de.lanceDePrint();
@@ -336,20 +348,21 @@ public class Joueur extends Personnage {
     public void afficheGuerison(Joueur cible, int heal){
         System.out.println("Le joueur " + cible.getM_nom() + " se fait guerir de " + heal + " pv");
     }
-    public void afficherToutJoueurs(Donjon donjon)
+    public int afficherToutJoueurs(Donjon donjon)
     {
         int i = 0;
         for (Joueur j : donjon.getM_joueurOnGround()) {
             i++;
             System.out.println(i + ") " + j.afficheTourInformation());
         }
+        return i;
     }
 
-    public int afficheDemandePersonnage(int len) {
+    public int afficheDemande(int len, String entite) {
         Scanner scanner = new Scanner(System.in);
         int choix = -1;
 
-        System.out.println("Veuillez choisir le numéro du personnage sur qui vous voulez effectuer l'action (entre 1 et " + len + ") :");
+        System.out.println("Veuillez choisir le numéro " + entite + " sur lequel vous voulez effectuer l'action (entre 1 et " + len + ") :");
 
         while (choix < 1 || choix > len) {
             String input = scanner.nextLine();
@@ -369,11 +382,10 @@ public class Joueur extends Personnage {
 
 
     public void sortBoogieWoogie(Donjon donjon){
-        afficherToutJoueurs(donjon);
-        int index = donjon.getM_joueurOnGround().size();
-        afficherToutMonstres(index, donjon);
-        int choix1 = afficheDemandePersonnage(index + donjon.getM_monstreOnGround().size());
-        int choix2 = afficheDemandePersonnage(index + donjon.getM_monstreOnGround().size());
+        int index =  afficherToutJoueurs(donjon);
+        int iMonstre = afficherToutMonstres(index, donjon);
+        int choix1 = afficheDemande(index + iMonstre, "du personnage");
+        int choix2 = afficheDemande(index + iMonstre, "du personnage");
         Personnage cible1;
         Personnage cible2;
         if (choix1 <= index)
@@ -396,17 +408,41 @@ public class Joueur extends Personnage {
         cible2.setPosition(tempX, tempY);
     }
 
-    public void afficherToutMonstres(int index, Donjon donjon)
+    public int afficherToutMonstres(int index, Donjon donjon)
     {
         int i = index;
         for (Monstre m : donjon.getM_monstreOnGround()) {
             i++;
             System.out.println(i + ") " + m.afficheTourInformation());
         }
+        return i;
     }
 
-    public void sortArmeMagique(){
+    public void sortArmeMagique(Donjon donjon){
+        int lenJoueur = afficherToutJoueurs(donjon);
+        int numJoueur = afficheDemande(lenJoueur, "du joueur");
+        Joueur cibleJoueur = donjon.getM_joueurOnGround().get(numJoueur-1);
+        int lenArme = afficherToutArmes(donjon, cibleJoueur);
+        int numArme = afficheDemande(lenArme, "de l'arme");
+        ClasseJoueur classe = cibleJoueur.getM_classe();
+        List<Arme> armes = classe.getM_armes();
+        Arme cibleArme = armes.get(numArme-1);
+        cibleArme.setM_bonusAttaque(cibleArme.getM_bonusAttaque() + 1);
+        affichageAmeliorationArme(cibleArme.getM_nom());
+    }
 
+    public int afficherToutArmes(Donjon donjon, Joueur joueur){
+        int i = 0;
+        for (Arme a : joueur.getM_classe().getM_armes()) {
+            i++;
+            System.out.println(i + ") " + a);
+        }
+        return i;
+    }
+
+    public void affichageAmeliorationArme(String nom)
+    {
+        System.out.println("Vous avez amélioré votre " + nom + "!");
     }
 
     public void afficherSort(String nom)

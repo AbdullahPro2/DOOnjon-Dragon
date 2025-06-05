@@ -10,6 +10,7 @@ public class Arme extends Entite {
   private String m_nom;
   private De m_degats;
   private int m_portee;
+  private int m_bonusAttaque;
 
   public Arme(TypeArme type, String nom, De degats, int portee, int x, int y) {
     super(x,y);
@@ -17,6 +18,7 @@ public class Arme extends Entite {
     this.m_nom = nom;
     this.m_degats = degats;
     this.m_portee = portee;
+    this.m_bonusAttaque = 0;
   }
   public TypeArme getM_typeArme() {
     return m_typeArme;
@@ -30,6 +32,11 @@ public class Arme extends Entite {
   }
   public int getM_portee() {
     return m_portee;
+  }
+  public int getM_bonusAttaque(){return m_bonusAttaque;}
+
+  public void setM_bonusAttaque(int m_bonusAttaque) {
+    this.m_bonusAttaque = m_bonusAttaque;
   }
 
   @Override

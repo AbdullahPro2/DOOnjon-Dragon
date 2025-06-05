@@ -30,6 +30,14 @@ public class De {
     return total;
   }
 
+  public int getM_facesParDe() {
+    return m_facesParDe;
+  }
+
+  public int getM_nombreDes() {
+    return m_nombreDes;
+  }
+
   @Override
   public String toString() {
     return m_nombreDes + "d" + m_facesParDe;

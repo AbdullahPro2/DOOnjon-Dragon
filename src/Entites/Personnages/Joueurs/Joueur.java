@@ -282,7 +282,7 @@ public class Joueur extends Personnage {
 
 
 
-    public boolean droitlanceSort()
+    public boolean droitLanceSort()
     {
         //retourne false si le joueur n'a pas accès à des sorts
         //retourne true si le joueur peut au moins lancer un sort
@@ -320,7 +320,7 @@ public class Joueur extends Personnage {
 
     public void sortGuerison(Donjon donjon){
         afficherToutJoueurs(donjon);
-        int choix = AfficheDemandeJoueur(donjon.getM_joueurOnGround().size());
+        int choix = afficheDemandePersonnage(donjon.getM_joueurOnGround().size());
         Joueur cible = donjon.getM_joueurOnGround().get(choix-1);
         De de = new De(1,10);
         int heal = de.lanceDePrint();
@@ -345,11 +345,11 @@ public class Joueur extends Personnage {
         }
     }
 
-    public int AfficheDemandeJoueur(int len) {
+    public int afficheDemandePersonnage(int len) {
         Scanner scanner = new Scanner(System.in);
         int choix = -1;
 
-        System.out.println("Veuillez choisir le numéro du joueur sur qui vous voulez effectuer l'action (entre 1 et " + len + ") :");
+        System.out.println("Veuillez choisir le numéro du personnage sur qui vous voulez effectuer l'action (entre 1 et " + len + ") :");
 
         while (choix < 1 || choix > len) {
             String input = scanner.nextLine();
@@ -369,7 +369,37 @@ public class Joueur extends Personnage {
 
 
     public void sortBoogieWoogie(Donjon donjon){
+        afficherToutJoueurs(donjon);
+        int index = donjon.getM_joueurOnGround().size();
+        afficherToutMonstres(index, donjon);
+        int choix1 = afficheDemandePersonnage(index + donjon.getM_monstreOnGround().size());
+        int choix2 = afficheDemandePersonnage(index + donjon.getM_monstreOnGround().size());
+        Personnage cible1;
+        Personnage cible2;
+        if (choix1 <= index)
+        {
+            cible1 = donjon.getM_joueurOnGround().get(choix1);
+        }
+        else {
+            cible1 = donjon.getM_monstreOnGround().get(choix1-index-1);
+        }
+        if (choix2 <= index)
+        {
+            cible2 = donjon.getM_joueurOnGround().get(choix2);
+        }
+        else {
+            cible1 = donjon.getM_monstreOnGround().get(choix2-index-1);
+        }
 
+    }
+
+    public void afficherToutMonstres(int index, Donjon donjon)
+    {
+        int i = index;
+        for (Monstre m : donjon.getM_monstreOnGround()) {
+            i++;
+            System.out.println(i + ") " + m.afficheTourInformation());
+        }
     }
 
     public void sortArmeMagique(){
@@ -482,7 +512,7 @@ public class Joueur extends Personnage {
         System.out.println("2 - Attaquer");
         System.out.println("3 - S'équiper");
         System.out.println("4 - Ramasser un équipement");
-        if (droitlanceSort())
+        if (droitLanceSort())
         {
             System.out.println("5 - Lancer un sort");
         }
@@ -514,7 +544,7 @@ public class Joueur extends Personnage {
                     ramasser(donjon);
                     break;
                 case "5":
-                    if (droitlanceSort()) {
+                    if (droitLanceSort()) {
                         lanceSort(donjon);
                     } else {
                         System.out.println("Choix invalide.");

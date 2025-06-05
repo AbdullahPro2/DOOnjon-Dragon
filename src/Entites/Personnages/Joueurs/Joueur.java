@@ -388,7 +388,7 @@ public class Joueur extends Personnage {
             cible2 = donjon.getM_joueurOnGround().get(choix2);
         }
         else {
-            cible1 = donjon.getM_monstreOnGround().get(choix2-index-1);
+            cible2 = donjon.getM_monstreOnGround().get(choix2-index-1);
         }
 
     }

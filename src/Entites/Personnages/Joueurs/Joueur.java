@@ -378,19 +378,22 @@ public class Joueur extends Personnage {
         Personnage cible2;
         if (choix1 <= index)
         {
-            cible1 = donjon.getM_joueurOnGround().get(choix1);
+            cible1 = donjon.getM_joueurOnGround().get(choix1-1);
         }
         else {
             cible1 = donjon.getM_monstreOnGround().get(choix1-index-1);
         }
         if (choix2 <= index)
         {
-            cible2 = donjon.getM_joueurOnGround().get(choix2);
+            cible2 = donjon.getM_joueurOnGround().get(choix2-1);
         }
         else {
             cible2 = donjon.getM_monstreOnGround().get(choix2-index-1);
         }
-
+        int tempX = cible1.getM_x();
+        int tempY = cible1.getM_y();
+        cible1.setPosition(cible2.getM_x(), cible2.getM_y());
+        cible2.setPosition(tempX, tempY);
     }
 
     public void afficherToutMonstres(int index, Donjon donjon)
@@ -413,10 +416,10 @@ public class Joueur extends Personnage {
 
     public String demandeSort() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Quel sort voulez-vous lancer : \n 1) Guérison    2) Boogie Woogie    3) Arme magique");
         String numSort = scanner.nextLine().trim();
 
         while (!numSort.equals("1") && !numSort.equals("2") && !numSort.equals("3")) {
-            System.out.println("Quel sort voulez-vous lancer : \n 1) Guérison    2) Boogie Woogie    3) Arme magique");
             System.out.println("Veuillez entrer un nombre valide : 1, 2 ou 3.");
             numSort = scanner.nextLine().trim();
         }

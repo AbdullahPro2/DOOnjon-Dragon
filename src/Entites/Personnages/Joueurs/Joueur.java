@@ -239,7 +239,7 @@ public class Joueur extends Personnage {
             afficheBonusAttaque(m_arme.getM_bonusAttaque());
             int pv = cible.getM_pv();
             cible.setM_pv(pv-degats-m_arme.getM_bonusAttaque());
-            degats += m_arme.getM_degats().lanceDePrint();
+            degats += m_arme.getM_bonusAttaque();
             if (cible.getM_pv() <= 0)
             {
                 System.out.println("Le monstre " + cible.getM_nom() + " a été tuée !");

@@ -282,33 +282,82 @@ public class Joueur extends Personnage {
 
 
 
-    public int droitlanceSort()
+    public boolean droitlanceSort()
     {
-        //retourne -1 si le joueur n'a pas accès à des sorts
-        //retourne 0 si le joueur peut au moins lancer un sort
+        //retourne false si le joueur n'a pas accès à des sorts
+        //retourne true si le joueur peut au moins lancer un sort
         if (!m_classe.getM_nomClass().equals("Clercs") || !m_classe.getM_nomClass().equals("Magiciens"))
         {
-            return -1;
+            return false;
         }
         else {
-            return 0;
+            return true;
         }
     }
 
-    public int demandeSort(){
+    public void lanceSort(Donjon donjon){
         //retourne 1 si le joueur lance Guérison
         //retourne 2 si le joueur lance Boogie Woogie
-        //retourne 3 si le joueur lance
-        int sortLance=1;
+        //retourne 3 si le joueur lance Arme Magique
+        String sortLance="1";
         if (m_classe.getM_nomClass().equals("Magiciens"))
         {
-            System.out.println("Quel sort voulez-vous lancer : \n 1) Guerison    2) Boogie Woogie    3) Arme magique");
-            Scanner scanner = new Scanner(System.in);
-            String numSort = scanner.nextLine();  // Lit une ligne de texte
-            sortLance = Integer.parseInt(numSort);
+            sortLance = demandeSort();
         }
-        return sortLance;
+        String nomSort;
+        switch(sortLance)
+        {
+            case "1":
+                nomSort = "Guerison";
+                afficherSort(nomSort);
+                sortGuerison(donjon);
+                break;
+            case "2":
+                nomSort = "Boogie Woogie";
+                afficherSort(nomSort);
+                sortBoogieWoogie(donjon);
+                break;
+            case "3":
+                nomSort = "Arme Magique";
+                afficherSort(nomSort);
+                sortArmeMagique();
+                break;
+            default:
+                System.out.println("Choix invalide.");
+        }
     }
+
+    public void sortGuerison(Donjon donjon){
+
+    }
+
+    public void sortBoogieWoogie(Donjon donjon){
+
+    }
+
+    public void sortArmeMagique(){
+
+    }
+
+    public void afficherSort(String nom)
+    {
+        System.out.println("Vous lancez " + nom);
+    }
+
+    public String demandeSort() {
+        Scanner scanner = new Scanner(System.in);
+        String numSort = scanner.nextLine().trim();
+
+        while (!numSort.equals("1") && !numSort.equals("2") && !numSort.equals("3")) {
+            System.out.println("Quel sort voulez-vous lancer : \n 1) Guérison    2) Boogie Woogie    3) Arme magique");
+            System.out.println("Veuillez entrer un nombre valide : 1, 2 ou 3.");
+            numSort = scanner.nextLine().trim();
+        }
+
+        // Ici on est sûr que numSort est "1", "2", ou "3"
+        return numSort;
+    }
+
 
     public Race getM_race() {
         return m_race;
@@ -396,6 +445,10 @@ public class Joueur extends Personnage {
         System.out.println("2 - Attaquer");
         System.out.println("3 - S'équiper");
         System.out.println("4 - Ramasser un équipement");
+        if (droitlanceSort())
+        {
+            System.out.println("5 - lancer un sort");
+        }
     }
     @Override
     public void executerTour(Donjon donjon) {
@@ -422,6 +475,8 @@ public class Joueur extends Personnage {
                 case "4":
                     ramasser(donjon);
                     break;
+                case "5":
+                    lanceSort(donjon);
                 default:
                     System.out.println("Choix invalide.");
                     continue;

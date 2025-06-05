@@ -25,7 +25,7 @@ public class De {
     for (int i = 0; i < m_nombreDes; i++) {
       total += rand.nextInt(m_facesParDe) + 1;
     }
-    System.out.println("Vous lancez " + m_nombreDes + "dé de " + m_facesParDe + "faces");
+    System.out.println("Vous lancez " + m_nombreDes + " dé de " + m_facesParDe + " faces");
     System.out.println("Vous avez fait " + total);
     return total;
   }

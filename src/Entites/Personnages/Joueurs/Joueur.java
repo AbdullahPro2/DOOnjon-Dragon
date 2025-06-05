@@ -286,19 +286,10 @@ public class Joueur extends Personnage {
     {
         //retourne false si le joueur n'a pas accès à des sorts
         //retourne true si le joueur peut au moins lancer un sort
-        if (!m_classe.getM_nomClass().equals("Clercs") || !m_classe.getM_nomClass().equals("Magiciens"))
-        {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return m_classe.getM_nomClass().equals("Clercs") || m_classe.getM_nomClass().equals("Magiciens");
     }
 
     public void lanceSort(Donjon donjon){
-        //retourne 1 si le joueur lance Guérison
-        //retourne 2 si le joueur lance Boogie Woogie
-        //retourne 3 si le joueur lance Arme Magique
         String sortLance="1";
         if (m_classe.getM_nomClass().equals("Magiciens"))
         {
@@ -328,8 +319,54 @@ public class Joueur extends Personnage {
     }
 
     public void sortGuerison(Donjon donjon){
-
+        afficherToutJoueurs(donjon);
+        int choix = AfficheDemandeJoueur(donjon.getM_joueurOnGround().size());
+        Joueur cible = donjon.getM_joueurOnGround().get(choix-1);
+        De de = new De(1,10);
+        int heal = de.lanceDePrint();
+        int subit = cible.getM_pvMax() - cible.getM_pv();
+        if (subit < 10)
+        {
+            heal = subit;
+        }
+        cible.setM_pv(cible.getM_pv()+heal);
+        afficheGuerison(cible, heal);
     }
+
+    public void afficheGuerison(Joueur cible, int heal){
+        System.out.println("Le joueur " + cible.getM_nom() + " se fait guerir de " + heal + " pv");
+    }
+    public void afficherToutJoueurs(Donjon donjon)
+    {
+        int i = 0;
+        for (Joueur j : donjon.getM_joueurOnGround()) {
+            i++;
+            System.out.println(i + ") " + j.afficheTourInformation());
+        }
+    }
+
+    public int AfficheDemandeJoueur(int len) {
+        Scanner scanner = new Scanner(System.in);
+        int choix = -1;
+
+        System.out.println("Veuillez choisir le numéro du joueur sur qui vous voulez effectuer l'action (entre 1 et " + len + ") :");
+
+        while (choix < 1 || choix > len) {
+            String input = scanner.nextLine();
+
+            try {
+                choix = Integer.parseInt(input);
+                if (choix < 1 || choix > len) {
+                    System.out.println("Numéro invalide. Veuillez entrer un nombre entre 1 et " + len + " :");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Entrée invalide. Veuillez entrer un nombre valide :");
+            }
+        }
+
+        return choix;
+    }
+
 
     public void sortBoogieWoogie(Donjon donjon){
 
@@ -447,7 +484,7 @@ public class Joueur extends Personnage {
         System.out.println("4 - Ramasser un équipement");
         if (droitlanceSort())
         {
-            System.out.println("5 - lancer un sort");
+            System.out.println("5 - Lancer un sort");
         }
     }
     @Override
@@ -461,6 +498,7 @@ public class Joueur extends Personnage {
             actionAffichage(actionsRestantes);
             System.out.print("Votre choix : ");
             String choix = scanner.nextLine().trim();
+
             switch (choix) {
                 case "1":
                     System.out.println("Déplacement possible pour " + getM_nom() + " " + getM_vitesse() / 3 + " cases");
@@ -476,19 +514,26 @@ public class Joueur extends Personnage {
                     ramasser(donjon);
                     break;
                 case "5":
-                    lanceSort(donjon);
+                    if (droitlanceSort()) {
+                        lanceSort(donjon);
+                    } else {
+                        System.out.println("Choix invalide.");
+                        continue;
+                    }
+                    break;
                 default:
                     System.out.println("Choix invalide.");
                     continue;
             }
 
-
             actionsRestantes--;
             donjon.display();
             System.out.println(afficheApresTour());
         }
+
         System.out.println("Fin du tour de " + getM_nom());
     }
+
 
     public String afficheTourInformation()
     {

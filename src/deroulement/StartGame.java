@@ -46,18 +46,22 @@ public class StartGame {
 
             printTourInformation(difficulty, tour, p);
             m_donjon.display();
-
+            boolean joueurEstMort;
             // Nettoyage des morts
             m_initiativeOrder.removeIf(perso -> perso.getM_pv() <= 0);
-
             int choice = maitreJeu.demanderInterventionMaitreDejeu();
             switch (choice) {
               case 1:
                 maitreJeu.DeplacerJoueurMonstre(m_initiativeOrder, m_donjon);
                 break;
               case 2:
-                maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder, m_donjon);
+                joueurEstMort = maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder, m_donjon);
                 // Vérifiez immédiatement si tous les monstres sont morts
+                if (joueurEstMort)
+                {
+                  System.out.println("\nUn joueur est mort. Fin du jeu !");
+                  return;
+                }
                 if (tousMonstresMorts()) {
                   break; // exits switch
                 }
@@ -70,10 +74,6 @@ public class StartGame {
             // Vérifiez après l'intervention du Maître si les monstres sont morts
             if (tousMonstresMorts()) {
               break; // quitte immédiatement la boucle for pour aller au donjon suivant
-            }
-
-            if (Utils.joueurEstMort(m_joueurs)) {
-              break;
             }
 
             p.executerTour(m_donjon); // Regular turn

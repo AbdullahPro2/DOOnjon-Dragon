@@ -21,7 +21,7 @@ public class Joueur extends Personnage {
     private ClasseJoueur m_classe;
 
     public Joueur(String nom, Race race, ClasseJoueur classe, int x, int y){
-        super(nom, 100000,x,y); //super(nom, classe.getM_pv(),x,y);
+        super(nom, classe.getM_pv(),x,y);
         m_race=race;
         m_classe=classe;
         super.setM_force(super.getM_force()+race.getM_BonusForce());
@@ -245,14 +245,14 @@ public class Joueur extends Personnage {
                 afficheBonusAttaque(m_arme.getM_bonusAttaque());
             }
             int pv = cible.getM_pv();
-            cible.setM_pv(pv-degats-m_arme.getM_bonusAttaque());
             degats += m_arme.getM_bonusAttaque();
+            cible.setM_pv(pv-degats);
             if (cible.getM_pv() <= 0)
             {
                 System.out.println("Le monstre " + cible.getM_nom() + " a été tuée !");
 
-                // Retirer la cible de la liste des entités
-                boolean removed = donjon.getM_monstreOnGround().remove(cible);
+                // Retirer la cible de la liste des monstres
+                donjon.getM_monstreOnGround().remove(cible);
             }
             else
             {
@@ -341,16 +341,27 @@ public class Joueur extends Personnage {
         De de = new De(1,10);
         int heal = de.lanceDePrint();
         int subit = cible.getM_pvMax() - cible.getM_pv();
-        if (subit < 10)
+        if (subit < heal)
         {
             heal = subit;
         }
-        cible.setM_pv(cible.getM_pv()+heal);
-        afficheGuerison(cible, heal);
+        if (heal > 0) {
+            cible.setM_pv(cible.getM_pv() + heal);
+            afficheGuerison(cible.getM_nom(), heal);
+        }
+        else
+        {
+            afficheFullVie(cible.getM_nom());
+        }
     }
 
-    public void afficheGuerison(Joueur cible, int heal){
-        System.out.println("Le joueur " + cible.getM_nom() + " se fait guerir de " + heal + " pv");
+    public void afficheFullVie(String nom)
+    {
+        System.out.println("Le joueur " + nom + " ne peut pas se faire guérir car il possède déjà 100% de ses pv");
+    }
+
+    public void afficheGuerison(String nom, int heal){
+        System.out.println("Le joueur " + nom + " se fait guerir de " + heal + " pv");
     }
     public int afficherToutJoueurs(Donjon donjon)
     {

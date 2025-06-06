@@ -9,6 +9,7 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 import utils.De;
+import utils.Utils;
 
 public class MaitreJeu {
   private Scanner scanner = new Scanner(System.in);
@@ -45,8 +46,9 @@ public class MaitreJeu {
     donjon.display();
   }
 
-  public void infligerDegatsParMaitreDeJeu(ArrayList<Personnage> initiativeOrder, Donjon donjon) {
+  public boolean infligerDegatsParMaitreDeJeu(ArrayList<Personnage> initiativeOrder, Donjon donjon) {
     System.out.println("Hahaha j'interviens pour vous infliger des dégâts !");
+    boolean joueurEstMort = false;
     Personnage cible = choisirPersonnage(initiativeOrder);
 
     int nbDes = 0;
@@ -82,6 +84,10 @@ public class MaitreJeu {
     cible.setM_pv(cible.getM_pv() - total);
     System.out.println("Total des dégâts infligés à " + cible.getM_nom() + " : " + total + " PV");
 
+    if (Utils.joueurEstMort(donjon.getM_joueurOnGround())) {
+      joueurEstMort = true;
+    }
+
     if (cible.getM_pv() <= 0) {
       System.out.println(cible.getM_nom() + " est mort !");
       initiativeOrder.remove(cible);
@@ -89,6 +95,7 @@ public class MaitreJeu {
     }
 
     donjon.display();
+    return joueurEstMort;
   }
 
   public void ajouterObstacle(Donjon donjon) {
@@ -207,7 +214,8 @@ public class MaitreJeu {
   public void affichagePersonnage(ArrayList<Personnage> initiativeOrder) {
     for(int i = 0; i < initiativeOrder.size(); i++)
     {
-      System.out.println("[" + (i + 1) + "] : " + initiativeOrder.get(i).getM_nom());
+      Personnage p = initiativeOrder.get(i);
+      System.out.println("[" + (i + 1) + "] : " + p.getM_nom() + "(" + p.getM_pv() + "/" + p.getM_pvMax() + ")");
     }
   }
 

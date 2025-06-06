@@ -10,8 +10,8 @@ import Entites.Equipements.TypeArmure;
 import deroulement.Donjon;
 import utils.De;
 import utils.Utils;
-
 import java.util.*;
+import static utils.Affichage.*;
 
 public class Joueur extends Personnage {
 
@@ -266,11 +266,6 @@ public class Joueur extends Personnage {
         }
     }
 
-    public void afficheBonusAttaque(int degatsArmure)
-    {
-        System.out.println("On ajoute votre bonus de dégats (+" + degatsArmure + ")");
-    }
-
     @Override
     public void ramasser(Donjon donjon) {
         boolean ramasse = false;
@@ -355,46 +350,6 @@ public class Joueur extends Personnage {
         }
     }
 
-    public void afficheFullVie(String nom)
-    {
-        System.out.println("Le joueur " + nom + " ne peut pas se faire guérir car il possède déjà 100% de ses pv");
-    }
-
-    public void afficheGuerison(String nom, int heal){
-        System.out.println("Le joueur " + nom + " se fait guerir de " + heal + " pv");
-    }
-    public int afficherToutJoueurs(Donjon donjon)
-    {
-        int i = 0;
-        for (Joueur j : donjon.getM_joueurOnGround()) {
-            i++;
-            System.out.println(i + ") " + j.afficheTourInformation());
-        }
-        return i;
-    }
-
-    public int afficheDemande(int len, String entite) {
-        Scanner scanner = new Scanner(System.in);
-        int choix = -1;
-
-        System.out.println("Veuillez choisir le numéro " + entite + " sur lequel vous voulez effectuer l'action (entre 1 et " + len + ") :");
-
-        while (choix < 1 || choix > len) {
-            String input = scanner.nextLine();
-
-            try {
-                choix = Integer.parseInt(input);
-                if (choix < 1 || choix > len) {
-                    System.out.println("Numéro invalide. Veuillez entrer un nombre entre 1 et " + len + " :");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Entrée invalide. Veuillez entrer un nombre valide :");
-            }
-        }
-
-        return choix;
-    }
-
 
     public void sortBoogieWoogie(Donjon donjon){
         int index =  afficherToutJoueurs(donjon);
@@ -423,16 +378,6 @@ public class Joueur extends Personnage {
         cible2.setPosition(tempX, tempY);
     }
 
-    public int afficherToutMonstres(int index, Donjon donjon)
-    {
-        int i = index;
-        for (Monstre m : donjon.getM_monstreOnGround()) {
-            i++;
-            System.out.println(i + ") " + m.afficheTourInformation());
-        }
-        return i;
-    }
-
     public void sortArmeMagique(Donjon donjon){
         int lenJoueur = afficherToutJoueurs(donjon);
         int numJoueur = afficheDemande(lenJoueur, "du joueur");
@@ -444,39 +389,6 @@ public class Joueur extends Personnage {
         Arme cibleArme = armes.get(numArme-1);
         cibleArme.setM_bonusAttaque(cibleArme.getM_bonusAttaque() + 1);
         affichageAmeliorationArme(cibleArme.getM_nom());
-    }
-
-    public int afficherToutArmes(Donjon donjon, Joueur joueur){
-        int i = 0;
-        for (Arme a : joueur.getM_classe().getM_armes()) {
-            i++;
-            System.out.println(i + ") " + a);
-        }
-        return i;
-    }
-
-    public void affichageAmeliorationArme(String nom)
-    {
-        System.out.println("Vous avez amélioré votre " + nom + "!");
-    }
-
-    public void afficherSort(String nom)
-    {
-        System.out.println("Vous lancez " + nom);
-    }
-
-    public String demandeSort() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Quel sort voulez-vous lancer : \n 1) Guérison    2) Boogie Woogie    3) Arme magique");
-        String numSort = scanner.nextLine().trim();
-
-        while (!numSort.equals("1") && !numSort.equals("2") && !numSort.equals("3")) {
-            System.out.println("Veuillez entrer un nombre valide : 1, 2 ou 3.");
-            numSort = scanner.nextLine().trim();
-        }
-
-        // Ici on est sûr que numSort est "1", "2", ou "3"
-        return numSort;
     }
 
 

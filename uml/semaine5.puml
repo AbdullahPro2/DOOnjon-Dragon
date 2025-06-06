@@ -182,18 +182,22 @@ package utils
 }
 package deroulement {
            abstract class Donjon <<abstract>>{
-                # m_longueur : int
-                # m_largeur : int
-                - scanner : Scanner
-                <<create>> Donjon(longueur : int, largeur : int)
-                + addEntityOnGround(ent : Entite)
-                + getM_entityOnGround() : ArrayList<Entite>
+                # m_longueur : Integer
+                # m_largeur : Integer
+                <<create>> Donjon(longueur : Integer, largeur : Integer)
+                + addEquipementOnGround(ent : Entite)
+                + addMonstreOnGround(m : Monstre)
+                + addObstacleOnGround(o : Obstacle)
+                + getM_joueurOnGround() : Joueur[*]
+                + getM_monstreOnGround() : Monstre[*]
+                + getM_equipementOnGround() : Entite[*]
+                + getM_obstacleOnGround() : Obstacle[*]
                 + getM_largeur() : Integer
                 + getM_longueur() : Integer
                 - printLine()
                 + display()
-                + getStartingCoordinates(i : Integer) : integer[];
-                + createDonjon() : void <<abstract>>
+                + {abstract} getStartingCoordinates(i : Integer) : Integer[]
+                + {abstract} createDonjon()
             }
            class EasyDonjon extends Donjon {
                 <<create>> EasyDonjon()
@@ -234,17 +238,16 @@ package deroulement {
 }
 
 ' Donjon Relations
-Donjon "1" o--> "*" Entite : -m_entityOnGround\ncontient des entités
-Donjon ..> Joueur : "crée les joueurs\n(createPlayers)"
-Donjon ..> Race : "utilise pour la création"
-Donjon ..> ClasseJoueur : "utilise pour la création"
+Donjon "1" *--> "* \n-m_equipementOnGround" Entite : contient \t\t >
 
 ' Class Startgame Relations
 StartGame "1 " *--> "1 " Donjon : - m_donjon
 StartGame .> ClasseJoueur: "«uses»"
 StartGame .> Race: "«uses»"
 StartGame "*" o--> "1\n-m_initiativeOrder" Personnage : personnages dans jeux\t\t >
-
+StartGame ..> Joueur : "«uses»"
+StartGame ..> Race : "«uses»"
+StartGame ..> ClasseJoueur : "«uses»"
 
 ' Relations de Personnage
 Personnage <|-up- Joueur
@@ -263,7 +266,7 @@ Entite ..> Armure : "uses"
 
 
 ' Relations de ClasseJoueur
-ClasseJoueur "1\nm_armes  " *----> "*" Arme:est dans les armes de base de >
+ClasseJoueur "1\nm_armes  " *----> "*" Arme : est dans les armes de base de >
 ClasseJoueur "1\nm_armures" *----> "*\n" Armure : est dans les armures de base de >
 
 ' Relations de Joueur

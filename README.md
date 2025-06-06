@@ -299,7 +299,7 @@ La structure du dépôt git doit être la suivante :
     ├── Main.java
     ├── ...
 ├── uml/
-    ├── semaine4.puml
+    ├── semaine5.puml
     ├──...
 ```
 

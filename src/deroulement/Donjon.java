@@ -27,9 +27,8 @@ public abstract class Donjon {
   public void addEquipementOnGround(Entite ent) {
     m_equipementOnGround.add(ent);
   }
-
-  public void addMonstreOnGround(Monstre ent) {
-    m_monstreOnGround.add(ent);
+  public void addMonstreOnGround(Monstre m) {
+    m_monstreOnGround.add(m);
   }
   public void addObstacleOnGround(Obstacle o){
     m_obstacleOnGround.add(o);

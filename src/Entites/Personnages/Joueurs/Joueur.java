@@ -100,7 +100,7 @@ public class Joueur extends Personnage {
             ArrayList<Armure> armures = m_classe.getM_armures();
             int lenArmures = armures.size();
             if (lenArmures > 0) {
-                System.out.print("Veuillez equiper une armure\n");
+                System.out.print("\nVeuillez equiper une armure\n");
                 for (int i = 0; i < lenArmures; i++) {
                     System.out.println(String.valueOf(i + 1) + ") " + armures.get(i).toString());
                 }
@@ -159,7 +159,7 @@ public class Joueur extends Personnage {
 
     public void equiperDepart() {
         System.out.println("Joueur : " + this.getM_nom());
-        System.out.print("Veuillez equiper une arme\n");
+        System.out.print("\nVeuillez equiper une arme\n");
         equiper("1");
         equiper("2");
     }

@@ -83,7 +83,7 @@ public class MaitreJeu {
     System.out.println("Total des dégâts infligés à " + cible.getM_nom() + " : " + total + " PV");
 
     if (cible.getM_pv() <= 0) {
-      System.out.println(cible.getM_nom() + " est mort et a été retiré !");
+      System.out.println(cible.getM_nom() + " est mort !");
       initiativeOrder.remove(cible);
       cible.retirerDuDonjon(donjon);
     }
@@ -196,7 +196,6 @@ public class MaitreJeu {
       }
 
       // Case libre → on déplace
-      System.out.println("DEBUG: x = " + x + ", y = " + y);
       p.setPosition(y, x);
       System.out.println("Déplacement effectué en " + (char) ('A' + x) + (y + 1));
       break;

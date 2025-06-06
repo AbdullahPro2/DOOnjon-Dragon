@@ -43,13 +43,12 @@ public class StartGame {
             List<Personnage> ordreDuTour = new ArrayList<>(m_initiativeOrder);
 
           for (Personnage p : ordreDuTour) {
-            if (p.getM_pv() <= 0) {
-              m_initiativeOrder.remove(p);
-              continue;
-            }
 
             printTourInformation(difficulty, tour, p);
             m_donjon.display();
+
+            // Nettoyage des morts
+            m_initiativeOrder.removeIf(perso -> perso.getM_pv() <= 0);
 
             int choice = maitreJeu.demanderInterventionMaitreDejeu();
             switch (choice) {
@@ -92,7 +91,7 @@ public class StartGame {
         System.out.println("\nUn joueur est mort. Fin du jeu !");
         return;
       } else {
-        System.out.println("\nTous les monstres ont été vaincus ! Passage au niveau suivant.");
+        System.out.println("\nTous les monstres ont été vaincus !");
       }
     }
     System.out.println("\nFélicitations ! Vous avez terminé tous les donjons !");

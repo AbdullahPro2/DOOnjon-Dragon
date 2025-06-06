@@ -49,53 +49,54 @@ public class Joueur extends Personnage {
     public void equiper(String choix)
     {
         Scanner scanner = new Scanner(System.in);
-        if (choix.equals("1"))
-        {
+        if (choix.equals("1")) {
             ArrayList<Arme> armes = m_classe.getM_armes();
-            for (int i=0; i<armes.size();i++)
-            {
-                System.out.println(String.valueOf(i+1) + ") " +  armes.get(i).toString());
-            }
-            int indice = -1;
-            boolean valide = false;
+            int lenArme = armes.size();
+            if (lenArme > 0) {
+                for (int i = 0; i < lenArme; i++) {
+                    System.out.println(String.valueOf(i + 1) + ") " + armes.get(i).toString());
+                }
+                int indice = -1;
+                boolean valide = false;
 
-            while (!valide) {
-                System.out.print("Mettre le numero de l'arme que vous voulez equiper: ");
-                String indiceStr = scanner.nextLine();  // Lit une ligne de texte
+                while (!valide) {
+                    System.out.print("Mettre le numero de l'arme que vous voulez equiper: ");
+                    String indiceStr = scanner.nextLine();  // Lit une ligne de texte
 
-                try {
-                    indice = Integer.parseInt(indiceStr) - 1;
-                    if (indice >= 0 && indice < armes.size()) {
-                        valide = true;  // On sortira de la boucle au prochain test
-                    } else {
-                        System.out.println("Veuillez entrer un numéro valide");
+                    try {
+                        indice = Integer.parseInt(indiceStr) - 1;
+                        if (indice >= 0 && indice < lenArme) {
+                            valide = true;  // On sortira de la boucle au prochain test
+                        } else {
+                            System.out.println("Veuillez entrer un numéro valide");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Ce n'est pas un nombre valide. Essayez encore.");
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("Ce n'est pas un nombre valide. Essayez encore.");
-                }
-            }
-
-            // À ce stade, indice est un entier valide entre 0 et armes.size() - 1
-            System.out.println("Vous avez choisi l'arme : " + armes.get(indice).getM_nom());
-            if (m_arme!=null)
-            {
-                if (m_arme.getM_typeArme() == TypeArme.GUERRE)
-                {
-                    super.setM_force(super.getM_force()-4);
-                    super.setM_vitesse(super.getM_vitesse()+2);
                 }
 
+                // À ce stade, indice est un entier valide entre 0 et lenArme - 1
+                System.out.println("Vous avez choisi l'arme : " + armes.get(indice).getM_nom());
+                if (m_arme != null) {
+                    if (m_arme.getM_typeArme() == TypeArme.GUERRE) {
+                        super.setM_force(super.getM_force() - 4);
+                        super.setM_vitesse(super.getM_vitesse() + 2);
+                    }
+
+                }
+                m_arme = armes.get(indice);
+                if (m_arme.getM_typeArme() == TypeArme.GUERRE) {
+                    super.setM_force(super.getM_force() + 4);
+                    super.setM_vitesse(super.getM_vitesse() - 2);
+                }
             }
-            m_arme = armes.get(indice);
-            if (m_arme.getM_typeArme() == TypeArme.GUERRE)
+            else
             {
-                super.setM_force(super.getM_force()+4);
-                super.setM_vitesse(super.getM_vitesse()-2);
+                System.out.println("Vous n'avez pas d'arme à équiper");
             }
         }
         else
         {
-            System.out.print("Veuillez equiper une armure\n");
             ArrayList<Armure> armures = m_classe.getM_armures();
             int lenArmures = armures.size();
             if (lenArmures > 0) {
@@ -133,6 +134,10 @@ public class Joueur extends Personnage {
                 if (m_armure.getM_typeArmure() == TypeArmure.LOURDE) {
                     super.setM_vitesse(super.getM_vitesse() - 4);
                 }
+            }
+            else
+            {
+                System.out.println("Vous n'avez pas d'armure à équiper");
             }
         }
 
@@ -236,7 +241,9 @@ public class Joueur extends Personnage {
             System.out.println("Votre attaque perce l'armure de " + nomMonstre + "(" + classeArmure + ")");
             System.out.println("Vous lancez votre dé de dégats");
             int degats = m_arme.getM_degats().lanceDePrint();
-            afficheBonusAttaque(m_arme.getM_bonusAttaque());
+            if (m_arme.getM_bonusAttaque()>0) {
+                afficheBonusAttaque(m_arme.getM_bonusAttaque());
+            }
             int pv = cible.getM_pv();
             cible.setM_pv(pv-degats-m_arme.getM_bonusAttaque());
             degats += m_arme.getM_bonusAttaque();
@@ -246,9 +253,6 @@ public class Joueur extends Personnage {
 
                 // Retirer la cible de la liste des entités
                 boolean removed = donjon.getM_monstreOnGround().remove(cible);
-                if (!removed) {
-                    System.out.println("Échec de la suppression du monstre : " + cible.getM_nom());
-                }
             }
             else
             {

@@ -182,7 +182,15 @@ package Entites{
         }
 
         class MaitreJeu {
-
+            +choisirPersonnage(initiativeOrder : Personnage[*]) : Personnage
+            +DeplacerJoueurMonstre(initiativeOrder : Personnage[*], donjon : Donjon)
+            +infligerDegatsParMaitreDeJeu(initiativeOrder : Personnage[*], donjon : Donjon) : Boolean
+            +ajouterObstacle(donjon : Donjon)
+            +demanderCoordonnees(donjon : Donjon) : Integer[*]
+            +demanderInterventionMaitreDejeu() : Integer
+            +seDeplacerParMaitreDeJeu(donjon : Donjon, p : Personnage)
+            +affichagePersonnage(initiativeOrder : Personnage[*])
+            + toString() : String
         }
 
     }
@@ -324,5 +332,10 @@ Arme .> Joueur : "uses"
 Armure .> TypeArmure : "«uses»\n m_typeArmure"
 Armure .> Joueur : "uses"
 
+' Relations de MaitreJeu
+
+MaitreJeu .> Personnage : "uses"
+MaitreJeu .> Entite : «call»
+MaitreJeu .> Obstacle : "instantiate"
 
 @enduml

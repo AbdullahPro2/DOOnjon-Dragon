@@ -10,7 +10,7 @@ package Entites{
         - m_x:Integer
         - m_y:Integer
         - {static} m_entites : List<Entite>
-        + <<create>> Entite(x : Integer, y: Integer)
+        + <<Create>> Entite(x : Integer, y: Integer)
         + getM_x() : Integer
         + getM_y() : Integer
         + setM_entites()
@@ -27,13 +27,14 @@ package Entites{
       class Arme{
         - m_nom : String
         - m_portee : Integer
-        + <<create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Integer)
+        - m_bonusAttaque : Integer
+        + <<Create>> Arme(type: TypeArme, nom: String , Dedegats: De , portee: Integer, x : Integer, y : Integer)
         + ramasser(joueur : Joueur)
-        + estBloquant() : boolean
         + getM_typeArme() : TypeArme
         + getM_nom() : String
         + getM_degats(): De
         + getM_portee(): Integer
+        + getM_bonusAttaque() : Integer
         + toString() : String
       }
       enum TypeArme <<enumerate>>
@@ -46,7 +47,7 @@ package Entites{
       class Armure{
         - m_nom : String
         - m_classeArmure : int
-        + <<create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer)
+        + <<Create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer)
         + ramasser(joueur : Joueur)
         + estBloquant() : boolean
         + getM_classeArmure() : Integer
@@ -69,7 +70,7 @@ package Entites{
             -m_dexterité : Integer
             -m_vitesse : Integer
             -m_initiative : Integer
-            + <<create>> Personnage(nom : String, pv : Integer, x : Integer, y : Integer)
+            + <<Create>> Personnage(nom : String, pv : Integer, x : Integer, y : Integer)
             + setPosition(x : Integer, y : Integer)
             + seDeplacer(donjon : Donjon
             + saisirPositionValide(maxX : Integer, maxY : Integer) : Integer[]
@@ -91,7 +92,7 @@ package Entites{
         }
         package Joueurs {
             class Joueur{
-                +<<create>>Joueur(nom : String, classe : Classe, race : Race, x : Integer, y : Integer)
+                +<<Create>>Joueur(nom : String, classe : Classe, race : Race, x : Integer, y : Integer)
                 +setPosition(x : Integer, y : Integer)
                 +equiper(choix : String)
                 +equiperChoix()
@@ -103,7 +104,7 @@ package Entites{
             class ClasseJoueur {
                - m_nomClass: String
                - m_pv: Integer
-               - <<create>> ClasseJoueur(nom : String, pv : Integer, armes: Armes[*], armures: Armure[*])
+               - <<Create>> ClasseJoueur(nom : String, pv : Integer, armes: Armes[*], armures: Armure[*])
                + {static} Clercs() : ClasseJoueur
                + {static} Guerriers() : ClasseJoueur
                + {static} Magiciens() : ClasseJoueur
@@ -120,7 +121,7 @@ package Entites{
               - m_bonusForce: Integer
               - m_bonusDexterite: Integer
               - m_bonusVitesse: Integer
-              - <<create>> Race(nom: String, force: Integer, dex: Integer, vitesse: Integer)
+              - <<Create>> Race(nom: String, force: Integer, dex: Integer, vitesse: Integer)
               + getM_nomRace(): String
               + getM_BonusForce(): Integer
               + getM_BonusDexterite(): Integer
@@ -135,7 +136,7 @@ package Entites{
         package Monstres {
             class Monstre {
                 - m_numero : Integer
-                + <<create>> Monstre(race : RaceMonstre, numero : Integer, x : Integer, y : Integer)
+                + <<Create>> Monstre(race : RaceMonstre, numero : Integer, x : Integer, y : Integer)
                 + attaquer()
                 + getM_race : RaceMonstre
                 + toString() : String
@@ -147,7 +148,7 @@ package Entites{
                 - m_classeArmure : Integer
                 - m_portee : Integer
                 - m_degats : Integer
-                - <<create>> RaceMonstre(nom: String, pv : Integer, classeArmure : Integer, portee : Integer, degats : Integer, de : De)
+                - <<Create>> RaceMonstre(nom: String, pv : Integer, classeArmure : Integer, portee : Integer, degats : Integer, de : De)
                 + {static} Dragon(): RaceMonstre
                 + {static} Demogorgon(): RaceMonstre
                 + getM_pv() : Integer
@@ -159,9 +160,14 @@ package Entites{
             }
         }
 
-        class Obstacle {
-            + Obstacle(x : Integer, y : Integer)
+        class MaitreJeu {
+
         }
+
+    }
+
+    class Obstacle {
+        + Obstacle(x : Integer, y : Integer)
     }
 }
 package utils
@@ -169,12 +175,13 @@ package utils
   class Utils <<static>>{
     + {static} dico : Map<Character, Integer>
     + {static} dico2 : Map<Integer,Character>
+    + {static} joueurEstMort() : Boolean
   }
   class De
   {
     - m_nombreDes : Integer
     - m_facesParDe: Integer
-    + <<create>> De(nombreDes : Integer, facesParDe : Integer)
+    + <<Create>> De(nombreDes : Integer, facesParDe : Integer)
     + lanceDe(): Integer
     + lanceDePrint(): Integer
     + toString(): String
@@ -184,7 +191,7 @@ package deroulement {
            abstract class Donjon <<abstract>>{
                 # m_longueur : Integer
                 # m_largeur : Integer
-                <<create>> Donjon(longueur : Integer, largeur : Integer)
+                + <<Create>> Donjon(longueur : Integer, largeur : Integer)
                 + addEquipementOnGround(ent : Entite)
                 + addMonstreOnGround(m : Monstre)
                 + addObstacleOnGround(o : Obstacle)
@@ -200,54 +207,55 @@ package deroulement {
                 + {abstract} createDonjon()
             }
            class EasyDonjon extends Donjon {
-                <<create>> EasyDonjon()
-                + getStartingCoordinates(i : Integer) : Integer[]
+                + <<Create>> EasyDonjon()
+                + getStartingCoordinates(i : Integer) : Integer[2]
                 + createDonjon()
                 + display()
            }
            class MediumDonjon extends Donjon {
-                            <<create>> MediumDonjon()
-                            + getStartingCoordinates(i : Integer) : Integer[]
+                            + <<Create>> MediumDonjon()
+                            + getStartingCoordinates(i : Integer) : Integer[2]
                             + createDonjon()
                             + display()
            }
            class HardDonjon extends Donjon {
-                                       <<create>> HardDonjon()
-                                       + getStartingCoordinates(i : Integer) : Integer[]
+                                       + <<Create>> HardDonjon()
+                                       + getStartingCoordinates(i : Integer) : Integer[2]
                                        + createDonjon()
                                        + display()
            }
            class StartGame {
-               - m_joueurs : ArrayList<Joueur>
-               - m_monstres : ArrayList<Monstre>
                + startGame()
-               + ajouterJoueurs()
                - printTourInformation(difficulty : Integer, tour : Integer, courant : Personnage)
-               - joueurEstMort() : Boolean
                - tousMonstresMorts() : Boolean
-               - loadCharactersFromDonjon()
                - sortInitiativeOrder()
-               - executerTour(p : Personnage)
                - launchDonjon(choice : Integer)
                + createPlayers(nbJoueurs : Integer)
-               + askPlayerName(i : Integer)
-               + askRace(nom : String) Race
-               + askClass(nom : String) ClasseJoueur
+               + updatePlayerPosition()
+               # askPlayerName(i : Integer) : String
+               # askRace(nom : String) : Race
+               # askClass(nom : String) : ClasseJoueur
            }
 
 }
 
 ' Donjon Relations
 Donjon "1" *--> "* \n-m_equipementOnGround" Entite : contient \t\t >
+Donjon "1" *--> "1..* \n-m_joueurOnGround" Joueur : contient \t\t >
+Donjon "1" *--> "1..* \n-m_monstreOnGround" Monstre : contient \t\t >
+Donjon "1" *--> "* \n-m_obstacleOnGround" Obstacle : contient \t\t >
+
 
 ' Class Startgame Relations
 StartGame "1 " *--> "1 " Donjon : - m_donjon
-StartGame .> ClasseJoueur: "«uses»"
-StartGame .> Race: "«uses»"
-StartGame "*" o--> "1\n-m_initiativeOrder" Personnage : personnages dans jeux\t\t >
-StartGame ..> Joueur : "«uses»"
-StartGame ..> Race : "«uses»"
-StartGame ..> ClasseJoueur : "«uses»"
+StartGame .> ClasseJoueur: "call"
+StartGame .> Race: "call"
+StartGame .> ClasseJoueur: "uses"
+StartGame .> Race: "uses"
+StartGame "*" o--> "2..*\n-m_initiativeOrder" Personnage : contient les personnages \t\t >
+StartGame "1" o--> "1..* \n-m_joueurs" Joueur : contient les joueurs \t\t >
+StartGame "1" *--> "1\n-m_maitreJeu" MaitreJeu : possedeUn \t\t >
+StartGame .> Monstre : "uses"
 
 ' Relations de Personnage
 Personnage <|-up- Joueur

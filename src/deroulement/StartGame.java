@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class StartGame {
   Donjon m_donjon;
-  MaitreJeu maitreJeu = new MaitreJeu();
+  MaitreJeu m_maitreJeu = new MaitreJeu();
   private final ArrayList<Joueur> m_joueurs = new ArrayList<>();
   private final ArrayList<Personnage> m_initiativeOrder = new ArrayList<>();
   private final Scanner scanner = new Scanner(System.in);
@@ -49,13 +49,13 @@ public class StartGame {
             boolean joueurEstMort;
             // Nettoyage des morts
             m_initiativeOrder.removeIf(perso -> perso.getM_pv() <= 0);
-            int choice = maitreJeu.demanderInterventionMaitreDejeu();
+            int choice = m_maitreJeu.demanderInterventionMaitreDejeu();
             switch (choice) {
               case 1:
-                maitreJeu.DeplacerJoueurMonstre(m_initiativeOrder, m_donjon);
+                m_maitreJeu.DeplacerJoueurMonstre(m_initiativeOrder, m_donjon);
                 break;
               case 2:
-                joueurEstMort = maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder, m_donjon);
+                joueurEstMort = m_maitreJeu.infligerDegatsParMaitreDeJeu(m_initiativeOrder, m_donjon);
                 // Vérifiez immédiatement si tous les monstres sont morts
                 if (joueurEstMort)
                 {
@@ -67,7 +67,7 @@ public class StartGame {
                 }
                 break;
               case 3:
-                maitreJeu.ajouterObstacle(m_donjon);
+                m_maitreJeu.ajouterObstacle(m_donjon);
                 break;
             }
 

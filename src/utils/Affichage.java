@@ -8,6 +8,12 @@ import deroulement.Donjon;
 import java.util.Scanner;
 
 public class Affichage {
+    private final Scanner scanner;
+
+    public Affichage() {
+        this.scanner = new Scanner(System.in); // ✅ initialise bien le champ
+    }
+
     public static void afficheBonusAttaque(int degatsArmure)
     {
         System.out.println("On ajoute votre bonus de dégats (+" + degatsArmure + ")");
@@ -31,8 +37,7 @@ public class Affichage {
         return i;
     }
 
-    public static int afficheDemande(int len, String entite) {
-        Scanner scanner = new Scanner(System.in);
+    public int afficheDemande(int len, String entite) {
         int choix = -1;
 
         System.out.println("Veuillez choisir le numéro " + entite + " sur lequel vous voulez effectuer l'action (entre 1 et " + len + ") :");
@@ -82,8 +87,7 @@ public class Affichage {
         System.out.println("Vous lancez " + nom);
     }
 
-    public static String demandeSort() {
-        Scanner scanner = new Scanner(System.in);
+    public String demandeSort() {
         System.out.println("Indiquez le numero du sort que vous souhaitez lancer : \n 1) Guérison    2) Boogie Woogie    3) Arme magique");
         String numSort = scanner.nextLine().trim();
 
@@ -95,6 +99,4 @@ public class Affichage {
         // Ici on est sûr que numSort est "1", "2", ou "3"
         return numSort;
     }
-
-
 }

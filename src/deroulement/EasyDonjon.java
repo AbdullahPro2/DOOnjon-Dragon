@@ -113,6 +113,7 @@ public class EasyDonjon extends Donjon {
     Arme epeeLongue = new Arme(TypeArme.GUERRE, "épée longue", new De(1, 8), 1, 11, 12);
     Arme rapiere = new Arme(TypeArme.GUERRE, "rapière", new De(1, 8), 1, 11, 13);
     Arme arbaleteLegere = new Arme(TypeArme.DISTANCE, "arbalète légère", new De(1, 8), 16, 9, 5);
+    Arme epeeDeuxMains = new Arme(TypeArme.COURANTE, "épée à deux mains", new De(2, 6), 1, 15, 12);
 
     // Armure sur la carte - par default
     Armure armureEcailles = new Armure(TypeArmure.LEGERE, "armure d'écailles", 9, 8, 12);
@@ -210,6 +211,7 @@ public class EasyDonjon extends Donjon {
     addEquipementOnGround(armureEcailles1);
     addEquipementOnGround(cotteMailles1);
     addEquipementOnGround(demiPlate1);
+    addEquipementOnGround(epeeDeuxMains);
   }
 
   @Override

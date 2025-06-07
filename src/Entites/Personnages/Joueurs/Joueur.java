@@ -8,6 +8,7 @@ import Entites.Equipements.Armure;
 import Entites.Equipements.TypeArme;
 import Entites.Equipements.TypeArmure;
 import deroulement.Donjon;
+import utils.Affichage;
 import utils.De;
 import utils.Utils;
 import java.util.*;
@@ -19,6 +20,7 @@ public class Joueur extends Personnage {
     private Armure m_armure;
     private Race m_race;
     private ClasseJoueur m_classe;
+    private Affichage m_affichage;
 
     public Joueur(String nom, Race race, ClasseJoueur classe, int x, int y){
         super(nom, classe.getM_pv(),x,y);
@@ -29,6 +31,7 @@ public class Joueur extends Personnage {
         super.setM_vitesse(super.getM_vitesse()+race.getM_BonusVitesse());
         m_arme = null;
         m_armure = null;
+        m_affichage = new Affichage();
     }
     @Override
     public String getDisplaySymbol() {
@@ -302,9 +305,10 @@ public class Joueur extends Personnage {
 
     public void lanceSort(Donjon donjon){
         String sortLance="1";
+        Affichage affichage = new Affichage();
         if (m_classe.getM_nomClass().equals("Magiciens"))
         {
-            sortLance = demandeSort();
+            sortLance = affichage.demandeSort();
         }
         String nomSort;
         switch(sortLance)
@@ -331,7 +335,7 @@ public class Joueur extends Personnage {
 
     public void sortGuerison(Donjon donjon){
         int len = afficherToutJoueurs(donjon);
-        int choix = afficheDemande(len, "du joueur");
+        int choix = m_affichage.afficheDemande(len, "du joueur");
         Joueur cible = donjon.getM_joueurOnGround().get(choix-1);
         De de = new De(1,10);
         int heal = de.lanceDePrint();
@@ -354,8 +358,8 @@ public class Joueur extends Personnage {
     public void sortBoogieWoogie(Donjon donjon){
         int index =  afficherToutJoueurs(donjon);
         int iMonstre = afficherToutMonstres(index, donjon);
-        int choix1 = afficheDemande(index + iMonstre, "du personnage");
-        int choix2 = afficheDemande(index + iMonstre, "du personnage");
+        int choix1 = m_affichage.afficheDemande(index + iMonstre, "du personnage");
+        int choix2 = m_affichage.afficheDemande(index + iMonstre, "du personnage");
         Personnage cible1;
         Personnage cible2;
         if (choix1 <= index)
@@ -380,10 +384,10 @@ public class Joueur extends Personnage {
 
     public void sortArmeMagique(Donjon donjon){
         int lenJoueur = afficherToutJoueurs(donjon);
-        int numJoueur = afficheDemande(lenJoueur, "du joueur");
+        int numJoueur = m_affichage.afficheDemande(lenJoueur, "du joueur");
         Joueur cibleJoueur = donjon.getM_joueurOnGround().get(numJoueur-1);
         int lenArme = afficherToutArmes(donjon, cibleJoueur);
-        int numArme = afficheDemande(lenArme, "de l'arme");
+        int numArme = m_affichage.afficheDemande(lenArme, "de l'arme");
         ClasseJoueur classe = cibleJoueur.getM_classe();
         List<Arme> armes = classe.getM_armes();
         Arme cibleArme = armes.get(numArme-1);

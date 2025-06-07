@@ -47,9 +47,8 @@ package Entites{
       class Armure{
         - m_nom : String
         - m_classeArmure : int
-        + <<Create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer)
+        + <<Create>> Armure(typeArmure : TypeArmure, nom : String, classeArmure : Integer, x : Integer; y : Integer)
         + ramasser(joueur : Joueur)
-        + estBloquant() : boolean
         + getM_classeArmure() : Integer
         + getM_nom() : String
         + getM_typeArmure() : TypeArmure
@@ -93,12 +92,27 @@ package Entites{
         package Joueurs {
             class Joueur{
                 +<<Create>>Joueur(nom : String, classe : Classe, race : Race, x : Integer, y : Integer)
+                +getDisplaySymbol() : String
+                +getM_armure() : Armure
+                +getM_classe() : ClasseJoueur
+                +getM_race() : Race
                 +setPosition(x : Integer, y : Integer)
                 +equiper(choix : String)
                 +equiperChoix()
                 +equiperDepart()
-                +attaquer()
-                +ramasser()
+                +attaquer(donjon : Donjon)
+                +ramasser(donjon : Donjon)
+                +droitLanceSort() : Boolean
+                +lanceSort(donjon : Donjon)
+                +sortGuerison(donjon : Donjon)
+                +sortBoogieWoogie(donjon : Donjon)
+                +sortArmeMagique(donjon : Donjon)
+                +afficheApresTour(donjon : Donjon) : String
+                +inventaireAffichage() : String
+                +actionAffichage(actionRestantes : Integer)
+                +executerTour(donjon : Donjon)
+                +afficheTourInformation() : String
+                +retirerDuDonjon(donjon : Donjon)
                 +toString() : String
             }
             class ClasseJoueur {
@@ -274,15 +288,17 @@ Entite ..> Armure : "uses"
 
 
 ' Relations de ClasseJoueur
-ClasseJoueur "1\nm_armes  " *----> "*" Arme : est dans les armes de base de >
-ClasseJoueur "1\nm_armures" *----> "*\n" Armure : est dans les armures de base de >
+ClasseJoueur "1\nm_armes  " *----> "*" Arme : est l'inventaire d'arme de >
+ClasseJoueur "1\nm_armures" *----> "*\n" Armure : est est l'inventaire d'armures de >
 
 ' Relations de Joueur
 
-Joueur "1" o--> "0..1" Arme : -m_arme\nporte une arme
-Joueur "1" o--> "0..1" Armure : -m_armure\nporte une armure
-Joueur "1" o--> "1" Race : -m_race\nest de la race
-Joueur "1" o--> "1" ClasseJoueur : -m_classe\na pour classe
+Joueur "1" o--> "0..1" Arme : -m_arme\nporte une arme >
+Joueur "1" o--> "0..1" Armure : -m_armure\nporte une armure >
+Joueur "1" o--> "1" Race : -m_race\nest de la race >
+Joueur "1" o--> "1" ClasseJoueur : -m_classe\na pour classe >
+Joueur "1" o--> "1" Affichage : -m_affichage\utilise l'affichage de >
+Joueur ..> Donjon : "uses"
 Joueur ..> De : "uses"
 Joueur ..> Monstre : "uses"
 
@@ -294,7 +310,7 @@ Monstre ..> Joueur : "uses"
 RaceMonstre "1" *--> "1" De : -m_deDegats\nfait les degats
 
 ' Class Arme Relations
-Arme .> TypeArme : "«uses»\n m_typeArme"
+Arme .> TypeArme : "uses \n -m_typeArme"
 Arme "1" *--> "1\n -m_degats" De : fait les dégâts
 Arme .> Joueur : "uses"
 'Class Armure Relations

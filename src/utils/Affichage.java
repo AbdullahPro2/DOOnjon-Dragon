@@ -99,4 +99,6 @@ public class Affichage {
         // Ici on est sûr que numSort est "1", "2", ou "3"
         return numSort;
     }
+
+
 }

@@ -204,16 +204,7 @@ public class Joueur extends Personnage {
             choix = 0;
         }
         else {
-            Scanner scanner = new Scanner(System.in);
-            choix = -1;
-            while (choix < 0 || choix >= taille) {
-                System.out.print("Choisissez une cible à attaquer (0 à " + (taille - 1) + ") : ");
-                if (scanner.hasNextInt()) {
-                    choix = scanner.nextInt();
-                } else {
-                    scanner.next(); // Consomme l'entrée invalide
-                }
-            }
+            choix = m_affichage.afficheDemande(taille, "du monstre");
         }
         Monstre cible = cibles.get(choix);
         String nomMonstre = cible.getM_nom();
@@ -305,10 +296,9 @@ public class Joueur extends Personnage {
 
     public void lanceSort(Donjon donjon){
         String sortLance="1";
-        Affichage affichage = new Affichage();
         if (m_classe.getM_nomClass().equals("Magiciens"))
         {
-            sortLance = affichage.demandeSort();
+            sortLance = m_affichage.demandeSort();
         }
         String nomSort;
         switch(sortLance)

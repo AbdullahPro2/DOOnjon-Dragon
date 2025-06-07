@@ -151,25 +151,32 @@ package Entites{
             class Monstre {
                 - m_numero : Integer
                 + <<Create>> Monstre(race : RaceMonstre, numero : Integer, x : Integer, y : Integer)
-                + attaquer()
+                + getDisplaySymbol() : String
+                + attaquer(donjon : Donjon)
                 + getM_race : RaceMonstre
+                + executerTour(donjon : Donjon)
+                + afficheApresTour() : String
+                + actionAffichage(actionRestantes : Integer) :
+                + retirerDuDonjon(donjon : Donjon)
+                + afficheTourInformation() : String
                 + toString() : String
             }
 
             class RaceMonstre {
                 - m_nom : String
-                - m_pv : Integer
+                - m_pvRace : Integer
                 - m_classeArmure : Integer
                 - m_portee : Integer
                 - m_degats : Integer
                 - <<Create>> RaceMonstre(nom: String, pv : Integer, classeArmure : Integer, portee : Integer, degats : Integer, de : De)
                 + {static} Dragon(): RaceMonstre
                 + {static} Demogorgon(): RaceMonstre
-                + getM_pv() : Integer
-                + getM_nom : String
-                + getM_degats : Integer
-                + getM_portee : Integer
-                + getM_classeArmure
+                + getM_pvRace() : Integer
+                + getM_nom() : String
+                + getM_degats() : Integer
+                + getM_portee() : Integer
+                + getM_classeArmure() : Integer
+                + getM_deDegats() : De
                 + toString() : String
             }
         }

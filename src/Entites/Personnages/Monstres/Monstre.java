@@ -117,16 +117,6 @@ public class Monstre extends Personnage {
             "    vitesse : " + getM_vitesse() + '\n';
     }
 
-    @Override
-    public String toString() {
-        return "Monstre{" +
-            "nom='" + super.getM_nom() + '\'' +
-            ", numero=" + m_numero +
-            ", race=" + m_race +
-            ", position=(" + getM_x() + ", " + getM_y() + ")" +
-            ", pv=" + getM_pv() +
-            '}';
-    }
     public void actionAffichage(int actionsRestantes)
     {
         System.out.println("Actions restantes : " + actionsRestantes);
@@ -170,6 +160,17 @@ public class Monstre extends Personnage {
     @Override
     public void retirerDuDonjon(Donjon donjon) {
         donjon.getM_monstreOnGround().remove(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Monstre{" +
+                "nom='" + super.getM_nom() + '\'' +
+                ", numero=" + m_numero +
+                ", race=" + m_race +
+                ", position=(" + getM_x() + ", " + getM_y() + ")" +
+                ", pv=" + getM_pv() +
+                '}';
     }
 }
 

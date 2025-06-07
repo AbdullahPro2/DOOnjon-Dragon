@@ -19,6 +19,7 @@ public class RaceMonstre {
         m_deDegats = de;
     }
     public int getM_pvRace() { return m_pvRace; }
+
     public String getM_nom() {return m_nom; }
 
     public int getM_classeArmure() {

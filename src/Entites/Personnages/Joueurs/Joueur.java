@@ -451,17 +451,6 @@ public class Joueur extends Personnage {
 
         return str.toString();
     }
-    @Override
-    public String toString() {
-        return super.getM_nom() + '\n' +
-            "Vie : " + getM_pv() + '\n' +
-            "Armure : " + (this.m_arme != null ? this.m_arme.toString() : " ") + '\n' +
-            "race : " + m_race.toString() + '\n' +
-            "classe : " + m_classe.toString() + '\n' +
-            "force : " + getM_force() + '\n' +
-            "dexterite : " + getM_dexterite() + '\n' +
-            "vitesse : " + getM_vitesse() + '\n';
-    }
 
     @Override
     public void actionAffichage(int actionsRestantes)
@@ -533,5 +522,17 @@ public class Joueur extends Personnage {
     @Override
     public void retirerDuDonjon(Donjon donjon) {
         donjon.getM_joueurOnGround().remove(this);
+    }
+
+    @Override
+    public String toString() {
+        return super.getM_nom() + '\n' +
+                "Vie : " + getM_pv() + '\n' +
+                "Armure : " + (this.m_arme != null ? this.m_arme.toString() : " ") + '\n' +
+                "race : " + m_race.toString() + '\n' +
+                "classe : " + m_classe.toString() + '\n' +
+                "force : " + getM_force() + '\n' +
+                "dexterite : " + getM_dexterite() + '\n' +
+                "vitesse : " + getM_vitesse() + '\n';
     }
 }

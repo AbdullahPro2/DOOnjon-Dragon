@@ -22,7 +22,7 @@ public class StartGame {
 
 
   public void startGame() {
-    int[] difficulties = {1, 2, 3}; // 1: Easy, 2: Medium, 3: Hard
+    int[] difficulties = {1,2,3}; // 1: Easy, 2: Medium, 3: Hard
     int tour = 1;
     createPlayers(4);
     for (int difficulty : difficulties) {

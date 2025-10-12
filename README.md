@@ -23,11 +23,17 @@ Avant d’installer le projet, assurez-vous d’avoir :
 
 ---
 
-## 🚀 Étapes d’installation
+## Auteurs  
+Projet réalisé dans le cadre du **BUT Informatique**  
 
-### 1️⃣ Cloner le projet
+- **Étudiant :** [Thomas Barseghian](https://github.com/thomasbarseghian)
+- **Binôme :** [Abdullah Nezami](https://github.com/AbdullahPro2)
+
+## Étapes d’installation
+
+### Cloner le projet
 ```bash
-git clone https://github.com/<votre-utilisateur>/DOOnjon-Dragon.git
+git clone https://github.com/AbdullahPro2/DOOnjon-Dragon.git
 cd DOOnjonAndDragon
 ```
 ### Fonctionnalités :
